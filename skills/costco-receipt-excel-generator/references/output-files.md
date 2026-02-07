@@ -1,22 +1,29 @@
-# Output Folder and File Naming
+# Output Folder and Workbook Naming
 
-Always create a dedicated output folder with this exact name format:
+Create one output folder per run with this exact format:
 
 - `YYYY-MM-DD Costco Receipt`
 - Example: `2026-02-07 Costco Receipt`
 
-Create it in the current working directory unless the user gives a different base path.
+Create it in the current working directory unless user specifies another base path.
 
-## Required files in that folder
+## Required output
 
-1. `actual-values-table.md` - markdown table for human review
-2. `live-formula-table.md` - markdown version of formula table
-3. `live-formula-table.csv` - Excel paste-ready CSV with formulas
-4. `notes.txt` - unresolved split notes (write `UNASSIGNED: none` if fully assigned)
+Exactly one workbook file in that folder:
+
+- `YYYY-MM-DD Costco Receipt.xlsx`
+
+Workbook sheet names:
+
+1. `Actual Values`
+2. `Live Formula`
+3. `Notes` (only if unresolved allocations exist)
 
 ## Minimal command pattern
 
 ```bash
-OUT_DIR="$(date +%F) Costco Receipt"
+DAY="$(date +%F)"
+OUT_DIR="${DAY} Costco Receipt"
 mkdir -p "$OUT_DIR"
+OUT_XLSX="$OUT_DIR/${DAY} Costco Receipt.xlsx"
 ```
