@@ -1,11 +1,50 @@
-# Terminal Prompt Template (Standalone / Low Token)
+# Terminal Prompt Templates
 
-Use this exact prompt in your terminal agent call. Replace bracketed placeholders.
+Use one of the templates below.
+
+## A) Ultra-Compact Prompt (lowest tokens)
+
+```text
+Task: From attached Costco receipt image(s), create split outputs only.
+
+Create folder: "$(date +%F) Costco Receipt" in CWD.
+Write files in that folder:
+- actual-values-table.md
+- live-formula-table.md
+- live-formula-table.csv
+- notes.txt
+
+Columns (exact order):
+Description | Unit Price | RJ Vol | Therese Vol | Mom Vol | Total Vol | RJ $ | Therese $ | Mom $ | Total Line $
+
+Rules:
+- Extract all item lines, including qty notation and discounts.
+- Total Vol=C+D+E.
+- Formula table item rows: G=B*C, H=B*D, I=B*E, J=G+H+I.
+- Include SUBTOTAL, TAX, TOTAL rows.
+- Subtotal rows use SUM.
+- TAX rows prorate by person subtotal share.
+- TOTAL rows are subtotal+tax.
+- Money rounded to 2 decimals.
+
+Splits:
+[PASTE SPLITS]
+
+Outputs:
+- actual-values-table.md: Actual Values markdown table
+- live-formula-table.md: Live Formula markdown table
+- live-formula-table.csv: same Live Formula table as CSV with formulas
+- notes.txt: unresolved items as UNASSIGNED lines, else "UNASSIGNED: none"
+
+Finally print absolute output folder path and file list.
+```
+
+## B) Explicit Prompt (more verbose, easier to audit)
 
 ```text
 Analyze the attached Costco receipt image(s) and do only this task.
 
-Create a folder named "YYYY-MM-DD Costco Receipt" (today's date, format like 2026-02-07 Costco Receipt) in the current working directory.
+Create a folder named "YYYY-MM-DD Costco Receipt" (today's date) in the current working directory.
 
 Inside that folder, write exactly these files:
 1) actual-values-table.md
@@ -21,7 +60,7 @@ Rules:
 - Keep Unit Price as listed on receipt.
 - Total Vol = RJ Vol + Therese Vol + Mom Vol.
 - For item rows in formula table:
-  - RJ $ = B* C
+  - RJ $ = B*C
   - Therese $ = B*D
   - Mom $ = B*E
   - Total Line $ = G+H+I
