@@ -19,7 +19,7 @@ Personal cloud operations base with specialized skills for investment banking an
 | Prep for IC presentation | `docs/skills/ib_toolkit/IC_PRESENTATION_PLAYBOOK.md` |
 | LP quarterly update | [IR Toolkit](#ir-toolkit-infrastructure-investor-relations) |
 | Fundraising deck | [IR Toolkit - Case Types](#ir-case-types) |
-| Prep for interview | [Spaced Repetition](#spaced_repetition) |
+| Prep for interview | [Interview Prep](#interview-prep) |
 | Track portfolio | [Net Worth Newsletter](#networth_newsletter) |
 | Market news | [Market Newsletter](#market_newsletter) |
 | Health metrics | [Health Dashboard](#health_dashboard) |
@@ -426,6 +426,30 @@ Generate, manage, and export Anki-ready flashcard decks for interview prep.
 
 **Docs:** `SKILL.md` (full reference), `QUICK_REFERENCE.md` (prompt-to-use-case mapping)
 
+### interview_prep
+**Location:** `src/ii_skills/interview_prep/`
+
+Structured interview preparation: company research, Q&A frameworks, cheat sheets, and Anki flashcards. All output to Tier 3 case workspace.
+
+**Capabilities (10 actions):**
+- Create interview prep workspace with company context and URLs
+- 9 prompt templates (T01-T09): Company Deep Dive, Deal Database, Industry Context, Stakeholder Analysis, Role Intelligence, Interview Q&A, Cheat Sheet, Flashcards, Why This Company?
+- Save web research, write sections, export Anki flashcards
+- Compile all sections into a single 10-page brief
+- Track progress across all sections
+
+**Commands:**
+```
+"Prepare me for an interview at Brookfield for an IR Associate role"
+"Load the company deep dive template"
+"Generate flashcards for my interview"
+"Compile the full interview brief"
+"How far along is the prep?"
+"List my interview preps"
+```
+
+**Docs:** `SKILL.md` (full reference), `QUICK_REFERENCE.md` (action mapping)
+
 ---
 
 ## Other Skills
@@ -545,6 +569,7 @@ ii-agent/
 │       │   ├── extractor.py         # PyMuPDF text extraction engine
 │       │   ├── patterns.py          # Financial regex patterns
 │       │   └── excel_writer.py      # Formatted Excel output
+│       ├── interview_prep/            # Structured interview preparation (10 actions)
 │       ├── spaced_repetition/        # Anki flashcard generation (8 actions)
 │       │   ├── prompts/             # 8 prompt templates (P01-P08)
 │       │   ├── decks/               # Generated decks (per interview)
@@ -598,6 +623,7 @@ ii-agent/
 | Recall company facts | "What do we know about ACME?" |
 | Organize deal files | "Create a deal folder for the Acme LBO" |
 | Extract CIM financials | "Extract financials from this CIM PDF" |
+| Prep for an interview | "Prepare me for an interview at Brookfield" |
 | Prep interview flashcards | "Generate flashcards for my interview on LBO" |
 | Export deck to Anki | "Export my interview deck to TSV" |
 | Study plan | "Build a study plan for my March 15 interview" |
@@ -610,7 +636,7 @@ ii-agent/
 *Base System: ii-agent (github.com/robertodbabaran/ii-agent)*
 *IB Toolkit: 67 modules (33 Excel + 34 Slides)*
 *IR Toolkit: 33 modules (Excel ↔ Slide pairs)*
-*Deal Support: deal_memory (10), output_organizer (7), pdf_extractor (6), spaced_repetition (8)*
+*Deal Support: deal_memory (10), output_organizer (7), pdf_extractor (6), spaced_repetition (8), interview_prep (10)*
 *Productivity: memory (14), task_management (12), connectors (16), productivity (5)*
 *Last Updated: 2026-02-06*
 
