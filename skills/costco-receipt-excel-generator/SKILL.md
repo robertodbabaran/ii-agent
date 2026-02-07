@@ -85,4 +85,4 @@ Before finalizing output:
 - Return both tables as markdown tables.
 - Immediately after the markdown tables, return the **Live Formula Table** again as CSV text so users can paste into Excel directly.
 - If split instructions are missing for any line, add an `UNASSIGNED` note after the tables listing unresolved items.
-- Provide a **standalone terminal prompt** using the template in `references/terminal-prompt-template.md` (do not mention other skills).
+- Provide a **standalone terminal prompt** from `references/terminal-prompt-template.md` and prefer the **Ultra-Compact Prompt** to minimize token usage (do not mention other skills).
