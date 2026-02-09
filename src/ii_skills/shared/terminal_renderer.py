@@ -510,7 +510,7 @@ class TerminalModelRenderer:
         entry_range = m.sensitivity_entry_range
 
         # Header
-        header = f"  {'Entry \\ Exit':>14}"
+        header = "  {:>14}".format("Entry \\ Exit")
         for xm in exit_range:
             header += f"  {_fmt_mult(xm):>10}"
 

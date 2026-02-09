@@ -30,32 +30,35 @@ except ImportError:
 
 
 # Style definitions
-STYLES = {
-    "header": {
-        "font": Font(bold=True, color="FFFFFF", size=11),
-        "fill": PatternFill(start_color="003366", end_color="003366", fill_type="solid"),
-        "alignment": Alignment(horizontal="center", vertical="center"),
-    },
-    "input": {
-        "font": Font(color="0000FF"),  # Blue for inputs
-    },
-    "assumption": {
-        "fill": PatternFill(start_color="E6F2FF", end_color="E6F2FF", fill_type="solid"),
-    },
-    "total": {
-        "font": Font(bold=True),
-        "border": Border(top=Side(style="thin"), bottom=Side(style="double")),
-    },
-    "percent": {
-        "number_format": "0.0%",
-    },
-    "currency": {
-        "number_format": '"$"#,##0.0',
-    },
-    "multiple": {
-        "number_format": "0.00x",
-    },
-}
+if OPENPYXL_AVAILABLE:
+    STYLES = {
+        "header": {
+            "font": Font(bold=True, color="FFFFFF", size=11),
+            "fill": PatternFill(start_color="003366", end_color="003366", fill_type="solid"),
+            "alignment": Alignment(horizontal="center", vertical="center"),
+        },
+        "input": {
+            "font": Font(color="0000FF"),  # Blue for inputs
+        },
+        "assumption": {
+            "fill": PatternFill(start_color="E6F2FF", end_color="E6F2FF", fill_type="solid"),
+        },
+        "total": {
+            "font": Font(bold=True),
+            "border": Border(top=Side(style="thin"), bottom=Side(style="double")),
+        },
+        "percent": {
+            "number_format": "0.0%",
+        },
+        "currency": {
+            "number_format": '"$"#,##0.0',
+        },
+        "multiple": {
+            "number_format": "0.00x",
+        },
+    }
+else:
+    STYLES = {}
 
 
 @dataclass
