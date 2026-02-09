@@ -10,6 +10,7 @@ Available Skills:
 - health_dashboard: WHOOP health metrics integration (recovery, sleep, strain)
 - networth_newsletter: Daily net worth tracking and portfolio analysis
 - daily_investment_newsletter: Canadian investment news aggregation
+- daily_macro_metals_newsletter: Daily macro source digest + silver/gold performance
 - memory: Long-term context and memory management (coming soon)
 """
 
