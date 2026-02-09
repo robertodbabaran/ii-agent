@@ -11,6 +11,7 @@ Available Skills:
 - networth_newsletter: Daily net worth tracking and portfolio analysis
 - daily_investment_newsletter: Canadian investment news aggregation
 - daily_macro_metals_newsletter: Daily macro source digest + silver/gold performance
+- jobs_applier_aihawk: Resume and cover letter tailoring for job applications
 - memory: Long-term context and memory management (coming soon)
 """
 

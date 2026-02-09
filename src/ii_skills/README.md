@@ -20,6 +20,7 @@ Skills are self-contained modules that provide specialized functionality. Each s
 | `networth_newsletter` | ✅ Active | Daily net worth tracking with multi-currency support |
 | `daily_investment_newsletter` | ✅ Active | Canadian investment news aggregation via Brave Search |
 | `daily_macro_metals_newsletter` | ✅ Active | Daily Substack/X source digest plus silver and gold performance snapshot |
+| `jobs_applier_aihawk` | ✅ Active | Resume and cover letter tailoring for job applications |
 | `memory` | 🔜 Planned | Long-term context and memory management |
 
 ## Architecture

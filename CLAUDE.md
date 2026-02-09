@@ -430,6 +430,32 @@ Generate, manage, and export Anki-ready flashcard decks for interview prep.
 
 ## Other Skills
 
+### jobs_applier_aihawk
+**Location:** `src/ii_skills/jobs_applier_aihawk/`
+
+Resume and cover letter tailoring engine. Takes a job description and generates tailored DOCX outputs from base templates.
+
+**Capabilities (5 actions):**
+- Tailor resume to match specific job descriptions
+- Tailor cover letters for specific companies and roles
+- Generate full application packages (resume + cover letter)
+- Analyze job descriptions (extract requirements, skills, keywords)
+- List available base documents
+
+**Base Documents (in `resources/`):**
+- `User Resume (Recruiter).docx`
+- `Sample Cover Letter (Generalist PE).docx`
+
+**Upstream Reference:** `external/Jobs_Applier_AI_Agent_AIHawk/` (AIHawk project)
+
+**Commands:**
+```
+"Tailor my resume for this job: [paste JD]"
+"Generate a cover letter for [Company] [Role]"
+"Full application package for this posting: [paste JD]"
+"Analyze this job description: [paste JD]"
+```
+
 ### networth_newsletter
 **Location:** `src/ii_skills/networth_newsletter/`
 
@@ -557,6 +583,14 @@ ii-agent/
 │       │   ├── task_graph.py        # DAG execution
 │       │   ├── run_budgets.py       # Execution limits
 │       │   └── event_schema.py      # Typed events
+│       ├── jobs_applier_aihawk/         # Resume/cover letter tailoring (5 actions)
+│       │   ├── __init__.py              # Skill class
+│       │   ├── tailor.py                # Tailoring engine (DOCX read/write, JD analysis)
+│       │   ├── config.py                # Configuration
+│       │   ├── SKILL.md                 # Documentation
+│       │   ├── resources/               # Base resume + cover letter (DOCX)
+│       │   ├── templates/               # Prompt templates
+│       │   └── output/                  # Generated tailored documents
 │       ├── networth_newsletter/
 │       ├── market_newsletter/
 │       ├── health_dashboard/
@@ -601,6 +635,8 @@ ii-agent/
 | Prep interview flashcards | "Generate flashcards for my interview on LBO" |
 | Export deck to Anki | "Export my interview deck to TSV" |
 | Study plan | "Build a study plan for my March 15 interview" |
+| Tailor resume for job | "Tailor my resume for this job: [paste JD]" |
+| Full application package | "Full application package for this posting: [paste JD]" |
 | Track portfolio | "Show my net worth breakdown" |
 | Market update | "What's happening in markets today?" |
 | Health check | "What's my HRV trend this week?" |

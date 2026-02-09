@@ -207,6 +207,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# External upstream repos (cloned, not committed)
+external/
+
 agent_logs.txt
 workspace/
 tmp/
