@@ -71,7 +71,7 @@ The most comprehensive skill - 67 modular analysis components for PE/IB deal wor
 
 | Document | Location | Purpose |
 |----------|----------|---------|
-| `CAPABILITIES.md` | `src/ii_skills/ib_toolkit/` | **Complete reference of all 67 modules** |
+| `CAPABILITIES.md` | `src/ii_skills/ib_toolkit/` | **Complete reference of all 84 modules** |
 | `LBO_CASE_GUIDE.md` | `src/ii_skills/ib_toolkit/` | **How to approach LBO cases by timeframe** |
 | `QUICK_REFERENCE.md` | `src/ii_skills/ib_toolkit/` | Request keywords → Module mapping |
 | `MODULE_INDEX.md` | `templates/reference_outputs/` | Template files with use cases |
@@ -79,11 +79,11 @@ The most comprehensive skill - 67 modular analysis components for PE/IB deal wor
 | `EXCEL_CONVENTIONS.md` | `docs/skills/ib_toolkit/` | **Color coding, number formats, model architecture** |
 | `SECTOR_PLAYBOOKS.md` | `docs/skills/ib_toolkit/` | **Sector-specific adjustments (SaaS, Healthcare, Industrial, Business Services, Consumer)** |
 | `IC_PRESENTATION_PLAYBOOK.md` | `docs/skills/ib_toolkit/` | **IC oral prep, Q&A frameworks, handling objections** |
-| `PROMPT_LIBRARY.md` | `docs/skills/ib_toolkit/` | 23 execution prompts (P00-P38) |
+| `PROMPT_LIBRARY.md` | `docs/skills/ib_toolkit/` | 31 execution prompts (P00-P38 + P-CFA-01 to P-CFA-08) |
 | `ORCHESTRATION_FRAMEWORK.md` | `docs/skills/ib_toolkit/` | Phased workflow with validation gates |
 | `BEST_PRACTICES.md` | `docs/skills/ib_toolkit/` | Slide & model standards from real case studies |
 | `CASE_INTAKE_PROTOCOL.md` | `docs/skills/ib_toolkit/` | 4-step intake with case type routing |
-| `SLIDE_TEMPLATES.md` | `docs/skills/ib_toolkit/` | 25+ ASCII slide layout diagrams |
+| `SLIDE_TEMPLATES.md` | `docs/skills/ib_toolkit/` | MOVED → `finance_professional/SLIDE_LIBRARY.md` (39+ templates) |
 
 ### IB Toolkit - LBO Models
 
@@ -142,7 +142,7 @@ Helper: `formula_builder.py` provides `FormulaBuilder` class with `ref()`, `shee
 
 ### IB Toolkit Complete Reference
 
-#### Module Categories (67 Total)
+#### Module Categories (84 Total)
 
 **Core LBO (9 Excel + 10 Slides)**
 | Module | Keywords |
@@ -205,6 +205,32 @@ Helper: `formula_builder.py` provides `FormulaBuilder` class with `ref()`, `shee
 | Tax Analysis | "tax", "NOL", "step-up" |
 | Control Premium | "control premium", "takeover" |
 
+**CFA Visual Slides (8 Slides Only)**
+| Module | Keywords |
+|--------|----------|
+| "What Must Be True" | "WMBT", "must be true", "conditions" |
+| Risk-Mitigant Pairing | "risk mitigant", "risk pairing" |
+| Valuation Blending | "valuation blend", "weighted valuation" |
+| Value Chain | "value chain", "horizontal flow" |
+| Risk Matrix | "risk matrix", "probability impact" |
+| TAM Funnel | "TAM", "market sizing", "funnel" |
+| PESTEL | "PESTEL", "macro analysis" |
+| Porter's Radar | "porter's radar", "five forces quantified" |
+
+**CFA Excel+Slide Pairs (3 Excel + 3 Slides)**
+| Module | Keywords |
+|--------|----------|
+| Tornado Sensitivity | "tornado", "single variable sensitivity" |
+| Football Field | "football field", "valuation range" |
+| SOTP Waterfall | "SOTP", "sum of the parts" |
+
+**CFA Valuation Engine (3 Excel Only)**
+| Module | Keywords |
+|--------|----------|
+| Enhanced WACC | "enhanced WACC", "3-method cost of debt", "multi-method beta" |
+| Geographic Terminal Growth | "geographic growth", "terminal growth", "GDP-weighted" |
+| Multi-Stage DCF | "multi-stage DCF", "3-stage DCF", "transition period" |
+
 ### IB Toolkit - Example Prompts
 
 **By Deal Type:**
@@ -232,6 +258,40 @@ Exit: "Create exit readiness assessment"
 - `Institutional_LBO_Template.xlsx` (17 sheets)
 - `Institutional_Deck_Template.pptx` (60+ slides)
 - Individual module templates (Excel + PPT for each)
+
+---
+
+## Finance Professional (Shared Skill)
+
+**Location:** `src/ii_skills/finance_professional/`
+
+Shared resources used by both IB Toolkit and IR Toolkit. Houses slide libraries, Excel conventions, case study standards, playbooks, and reference templates.
+
+### Quick Reference
+
+| Resource | File | Purpose |
+|----------|------|---------|
+| Slide Library | `SLIDE_LIBRARY.md` | 39+ ASCII slide templates (IC + equity research) |
+| Slide Design Guide | `SLIDE_DESIGN_GUIDE.md` | 27 professional templates with python-pptx code |
+| Excel Conventions | `EXCEL_CONVENTIONS.md` | Color coding, number formats, model architecture |
+| Case Study Standards | `CASE_STUDY_STANDARDS.md` | 10 universal standards for all case work |
+| Analysis Playbook | `ANALYSIS_PLAYBOOK.md` | DuPont, ROIC, Earnings Quality, Sector KPIs |
+| Valuation Playbook | `VALUATION_PLAYBOOK.md` | 10 methods (DCF, Monte Carlo, Reverse DCF, SOTP, DDM) |
+| Industry Playbook | `INDUSTRY_PLAYBOOK.md` | Porter's, PESTEL, Competitive Scoring, HHI, Value Chain |
+| Risk Playbook | `RISK_PLAYBOOK.md` | Risk matrix, Monte Carlo, tornado, scenario analysis |
+| ESG Playbook | `ESG_PLAYBOOK.md` | Governance scorecard, ESG-in-valuation, SDG alignment |
+| Wow Factor Playbook | `WOW_FACTOR_PLAYBOOK.md` | 20 differentiation techniques (primary research, reverse DCF) |
+| Development Roadmap | `ROADMAP.md` | 14 prioritized items (all DONE) |
+| Reference Templates | `templates/reference_outputs/` | 30 PPTX/XLSX institutional templates |
+
+### CFA Research Challenge Patterns (Source)
+Extracted from 10 years of Global Winners (2016-2025). 8 new prompts added to IB Toolkit (P-CFA-01 through P-CFA-08).
+
+**Previously at (now redirect stubs):**
+- `docs/skills/ib_toolkit/SLIDE_TEMPLATES.md` → `finance_professional/SLIDE_LIBRARY.md`
+- `docs/skills/ib_toolkit/EXCEL_CONVENTIONS.md` → `finance_professional/EXCEL_CONVENTIONS.md`
+- `docs/skills/SLIDE_DESIGN_GUIDE.md` → `finance_professional/SLIDE_DESIGN_GUIDE.md`
+- `docs/skills/CASE_STUDY_STANDARDS.md` → `finance_professional/CASE_STUDY_STANDARDS.md`
 
 ---
 
@@ -443,7 +503,7 @@ Resume and cover letter tailoring engine. Takes a job description and generates 
 - List available base documents
 
 **Base Documents (in `resources/`):**
-- `User Resume (Recruiter).docx`
+- `Resume (Recruiter).docx`
 - `Sample Cover Letter (Generalist PE).docx`
 
 **Upstream Reference:** `external/Jobs_Applier_AI_Agent_AIHawk/` (AIHawk project)
@@ -549,13 +609,13 @@ python src/ii_skills/health_dashboard/whoop_newsletter.py
 ii-agent/
 ├── src/
 │   └── ii_skills/
-│       ├── ib_toolkit/              # PE/IB deal analysis (67 modules)
+│       ├── ib_toolkit/              # PE/IB deal analysis (84 modules)
 │       │   ├── CAPABILITIES.md      # Full module reference
 │       │   ├── LBO_CASE_GUIDE.md    # Case approach guide
 │       │   ├── QUICK_REFERENCE.md   # Request → Module map
 │       │   └── templates/
 │       │       ├── excel_models/    # Excel generation code (smart formulas)
-│       │       │   ├── excel_modules.py   # 33 module functions (8 with live formulas)
+│       │       │   ├── excel_modules.py   # 39 module functions (14 with live formulas)
 │       │       │   └── formula_builder.py # Cell reference & formula helpers
 │       │       ├── case_study/      # Slide generation code
 │       │       └── reference_outputs/ # 30 template files
@@ -644,7 +704,7 @@ ii-agent/
 ---
 
 *Base System: ii-agent (github.com/robertodbabaran/ii-agent)*
-*IB Toolkit: 67 modules (33 Excel + 34 Slides)*
+*IB Toolkit: 84 modules (39 Excel + 45 Slides)*
 *IR Toolkit: 33 modules (Excel ↔ Slide pairs)*
 *Deal Support: deal_memory (10), output_organizer (7), pdf_extractor (6), spaced_repetition (8)*
-*Last Updated: 2026-02-05*
+*Last Updated: 2026-02-11*

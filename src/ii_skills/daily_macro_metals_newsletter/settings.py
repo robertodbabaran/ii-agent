@@ -10,7 +10,7 @@ class DailyMacroMetalsSettings:
     base_dir: Path = Path("Memory/daily_macro_metals_newsletter")
     gmail_address: str = os.getenv("GMAIL_ADDRESS", "")
     gmail_app_password: str = os.getenv("GMAIL_APP_PASSWORD", "")
-    default_recipient: str = os.getenv("RECIPIENT_EMAIL", "user@example.com")
+    default_recipient: str = os.getenv("RECIPIENT_EMAIL", "")
 
     # Data sources requested by user
     campbell_substack_feed: str = "https://campbellramble.substack.com/feed"

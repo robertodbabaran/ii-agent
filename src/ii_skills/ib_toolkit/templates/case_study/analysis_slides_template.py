@@ -9,7 +9,7 @@ Creates a 30-slide PowerPoint template covering:
 - Company Analysis (business overview, management)
 - Deal Analysis (investment thesis, risks, recommendation)
 
-Formatting: Matches User's BCI/Northleaf case study style
+Formatting: Matches BCI/Northleaf case study style
 - Font: Arial
 - Primary color: #00365B (dark navy)
 - Layout: 10" x 7.5" slides with consistent positioning

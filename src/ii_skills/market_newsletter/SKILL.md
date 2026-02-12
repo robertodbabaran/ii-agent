@@ -14,28 +14,19 @@ Automated daily newsletter that fetches market data and news for tracked assets,
 
 ## Tracked Assets
 
-### Precious Metals
-- Gold (GC=F)
-- Silver (SI=F)
+Configured via `config.py`. Supports any asset class — examples:
 
-### Base Metals
-- Copper (HG=F)
-- Alfamin Resources (AFM.V)
-- Global X Copper Producers (COPX)
+### Precious Metals
+- Gold (GC=F), Silver (SI=F)
+
+### Equities & ETFs
+- Any stock or ETF ticker supported by Yahoo Finance
 
 ### Crypto
-- Bitcoin
-- Ethereum
+- Bitcoin, Ethereum (via CoinGecko)
 
-### Semiconductors
-- Lumentum (LITE)
-- Coherent (COHR)
-- Lattice Semiconductor (LSCC)
-- Micron Technology (MU)
-- iShares Semiconductor ETF (SOXX)
-
-### Energy
-- Tourmaline Oil (TOU.TO)
+### Commodities
+- Copper (HG=F) and other futures
 
 ## Required Configuration
 | Config File | Description | Required |

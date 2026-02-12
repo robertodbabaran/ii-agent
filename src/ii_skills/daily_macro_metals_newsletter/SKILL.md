@@ -37,7 +37,7 @@ python src/ii_skills/daily_macro_metals_newsletter/generate_newsletter.py --send
 Environment variables for email sending:
 - `GMAIL_ADDRESS`
 - `GMAIL_APP_PASSWORD`
-- `RECIPIENT_EMAIL` (optional override; defaults to `user@example.com`)
+- `RECIPIENT_EMAIL` (required — set to your email address)
 
 ## Output
 Artifacts are written to:

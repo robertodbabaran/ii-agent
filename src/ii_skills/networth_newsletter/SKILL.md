@@ -75,27 +75,27 @@ Edit `config.py`:
 ```python
 MARKET_HOLDINGS = {
     "Gold": {
-        "quantity": 8.656,      # ounces
-        "cost_basis_usd": 15000,
+        "quantity": 1.0,          # ounces
+        "cost_basis_usd": 2000,
         "ticker": "GC=F",
         "type": "commodity",
         "unit": "oz"
     },
-    "Bitcoin": {
-        "quantity": 0.1,
-        "cost_basis_usd": 5000,
-        "ticker": "bitcoin",    # CoinGecko ID
-        "type": "crypto",
-        "unit": "BTC"
+    "Example Stock": {
+        "quantity": 100,
+        "cost_basis_usd": 10000,
+        "ticker": "AAPL",
+        "type": "stock",
+        "unit": "shares"
     },
 }
 
 CASH_ACCOUNTS = {
-    "Checking": {"balance": 7000, "currency": "CAD"},
+    "Checking": {"balance": 5000, "currency": "CAD"},
 }
 
 LIABILITIES = {
-    "Student Loans": {"balance": 25215.60, "currency": "CAD"},
+    "Example Loan": {"balance": 10000.00, "currency": "CAD"},
 }
 ```
 
