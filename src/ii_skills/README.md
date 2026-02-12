@@ -21,6 +21,7 @@ Skills are self-contained modules that provide specialized functionality. Each s
 | `daily_investment_newsletter` | ✅ Active | Canadian investment news aggregation via Brave Search |
 | `daily_macro_metals_newsletter` | ✅ Active | Daily Substack/X source digest plus silver and gold performance snapshot |
 | `jobs_applier_aihawk` | ✅ Active | Resume and cover letter tailoring for job applications |
+| `meeting_assistant` | ✅ Active | Meeting notes → action items, calendar follow-ups, Todoist tasks, summary emails |
 | `memory` | 🔜 Planned | Long-term context and memory management |
 
 ## Architecture
