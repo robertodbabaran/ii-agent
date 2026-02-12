@@ -22,6 +22,8 @@ Skills are self-contained modules that provide specialized functionality. Each s
 | `daily_macro_metals_newsletter` | ✅ Active | Daily Substack/X source digest plus silver and gold performance snapshot |
 | `jobs_applier_aihawk` | ✅ Active | Resume and cover letter tailoring for job applications |
 | `meeting_assistant` | ✅ Active | Meeting notes → action items, calendar follow-ups, Todoist tasks, summary emails |
+| `todoist_integration` | ✅ Active | Standalone Todoist task management — create, list, complete tasks from natural language, notes, or email |
+| `deal_memory` | ✅ Active | Persistent deal context + **relationship tracker** (contact CRUD, weekly email reminders) |
 | `memory` | 🔜 Planned | Long-term context and memory management |
 
 ## Architecture
@@ -166,5 +168,5 @@ Skills system adapted from the Claire Agent System, integrating:
 
 ---
 
-*Version: 1.0.0*
-*Last Updated: 2026-02-04*
+*Version: 1.1.0*
+*Last Updated: 2026-02-12*
