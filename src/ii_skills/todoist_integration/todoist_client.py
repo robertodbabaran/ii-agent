@@ -15,7 +15,7 @@ import requests
 logger = logging.getLogger(__name__)
 
 _TOKEN_PATH = Path(__file__).resolve().parents[3] / "Config" / "todoist-token.txt"
-_API_BASE = "https://api.todoist.com/rest/v2"
+_API_BASE = "https://api.todoist.com/api/v1"
 _TIMEOUT = 15
 
 

@@ -20,7 +20,7 @@ Get your token at: https://app.todoist.com/app/settings/integrations/developer
 
 ## API
 
-Uses **Todoist REST API v2** at `https://api.todoist.com/rest/v2/`.
+Uses **Todoist API v1** at `https://api.todoist.com/api/v1/`.
 
 ## Commands
 
