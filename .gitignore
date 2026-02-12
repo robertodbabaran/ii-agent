@@ -10,10 +10,18 @@ Config/
 *.json
 !package*.json
 !tsconfig.json
-!setting_mcp.json
 **/whoop_tokens.json
 **/networth_history.json
 **/*.log
+
+# Personal documents — NEVER commit
+**/*.docx
+**/*.pdf
+!docs/**/*.pdf
+
+# Sensitive skill directories (untracked, contain personal data)
+src/ii_skills/career_toolkit/resources/
+src/ii_skills/podcast_deep_dive/output/
 
 # ============================================================
 # TIER 3 — Case Workspaces (generated output, not committed)

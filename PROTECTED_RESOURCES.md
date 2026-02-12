@@ -14,11 +14,19 @@ They contain credentials and personal financial data that must never be committe
 
 ### Credential Configs (source of truth — runner scripts auto-restore from here)
 ```
-C:\Users\user\OneDrive\Desktop\RJ\II-Agent Credentials\credentials_backup.txt
-C:\Users\user\OneDrive\Desktop\RJ\II-Agent Credentials\configs\networth_config.py
-C:\Users\user\OneDrive\Desktop\RJ\II-Agent Credentials\configs\market_config.py
-C:\Users\user\OneDrive\Desktop\RJ\II-Agent Credentials\configs\whoop_config.py
+%USERPROFILE%\OneDrive\Desktop\RJ\II-Agent Credentials\credentials_backup.txt
+%USERPROFILE%\OneDrive\Desktop\RJ\II-Agent Credentials\configs\networth_config.py
+%USERPROFILE%\OneDrive\Desktop\RJ\II-Agent Credentials\configs\market_config.py
+%USERPROFILE%\OneDrive\Desktop\RJ\II-Agent Credentials\configs\whoop_config.py
 ```
+
+### Personal Documents (master copies — never committed to git)
+```
+%USERPROFILE%\OneDrive\Desktop\RJ\II-Agent Credentials\documents\Resume (Recruiter).docx
+%USERPROFILE%\OneDrive\Desktop\RJ\II-Agent Credentials\documents\Sample Cover Letter (Generalist PE).docx
+```
+Working copies live in `src/ii_skills/career_toolkit/resources/` (untracked by git).
+Vault copies are the OneDrive-synced backup.
 
 ### Repo Config Mirrors (auto-restored by runner .bat scripts — treat as read-only)
 ```
@@ -33,6 +41,7 @@ Config/                                       # Entire directory
 - Credentials are only stored in the Desktop vault, never committed to git
 - Net worth holdings and personal financial inputs live in the vault only
 - Repo config.py files are disposable mirrors — runner scripts copy from vault before each run
+- Personal DOCX files (resume, cover letter) are NEVER committed — .gitignore blocks *.docx
 - If vault files need updating, the agent must ask the user first and update BOTH the vault master AND the repo mirror
 
 ---
@@ -99,7 +108,7 @@ src/ii_skills/ir_toolkit/modules/                 # Module specs
 
 ### Historical Work Samples
 ```
-C:\Users\user\OneDrive\Desktop\RJ\Historical Work\   # TD Securities presentations, etc.
+%USERPROFILE%\OneDrive\Desktop\RJ\Historical Work\   # TD Securities presentations, etc.
 ```
 
 ### Rules
@@ -152,6 +161,65 @@ Before writing ANY file, the agent checks:
 | Tier 3 (active case workspace) | **PROCEED** — this is the working area |
 | New file in repo (not in any tier) | **PROCEED with caution** — confirm if ambiguous |
 | System files (CLAUDE.md, PROTECTED_RESOURCES.md) | **STOP** — ask user for explicit permission |
+
+---
+
+## Git Protection System
+
+Three layers prevent personal data from reaching public GitHub:
+
+### Layer 1: .gitignore
+Blocks sensitive file types from being tracked:
+- `**/config.py` — credential/holdings configs
+- `**/*.docx` — personal documents (resume, cover letter)
+- `**/*.log`, `**/networth_history.json` — runtime data
+- `output/`, `outputs/` — generated workbooks and reports
+
+### Layer 2: Pre-commit Hook (`.git/hooks/pre-commit`)
+Scans all staged files before every commit and **blocks** if it finds:
+- Personal email addresses
+- Full name
+- Hardcoded user paths (e.g. literal `C:\Users\<username>\`)
+- `.docx` binary files
+- Known real financial values
+
+To bypass in emergencies: `git commit --no-verify`
+
+### Layer 3: Sanitized Tracked Files
+Files that are tracked by git contain ONLY placeholder/generic values:
+
+| Tracked File | What's Sanitized | Real Data Lives In |
+|---|---|---|
+| `networth_newsletter/SKILL.md` | Example holdings (generic tickers, round numbers) | Vault `networth_config.py` |
+| `market_newsletter/SKILL.md` | Generic asset class examples | Vault `market_config.py` |
+| `daily_macro_metals_newsletter/settings.py` | Empty default recipient (uses env var) | `RECIPIENT_EMAIL` env var |
+| All `.bat` runner files | `%USERPROFILE%` + `%~dp0` (no hardcoded paths) | Paths resolve at runtime |
+| `CLAUDE.md`, `INTEGRATION_ANALYSIS.md` | No personal name or email | N/A |
+| `analysis_slides_template.py` | No personal name in comments | N/A |
+
+### History Rewrite (2026-02-12)
+Git history was rewritten with `git-filter-repo` to remove:
+- Resume and cover letter DOCX binary files from all commits
+- All instances of personal email addresses from file content and commit messages
+- All instances of full name from file content
+
+After rewriting, **force push is required** to sync the remote:
+```bash
+git push origin develop --force-with-lease
+```
+
+### Vault ↔ Repo File Map
+
+| Purpose | Vault (real data) | Repo (sanitized) |
+|---|---|---|
+| Net worth config | `Credentials\configs\networth_config.py` | `networth_newsletter/config.py` (untracked) |
+| Market config | `Credentials\configs\market_config.py` | `market_newsletter/config.py` (untracked) |
+| WHOOP config | `Credentials\configs\whoop_config.py` | `health_dashboard/config.py` (untracked) |
+| Resume | `Credentials\documents\*.docx` | `career_toolkit/resources/` (untracked) |
+| Cover letter | `Credentials\documents\*.docx` | `career_toolkit/resources/` (untracked) |
+
+**Workflow**: Vault files are auto-copied to repo at runtime by `.bat` runner scripts.
+The repo copies are disposable — they can be deleted and re-restored from the vault.
 
 ---
 
