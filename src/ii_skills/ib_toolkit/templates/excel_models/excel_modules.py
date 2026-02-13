@@ -194,6 +194,16 @@ MODEL_MODULES = {
         "comprehensive_version": "Bottom-up with implementation costs",
         "function": "add_synergy_model"
     },
+
+    # Canonical Data Repository
+    "source_index": {
+        "name": "Source Index",
+        "description": "Canonical repository of all metrics flowing into PowerPoint slides",
+        "quick_version": "Numbered metrics with source links",
+        "standard_version": "Full metrics with categories and slide references",
+        "comprehensive_version": "Complete audit trail with data vintage and validation",
+        "function": "add_source_index"
+    },
 }
 
 
@@ -5160,6 +5170,188 @@ class ExcelModelGenerator:
         ws.column_dimensions['A'].width = 25
         ws.column_dimensions['B'].width = 12
         ws.column_dimensions['C'].width = 12
+        return self
+
+    # ============================================================
+    # MODULE: SOURCE INDEX (Canonical Data Repository)
+    # ============================================================
+
+    def add_source_index(self, metrics: list = None) -> 'ExcelModelGenerator':
+        """Add Source Index tab — canonical repository of all metrics flowing into slides.
+
+        This tab is the SINGLE SOURCE OF TRUTH for every data point used in any
+        PowerPoint slide. All other tabs (including Powerpoint Outputs bridge) pull
+        from or validate against this index.
+
+        Columns:
+            A - # (sequential number)
+            B - Metric (name of the data point)
+            C - Value (the canonical value)
+            D - Source Link (URL or document reference for auditability)
+            E - Category (Transaction / Operational / Financial / Valuation / Industry / Sponsor)
+            F - Slide Reference (which slide(s) use this metric)
+            G - Data Vintage (FIXED / AT ENTRY / ACTUAL / DERIVED / MARKET / ILLUSTRATIVE)
+            H - Last Verified (date of last verification)
+
+        Args:
+            metrics: Optional list of dicts with keys matching columns above.
+                     If None, creates template with empty rows for manual population.
+        """
+        ws = self.wb.create_sheet("Source Index")
+        self.sheets_created.append("Source Index")
+
+        # --- GS Formatting Constants ---
+        GS_HEADER_FILL = PatternFill(start_color="002060", end_color="002060", fill_type="solid")
+        GS_HEADER_FONT = Font(name="Arial", size=10, color="FFFFFF", bold=True)
+        GS_INPUT_FONT = Font(name="Arial", size=10, color="0070C0")  # Blue for hardcoded
+        GS_CALC_FONT = Font(name="Arial", size=10, color="000000")
+        GS_LINK_FONT = Font(name="Arial", size=10, color="FF0000", underline="single")  # Red for external
+        GS_BODY_FONT = Font(name="Arial", size=10)
+        GS_BORDER = Border(
+            left=Side(style='thin', color="D9D9D9"),
+            right=Side(style='thin', color="D9D9D9"),
+            top=Side(style='thin', color="D9D9D9"),
+            bottom=Side(style='thin', color="D9D9D9")
+        )
+        CATEGORY_FILLS = {
+            "Transaction": PatternFill(start_color="E2EFDA", end_color="E2EFDA", fill_type="solid"),
+            "Operational": PatternFill(start_color="DDEBF7", end_color="DDEBF7", fill_type="solid"),
+            "Financial": PatternFill(start_color="FCE4D6", end_color="FCE4D6", fill_type="solid"),
+            "Valuation": PatternFill(start_color="E2D9F3", end_color="E2D9F3", fill_type="solid"),
+            "Industry": PatternFill(start_color="FFF2CC", end_color="FFF2CC", fill_type="solid"),
+            "Sponsor": PatternFill(start_color="D6DCE4", end_color="D6DCE4", fill_type="solid"),
+            "Pro Forma": PatternFill(start_color="F2DCDB", end_color="F2DCDB", fill_type="solid"),
+        }
+
+        # --- Sheet Setup (GS standards) ---
+        ws.sheet_view.showGridLines = False
+        ws.sheet_properties.pageSetUpPr = None
+        ws.page_setup.orientation = 'landscape'
+        ws.page_setup.fitToWidth = 1
+        ws.page_setup.fitToHeight = 0
+
+        # --- Title ---
+        ws.cell(row=1, column=1, value=f"{self.company_name} — Source Index")
+        ws.cell(row=1, column=1).font = Font(name="Arial", size=14, bold=True)
+        ws.cell(row=2, column=1, value="Canonical repository: ALL metrics flowing into slides originate here.")
+        ws.cell(row=2, column=1).font = Font(name="Arial", size=10, italic=True, color="666666")
+        ws.cell(row=3, column=1, value=f"Generated: {datetime.now().strftime('%B %d, %Y')}")
+        ws.cell(row=3, column=1).font = Font(name="Arial", size=9, color="999999")
+
+        # --- Column Headers (Row 5) ---
+        headers = [
+            ("#", 6),
+            ("Metric", 40),
+            ("Value", 18),
+            ("Source Link", 50),
+            ("Category", 16),
+            ("Slide Reference", 25),
+            ("Data Vintage", 16),
+            ("Last Verified", 14),
+        ]
+        header_row = 5
+        for col_idx, (header_name, width) in enumerate(headers, 1):
+            cell = ws.cell(row=header_row, column=col_idx, value=header_name)
+            cell.fill = GS_HEADER_FILL
+            cell.font = GS_HEADER_FONT
+            cell.alignment = Alignment(horizontal='center', vertical='center')
+            cell.border = GS_BORDER
+            ws.column_dimensions[get_column_letter(col_idx)].width = width
+
+        # --- Freeze panes below header ---
+        ws.freeze_panes = "A6"
+
+        # --- Auto-filter ---
+        ws.auto_filter.ref = f"A{header_row}:H{header_row}"
+
+        # --- Populate with metrics or template rows ---
+        if metrics:
+            for i, metric in enumerate(metrics, 1):
+                row = header_row + i
+                # Column A: Number
+                ws.cell(row=row, column=1, value=i)
+                ws.cell(row=row, column=1).font = GS_BODY_FONT
+                ws.cell(row=row, column=1).alignment = Alignment(horizontal='center')
+                ws.cell(row=row, column=1).border = GS_BORDER
+
+                # Column B: Metric
+                ws.cell(row=row, column=2, value=metric.get('metric', ''))
+                ws.cell(row=row, column=2).font = GS_BODY_FONT
+                ws.cell(row=row, column=2).border = GS_BORDER
+
+                # Column C: Value
+                val = metric.get('value', '')
+                ws.cell(row=row, column=3, value=val)
+                ws.cell(row=row, column=3).font = GS_INPUT_FONT  # Blue = hardcoded input
+                ws.cell(row=row, column=3).alignment = Alignment(horizontal='right')
+                ws.cell(row=row, column=3).border = GS_BORDER
+
+                # Column D: Source Link
+                source = metric.get('source', '')
+                ws.cell(row=row, column=4, value=source)
+                if source and (source.startswith('http://') or source.startswith('https://')):
+                    ws.cell(row=row, column=4).font = GS_LINK_FONT
+                    ws.cell(row=row, column=4).hyperlink = source
+                else:
+                    ws.cell(row=row, column=4).font = GS_BODY_FONT
+                ws.cell(row=row, column=4).border = GS_BORDER
+
+                # Column E: Category
+                category = metric.get('category', '')
+                ws.cell(row=row, column=5, value=category)
+                ws.cell(row=row, column=5).font = GS_BODY_FONT
+                ws.cell(row=row, column=5).alignment = Alignment(horizontal='center')
+                ws.cell(row=row, column=5).border = GS_BORDER
+                if category in CATEGORY_FILLS:
+                    ws.cell(row=row, column=5).fill = CATEGORY_FILLS[category]
+
+                # Column F: Slide Reference
+                ws.cell(row=row, column=6, value=metric.get('slide_ref', ''))
+                ws.cell(row=row, column=6).font = GS_BODY_FONT
+                ws.cell(row=row, column=6).border = GS_BORDER
+
+                # Column G: Data Vintage
+                ws.cell(row=row, column=7, value=metric.get('vintage', ''))
+                ws.cell(row=row, column=7).font = GS_BODY_FONT
+                ws.cell(row=row, column=7).alignment = Alignment(horizontal='center')
+                ws.cell(row=row, column=7).border = GS_BORDER
+
+                # Column H: Last Verified
+                ws.cell(row=row, column=8, value=metric.get('verified', datetime.now().strftime('%Y-%m-%d')))
+                ws.cell(row=row, column=8).font = GS_BODY_FONT
+                ws.cell(row=row, column=8).alignment = Alignment(horizontal='center')
+                ws.cell(row=row, column=8).border = GS_BORDER
+
+            # Update auto-filter range to include data
+            last_row = header_row + len(metrics)
+            ws.auto_filter.ref = f"A{header_row}:H{last_row}"
+        else:
+            # Template mode: create 50 empty placeholder rows with formatting
+            for i in range(1, 51):
+                row = header_row + i
+                ws.cell(row=row, column=1, value=i)
+                ws.cell(row=row, column=1).font = GS_BODY_FONT
+                ws.cell(row=row, column=1).alignment = Alignment(horizontal='center')
+                for col_idx in range(1, 9):
+                    ws.cell(row=row, column=col_idx).border = GS_BORDER
+                    if col_idx > 1:
+                        ws.cell(row=row, column=col_idx).font = GS_BODY_FONT
+            ws.auto_filter.ref = f"A{header_row}:H{header_row + 50}"
+
+        # --- Print area ---
+        last_data_row = header_row + (len(metrics) if metrics else 50)
+        ws.print_area = f"A1:H{last_data_row}"
+
+        # Track in cell_map for cross-sheet references
+        self.cell_map["source_index"] = {
+            "header_row": str(header_row),
+            "data_start_row": str(header_row + 1),
+            "metric_col": "B",
+            "value_col": "C",
+            "source_col": "D",
+            "category_col": "E",
+        }
+
         return self
 
     # ============================================================
