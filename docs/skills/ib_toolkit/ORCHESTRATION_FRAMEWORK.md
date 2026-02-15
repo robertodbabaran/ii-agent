@@ -25,7 +25,10 @@ This framework enables structured, multi-phase deal analysis using modular promp
 │ PHASE 2: MODELING (Hours 24-48)                                 │
 │ Revenue Build → Operating Model → Debt Schedule → Returns       │
 ├─────────────────────────────────────────────────────────────────┤
-│ PHASE 3: IC PREPARATION (Hours 48-72)                           │
+│ PHASE 2.5: CFA ENRICHMENT (Hours 48-60, 5+ day cases)          │
+│ DuPont → Reverse DCF → Earnings Quality → SOTP → Football Field │
+├─────────────────────────────────────────────────────────────────┤
+│ PHASE 3: IC PREPARATION (Hours 48/60-72)                        │
 │ Thesis → Risk Matrix → Scenarios → Deck Assembly → Q&A Prep     │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -63,6 +66,30 @@ This framework enables structured, multi-phase deal analysis using modular promp
 | P22 | Debt Schedule Builder | P21 | Sources/uses, amortization |
 | P23 | Returns Calculator | P21, P22 | MOIC/IRR sensitivity tables |
 | P24 | Scenario Engine | P23 | Bull/Base/Bear cases |
+
+### Phase 2.5: CFA Enrichment Prompts (5+ Day Cases)
+
+| ID | Prompt Name | Dependencies | Output |
+|----|-------------|--------------|--------|
+| P-CFA-01 | Reverse DCF Analysis | P21 (Operating Model) | Market-implied growth comparison |
+| P-CFA-02 | Monte Carlo Simulation | P23 (Returns) | Distribution histogram + stats |
+| P-CFA-03 | Risk Matrix (Quantified) | P14 (Red Flags) | 3×3 heat map with $ impacts |
+| P-CFA-04 | DuPont Decomposition | P21 (Operating Model) | ROE driver attribution |
+| P-CFA-05 | ESG Scorecard | P02 (Company Overview) | Governance + environmental scoring |
+| P-CFA-06 | Football Field Chart | P23 (Returns), P-CFA-01 | Valuation range comparison |
+| P-CFA-07 | Earnings Quality Analysis | P21 (Operating Model) | M-Score, Z-Score, F-Score dashboard |
+| P-CFA-08 | SOTP Valuation | P20 (Revenue Build) | Segment-level valuation waterfall |
+
+**Phase 2 → Phase 2.5 Gate:**
+- [ ] Core model passes Section 1-4 of MODEL_AUDIT_CHECKLIST.md
+- [ ] Operating model and returns analysis are stable (no more iteration expected)
+- [ ] Case timeframe is 5+ days (skip Phase 2.5 for 24-48 hour cases)
+
+**Phase 2.5 → Phase 3 Gate:**
+- [ ] All selected CFA modules generate without errors
+- [ ] CFA outputs are consistent with core model (same revenue, EBITDA, WACC assumptions)
+- [ ] Football field range brackets the base case valuation
+- [ ] Earnings quality scores are documented and interpreted
 
 ### Phase 3: IC Preparation Prompts
 
@@ -411,7 +438,19 @@ P00 ─┬─► P01 ─┬─► P02 ─┬─► P03 ─┬─► P10 ─┬�
      │        │                 │        │
      │        └─► P14           │        └─► P20 ─► P21 ─┬─► P22 ─► P23 ─► P24
      │                          │                        │
-     │                          └─► P12                  └─► P30 ─► P31 ─► P32 ─► P33 ─► P34 ─► P35
+     │                          └─► P12                  ├─► P-CFA-01 (Reverse DCF)
+     │                                                   ├─► P-CFA-04 (DuPont)
+     │                                                   ├─► P-CFA-07 (Earnings Quality)
+     │                                                   └─► P-CFA-08 (SOTP) ─┐
+     │                                                                         │
+     │   P14 ──────► P-CFA-03 (Risk Matrix)                                    │
+     │   P23 ──────► P-CFA-02 (Monte Carlo)                                    │
+     │   P23 + P-CFA-01 ──► P-CFA-06 (Football Field)                         │
+     │   P02 ──────► P-CFA-05 (ESG)                                            │
+     │                                                                         │
+     │   [Phase 2.5 complete] ─────────────────────────────────────────────────┘
+     │                          │
+     │                          └─► P30 ─► P31 ─► P32 ─► P33 ─► P34 ─► P35
      │
      └─► [State Management Thread]
 ```

@@ -14,8 +14,9 @@ A structured decision tree for approaching PE/LBO modeling cases based on availa
     24-HOUR       48-HOUR               5-DAY          7+ DAY
    (Screening)   (First Round)      (Final Round)  (Institutional)
         |             |                     |             |
-   4 Sheets      9 Sheets             17 Sheets     30 Sheets
+   4 Sheets      9 Sheets             17 Sheets     30+ Sheets
    ~25 Slides    ~25 Slides           60+ Slides    80+ Slides
+                                    + CFA optional  + CFA suite (11)
 ```
 
 ---
@@ -141,6 +142,7 @@ generate_full_deck(company, path)  # ~25 slides
 | **Day 2** | Debt & Returns | Debt Schedule, Working Capital, Returns, Sensitivity |
 | **Day 3** | Institutional | WACC, DCF, Scenario Analysis, Mgmt vs Buyer |
 | **Day 4** | Due Diligence | QoE, NWC Normalization, Customer Quality, Credit |
+| **Day 4-5** | CFA Enrichment (optional) | Tornado, Football Field, SOTP, Earnings Quality |
 | **Day 5** | Deck & Review | Full deck build, model audit, presentation prep |
 
 ### Full Module List (17 Sheets)
@@ -167,6 +169,12 @@ generate_full_deck(company, path)  # ~25 slides
 - NWC Normalization
 - Customer/Revenue Quality
 - Credit Analysis
+
+**CFA Enrichment (optional, 4 sheets)**
+- Tornado Sensitivity — `gen.add_tornado_sensitivity()`
+- Football Field — `gen.add_football_field()`
+- SOTP Valuation — `gen.add_sotp_valuation()` (multi-segment targets)
+- Earnings Quality — `gen.add_earnings_quality()`
 
 ### Generate With
 ```python
@@ -213,10 +221,23 @@ generate_institutional_deck(company, path)  # 60+ slides
 - Tax Analysis
 - Control Premium (if public target)
 
-### Full 30-Sheet Model Structure
+**CFA Enrichment (up to 11 sheets — distinct Phase 2.5)**
+- Reverse DCF — `gen.add_reverse_dcf()`
+- DuPont Analysis — `gen.add_dupont_analysis()`
+- ROIC Decomposition — `gen.add_roic_decomposition()`
+- DDM Valuation — `gen.add_ddm_valuation()`
+- Earnings Quality — `gen.add_earnings_quality()`
+- Tornado Sensitivity — `gen.add_tornado_sensitivity()`
+- Football Field — `gen.add_football_field()`
+- SOTP Valuation — `gen.add_sotp_valuation()`
+- Enhanced WACC — `gen.add_enhanced_wacc()`
+- Geographic Terminal Growth — `gen.add_geographic_terminal_growth()`
+- Multi-Stage DCF — `gen.add_multi_stage_dcf()`
+
+### Full Model Structure (30 Core + 11 CFA + Source Index)
 
 ```
-COMPREHENSIVE LBO MODEL (30 Sheets)
+COMPREHENSIVE LBO MODEL (30 Core Sheets)
 │
 ├── CORE LBO (9)
 │   ├── Sources & Uses
@@ -260,10 +281,26 @@ COMPREHENSIVE LBO MODEL (30 Sheets)
 │   ├── Exit Readiness
 │   └── Management Incentive Plan
 │
-└── SPECIALIZED (as needed)
-    ├── Rollup Model
-    ├── Tax Analysis
-    └── Control Premium
+├── SPECIALIZED (as needed)
+│   ├── Rollup Model
+│   ├── Tax Analysis
+│   └── Control Premium
+│
+├── CFA ENRICHMENT (up to 11, 7+ day cases)
+│   ├── Reverse DCF
+│   ├── DuPont Analysis
+│   ├── ROIC Decomposition
+│   ├── DDM Valuation
+│   ├── Earnings Quality
+│   ├── Tornado Sensitivity
+│   ├── Football Field
+│   ├── SOTP Valuation
+│   ├── Enhanced WACC
+│   ├── Geo Terminal Growth
+│   └── Multi-Stage DCF
+│
+└── SOURCE INDEX (1, always last)
+    └── Source Index (canonical data audit trail)
 ```
 
 ---

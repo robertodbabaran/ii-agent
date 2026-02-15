@@ -1549,6 +1549,339 @@ Paste the feedback or new information below:
 
 ---
 
+## Phase 2.5: CFA Enrichment Prompts
+
+### P-CFA-01: Reverse DCF Analysis
+
+```markdown
+# ROLE
+You are a CFA-trained equity research analyst running a reverse DCF.
+
+# CONTEXT
+Company: [COMPANY_NAME]
+Completed: P21 (Operating Model with projections)
+
+# OBJECTIVE
+Determine market-implied growth rate and compare to your forecast.
+
+# TASKS
+1. Take current share price / enterprise value as given
+2. Use WACC and terminal growth from the model
+3. Solve for implied revenue growth rate (goal-seek)
+4. Compare implied vs. forecast assumptions
+5. Generate Excel module: `add_reverse_dcf()`
+
+# OUTPUT FORMAT
+## Reverse DCF | [COMPANY_NAME]
+
+### Market-Implied Assumptions
+| Metric | Market Implies | Our Forecast | Delta |
+|--------|---------------|--------------|-------|
+| Revenue CAGR | X.X% | X.X% | +/-X.X% |
+| EBITDA Margin (terminal) | XX.X% | XX.X% | +/-X.X% |
+| FCF Growth | X.X% | X.X% | +/-X.X% |
+
+### 2-Way Table: WACC × Terminal Growth → Implied Revenue CAGR
+[5×5 grid]
+
+### Verdict
+[Market is pricing in X% growth; we forecast Y% → Z% mispricing]
+
+# VALIDATION
+- [ ] Implied growth rates are economically plausible
+- [ ] WACC and terminal growth match core model exactly
+- [ ] Comparison table sourced from operating model
+```
+
+---
+
+### P-CFA-02: Monte Carlo Simulation
+
+```markdown
+# ROLE
+You are a quantitative analyst building a Monte Carlo simulation.
+
+# CONTEXT
+Company: [COMPANY_NAME]
+Completed: P23 (Returns Calculator)
+
+# OBJECTIVE
+Run probability-weighted simulation on key model variables.
+
+# TASKS
+1. Identify 5-7 key variables to stress (revenue growth, margins, WACC, terminal growth, exit multiple)
+2. Assign distributions (Normal for most, Lognormal for impairments)
+3. Run 10,000+ iterations using numpy
+4. Output histogram, percentiles, probability of target returns
+5. Report: "X% probability of achieving Y% IRR"
+
+# OUTPUT FORMAT
+## Monte Carlo Simulation | [COMPANY_NAME]
+
+### Variable Distributions
+| Variable | Distribution | Mean | Std Dev | Source |
+|----------|-------------|------|---------|--------|
+| Revenue Growth | Normal | X% | X% | Historical volatility |
+
+### Results (10,000 iterations)
+| Metric | Mean | Median | Std Dev | 10th %ile | 90th %ile |
+|--------|------|--------|---------|-----------|-----------|
+
+### Probability Analysis
+- P(IRR > 20%) = XX%
+- P(MOIC > 2.0x) = XX%
+- P(Capital Loss) = XX%
+
+# VALIDATION
+- [ ] Input distributions are justified
+- [ ] Sufficient iterations for convergence
+- [ ] Results consistent with scenario analysis
+```
+
+---
+
+### P-CFA-03: Risk Matrix with Quantified Impacts
+
+```markdown
+# ROLE
+You are a PE associate creating a quantified risk assessment.
+
+# CONTEXT
+Company: [COMPANY_NAME]
+Completed: P14 (Red Flag Scanner)
+
+# OBJECTIVE
+Create risk matrix with dollar-denominated valuation impacts.
+
+# TASKS
+1. Identify 8-12 risks across Market/Operational/Financial/Regulatory
+2. Score probability (1-3) and impact (1-3)
+3. Quantify each risk in dollars or percentage of valuation
+4. Generate slide: `add_risk_matrix_slide()`
+
+# OUTPUT FORMAT
+## Risk Matrix | [COMPANY_NAME]
+
+### Risk Register
+| # | Risk | Category | Prob | Impact | $ Impact | Mitigant | Residual |
+|---|------|----------|------|--------|----------|----------|----------|
+
+### 3×3 Heat Map (generated via `add_risk_matrix_slide()`)
+
+# VALIDATION
+- [ ] All P14 red flags included
+- [ ] Each risk has quantified $ impact
+- [ ] Mitigants are specific, not generic
+```
+
+---
+
+### P-CFA-04: DuPont Decomposition
+
+```markdown
+# ROLE
+You are a CFA-trained analyst decomposing return on equity.
+
+# CONTEXT
+Company: [COMPANY_NAME]
+Completed: P21 (Operating Model)
+
+# OBJECTIVE
+Run 3-component and 5-component DuPont analysis with trend attribution.
+
+# TASKS
+1. Calculate 3-component DuPont: Net Margin × Asset Turnover × Equity Multiplier
+2. Calculate 5-component extended DuPont (add tax burden and interest burden)
+3. Track each component over historical + projected periods
+4. Attribute ROE changes to specific drivers
+5. Generate Excel module: `add_dupont_analysis()`
+
+# OUTPUT FORMAT
+## DuPont Analysis | [COMPANY_NAME]
+
+### 3-Component DuPont
+| Component | 2022A | 2023A | 2024A | 2025E | 2026E |
+|-----------|-------|-------|-------|-------|-------|
+| Net Profit Margin | XX% | XX% | XX% | XX% | XX% |
+| Asset Turnover | X.Xx | X.Xx | X.Xx | X.Xx | X.Xx |
+| Equity Multiplier | X.Xx | X.Xx | X.Xx | X.Xx | X.Xx |
+| **ROE** | **XX%** | **XX%** | **XX%** | **XX%** | **XX%** |
+
+### Driver Attribution
+[Which component is driving ROE change?]
+
+# VALIDATION
+- [ ] ROE = NM × AT × EM (verifiable identity)
+- [ ] Historical values match reported ROE
+- [ ] Attribution is clear and actionable
+```
+
+---
+
+### P-CFA-05: ESG Scorecard
+
+```markdown
+# ROLE
+You are an ESG analyst building a governance and sustainability assessment.
+
+# CONTEXT
+Company: [COMPANY_NAME]
+Completed: P02 (Company Overview)
+
+# OBJECTIVE
+Create ESG scorecard covering governance, environmental, and social metrics.
+
+# TASKS
+1. Score governance (board independence, committee structure, compensation)
+2. Score environmental (emissions, targets, TCFD alignment)
+3. Score social (TRIR, diversity, community)
+4. Compare to sector benchmarks
+5. Assess ESG valuation premium/discount
+
+# OUTPUT FORMAT
+## ESG Scorecard | [COMPANY_NAME]
+
+### Overall Score
+| Dimension | Score (1-5) | Weight | Weighted |
+|-----------|-------------|--------|----------|
+| Governance | X | 40% | X.X |
+| Environmental | X | 30% | X.X |
+| Social | X | 30% | X.X |
+| **Total** | — | 100% | **X.X/5** |
+
+### Valuation Implication
+[Premium/discount to peers based on ESG positioning]
+
+# VALIDATION
+- [ ] All metrics sourced from public filings
+- [ ] Scores benchmarked vs sector peers
+- [ ] Valuation impact is quantified
+```
+
+---
+
+### P-CFA-06: Football Field Chart
+
+```markdown
+# ROLE
+You are a PE associate creating a valuation summary.
+
+# CONTEXT
+Company: [COMPANY_NAME]
+Completed: P23 (Returns), P-CFA-01 (Reverse DCF)
+
+# OBJECTIVE
+Create football field valuation range chart across all methodologies.
+
+# TASKS
+1. Compile valuation ranges from each method (DCF, Comps, LBO, SOTP, DDM)
+2. Add 52-week trading range and broker consensus
+3. Calculate weighted blended target
+4. Generate Excel module: `add_football_field()`
+5. Generate slide: `add_football_field_slide()`
+
+# OUTPUT FORMAT
+## Football Field | [COMPANY_NAME]
+
+### Valuation Ranges
+| Method | Low | Mid | High | Weight |
+|--------|-----|-----|------|--------|
+| DCF (FCFF) | $XX | $XX | $XX | XX% |
+| Trading Comps | $XX | $XX | $XX | XX% |
+| Transaction Comps | $XX | $XX | $XX | XX% |
+| LBO Floor | $XX | $XX | $XX | — |
+| **Blended Target** | — | **$XX** | — | 100% |
+
+# VALIDATION
+- [ ] All methods included and sourced
+- [ ] Ranges are consistent with underlying analysis
+- [ ] Current price marked on chart
+```
+
+---
+
+### P-CFA-07: Earnings Quality Analysis
+
+```markdown
+# ROLE
+You are a forensic accounting analyst assessing earnings quality.
+
+# CONTEXT
+Company: [COMPANY_NAME]
+Completed: P21 (Operating Model)
+
+# OBJECTIVE
+Calculate Beneish M-Score, Altman Z-Score, and Piotroski F-Score.
+
+# TASKS
+1. Calculate Beneish M-Score (8 variables → manipulation probability)
+2. Calculate Altman Z-Score (5 variables → bankruptcy probability)
+3. Calculate Piotroski F-Score (9 binary tests → financial health)
+4. Interpret each score with conditional formatting
+5. Generate Excel module: `add_earnings_quality()`
+
+# OUTPUT FORMAT
+## Earnings Quality Dashboard | [COMPANY_NAME]
+
+### Score Summary
+| Score | Value | Threshold | Status |
+|-------|-------|-----------|--------|
+| Beneish M-Score | X.XX | > -1.78 suspicious | ✅/⚠️/🔴 |
+| Altman Z-Score | X.XX | < 1.81 distress | ✅/⚠️/🔴 |
+| Piotroski F-Score | X/9 | ≥ 7 strong | ✅/⚠️/🔴 |
+
+### Component Details
+[Full component breakdown for each score]
+
+# VALIDATION
+- [ ] Input values sourced from audited financials
+- [ ] Formulas match published academic definitions
+- [ ] Interpretation follows standard thresholds
+```
+
+---
+
+### P-CFA-08: SOTP Valuation
+
+```markdown
+# ROLE
+You are a PE associate building a sum-of-the-parts valuation.
+
+# CONTEXT
+Company: [COMPANY_NAME]
+Completed: P20 (Revenue Build — segment-level)
+
+# OBJECTIVE
+Value each business segment using the most appropriate methodology.
+
+# TASKS
+1. Identify 2-5 separable business segments
+2. Select valuation method per segment (DCF, EV/EBITDA, P/FFO, project NPV)
+3. Value each segment independently
+4. Sum to enterprise value, apply conglomerate discount if warranted
+5. Generate Excel module: `add_sotp_valuation()`
+6. Generate slide: `add_sotp_waterfall_slide()`
+
+# OUTPUT FORMAT
+## SOTP Valuation | [COMPANY_NAME]
+
+### Segment Valuation
+| Segment | Revenue | EBITDA | Method | Multiple | EV |
+|---------|---------|--------|--------|----------|-----|
+| [Seg 1] | $XXM | $XXM | EV/EBITDA | X.Xx | $XXM |
+| [Seg 2] | $XXM | $XXM | DCF | — | $XXM |
+| **Sum** | **$XXM** | **$XXM** | — | — | **$XXM** |
+| Conglomerate Discount | — | — | — | (X%) | ($XXM) |
+| **Adjusted EV** | — | — | — | — | **$XXM** |
+
+# VALIDATION
+- [ ] Segment revenues sum to consolidated revenue
+- [ ] Each segment's comparable universe is distinct
+- [ ] Conglomerate discount is justified (or absence justified)
+```
+
+---
+
 ## Appendix: Quick Reference
 
 ### Prompt Dependency Map
@@ -1573,6 +1906,16 @@ P00 → P01 → P02 → P03 → P04
                                       ↓
                                      P33 → P34 → P35
 
+CFA ENRICHMENT PROMPTS (Phase 2.5, 5+ day cases):
+P-CFA-01 (Reverse DCF)      ← Requires: P21
+P-CFA-02 (Monte Carlo)      ← Requires: P23
+P-CFA-03 (Risk Matrix)      ← Requires: P14
+P-CFA-04 (DuPont)           ← Requires: P21
+P-CFA-05 (ESG)              ← Requires: P02
+P-CFA-06 (Football Field)   ← Requires: P23, P-CFA-01
+P-CFA-07 (Earnings Quality) ← Requires: P21
+P-CFA-08 (SOTP)             ← Requires: P20
+
 STANDALONE PROMPTS (can run after core phases):
 P36 (IC Memo)          ← Requires: P30-P32 + all model tabs
 P37 (Mgmt Deck Scan)   ← Requires: P01 (Material Inventory)
@@ -1585,6 +1928,7 @@ P38 (Model Iteration)  ← Requires: Any completed model version
 | 0: Foundation | P00-P04 | 4-8 hours | Company understanding |
 | 1: Analysis | P10-P14 | 8-16 hours | Due diligence insights |
 | 2: Modeling | P20-P24 | 8-16 hours | Financial projections |
+| 2.5: CFA Enrichment | P-CFA-01 to 08 | 4-8 hours | Advanced analytics (5+ day cases) |
 | 3: IC Prep | P30-P35 | 8-16 hours | IC materials |
 | Extended | P36-P38 | As needed | Memo, mgmt analysis, iterations |
 
@@ -1601,6 +1945,6 @@ P38 (Model Iteration)  ← Requires: Any completed model version
 
 ---
 
-*Prompt Library Version: 1.1.0*
-*Total Prompts: 23 (Core Set: 20 + Extended: 3)*
+*Prompt Library Version: 2.0.0*
+*Total Prompts: 31 (Core Set: 20 + Extended: 3 + CFA Enrichment: 8)*
 *Full Library: 52 prompts available in extended version*

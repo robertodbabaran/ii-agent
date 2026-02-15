@@ -11,7 +11,8 @@
 |-------|---------------|
 | After building core model (Phase 2) | Sections 1-3 |
 | After adding institutional modules | Sections 1-4 |
-| Before IC submission | Full checklist (Sections 1-6) |
+| After CFA enrichment (Phase 2.5) | Sections 1-4 + Section 7 |
+| Before IC submission | Full checklist (Sections 1-7) |
 | After model feedback/updates | Section 6 + any modified sections |
 
 ---
@@ -261,6 +262,41 @@ Run this 5-minute check before sending any model:
 
 ---
 
+## Section 7: CFA Module Validation (12 Checks)
+
+*Run after Phase 2.5 CFA Enrichment. Only check modules that were generated.*
+
+### 7.1 DuPont & ROIC Modules
+
+- [ ] **DuPont identity holds**: Net Margin × Asset Turnover × Equity Multiplier = ROE (verify ±0.01%)
+- [ ] **ROIC vs WACC spread calculated**: ROIC − WACC = Economic Profit spread (positive = value creation)
+- [ ] **Historical values match reported**: DuPont ROE ties to company-reported ROE for all historical periods
+
+### 7.2 Earnings Quality Scores
+
+- [ ] **Beneish M-Score formula correct**: All 8 component variables use published academic definitions
+- [ ] **Altman Z-Score formula correct**: All 5 variables match Altman (1968) specification
+- [ ] **Piotroski F-Score counts correctly**: 9 binary tests, score ranges 0-9
+
+### 7.3 Valuation Cross-Checks
+
+- [ ] **Reverse DCF implied growth is plausible**: Market-implied growth rate falls within industry range (not negative or >30%)
+- [ ] **DDM terminal value reasonable**: Terminal value as % of total DDM value < 90%
+- [ ] **Football field methods consistent**: All valuation ranges overlap or gaps are explained
+- [ ] **SOTP segment values sum correctly**: Sum of segment EVs − conglomerate discount + cash − debt = equity value
+
+### 7.4 Advanced WACC & DCF
+
+- [ ] **Enhanced WACC within reasonable range**: WACC falls between 6-15% for typical corporates; deviation explained
+- [ ] **Multi-stage DCF growth decay is smooth**: No abrupt jumps between stages; terminal growth ≤ long-term GDP growth
+
+### 7.5 Source Index Completeness (if present)
+
+- [ ] **Every metric in slides has a Source Index entry**: Cross-reference slide data points to Source Index tab
+- [ ] **Source links are valid**: Each metric traces back to a specific document/page
+
+---
+
 *See also: `EXCEL_CONVENTIONS.md` for formatting standards, `LBO_CASE_GUIDE.md` for model quality checklist*
 
-*Version: 1.0.0 | Last Updated: February 2026*
+*Version: 2.0.0 | Last Updated: February 2026*

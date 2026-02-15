@@ -155,18 +155,29 @@ Select ONLY the modules needed for your case type:
 │ □ M13: Risk Assessment & Mitigants                                  │
 │ □ M14: Due Diligence Questions                                      │
 └─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ CFA ENRICHMENT MODULES (5+ day cases, optional)                     │
+├─────────────────────────────────────────────────────────────────────┤
+│ □ M15: DuPont / ROIC Decomposition                                  │
+│ □ M16: Reverse DCF / Market-Implied Analysis                        │
+│ □ M17: Earnings Quality (M-Score, Z-Score, F-Score)                 │
+│ □ M18: Football Field / Valuation Range Chart                       │
+│ □ M19: SOTP Valuation (multi-segment companies)                     │
+│ □ M20: Enhanced WACC / Multi-Stage DCF                              │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Module Selection by Case Type
 
-| Case Type | Required Modules | Optional Modules |
-|-----------|------------------|------------------|
-| A. Model Build | M4, M5, M8, M9, M10 | M6, M7, M11 |
-| B. Model Analysis | M1, M4, M10, M12, M13 | M2, M11 |
-| C. Investment Memo | M1, M2, M12, M13 | M3, M7 |
-| D. Deal Structuring | M8, M9, M10, M11 | M6 |
-| E. Due Diligence | M1, M2, M3, M14 | M4, M6 |
-| F. Valuation | M4, M5, M7 | M1, M10 |
+| Case Type | Required Modules | Optional Modules | CFA Enrichment (5+ day) |
+|-----------|------------------|------------------|------------------------|
+| A. Model Build | M4, M5, M8, M9, M10 | M6, M7, M11 | — |
+| B. Model Analysis | M1, M4, M10, M12, M13 | M2, M11 | M15, M16, M17, M18 |
+| C. Investment Memo | M1, M2, M12, M13 | M3, M7 | M16, M18, M19 |
+| D. Deal Structuring | M8, M9, M10, M11 | M6 | — |
+| E. Due Diligence | M1, M2, M3, M14 | M4, M6 | — |
+| F. Valuation | M4, M5, M7 | M1, M10 | M15, M16, M17, M18, M19, M20 |
 
 ---
 

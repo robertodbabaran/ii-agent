@@ -109,6 +109,28 @@ You can ask for any of the following and the agent will generate the appropriate
 | **Tax Analysis** | "tax", "NOL", "step-up", "338(h)(10)" | `add_tax_analysis()` | Tax shields and effective rate |
 | **Control Premium** | "control premium", "takeover premium" | `add_control_premium_analysis()` | Premium analysis vs precedents |
 
+### CFA Valuation Modules (5)
+
+| Module | Request Keywords | Function | Output |
+|--------|-----------------|----------|--------|
+| **Reverse DCF** | "reverse DCF", "implied growth" | `add_reverse_dcf()` | Market-implied growth comparison |
+| **DuPont Analysis** | "DuPont", "ROE decomposition" | `add_dupont_analysis()` | 3-component and 5-component ROE |
+| **ROIC Decomposition** | "ROIC", "economic profit", "invested capital" | `add_roic_decomposition()` | ROIC vs WACC spread |
+| **DDM Valuation** | "DDM", "dividend discount" | `add_ddm_valuation()` | Two-stage and H-model DDM |
+| **Earnings Quality** | "earnings quality", "M-Score", "Z-Score", "F-Score" | `add_earnings_quality()` | Beneish/Altman/Piotroski dashboard |
+
+### CFA Advanced Modules (7)
+
+| Module | Request Keywords | Function | Output |
+|--------|-----------------|----------|--------|
+| **Tornado Sensitivity** | "tornado", "single variable sensitivity" | `add_tornado_sensitivity()` | IRR-ranked sensitivity data |
+| **Football Field** | "football field", "valuation range" | `add_football_field()` | Multi-method range comparison |
+| **SOTP Valuation** | "SOTP", "sum of the parts" | `add_sotp_valuation()` | Segment-level valuation |
+| **Enhanced WACC** | "enhanced WACC", "multi-method beta" | `add_enhanced_wacc()` | 3-method Kd, CRP, size premium |
+| **Geographic Terminal Growth** | "geographic growth", "GDP-weighted" | `add_geographic_terminal_growth()` | GDP-weighted terminal rate |
+| **Multi-Stage DCF** | "multi-stage DCF", "3-stage DCF" | `add_multi_stage_dcf()` | 3-stage with transition period |
+| **Source Index** | "source index", "data repository" | `add_source_index()` | Canonical metric audit trail |
+
 ---
 
 ## PowerPoint Slide Modules
@@ -126,7 +148,6 @@ You can ask for any of the following and the agent will generate the appropriate
 | **Management Analysis** | "management", "team", "leadership" | `add_management_analysis()` | 2 |
 | **Investment Thesis** | "thesis", "recommendation", "risks" | `add_investment_thesis()` | 3 |
 | **Company Overview** | "overview", "business description" | `add_company_overview()` | 3 |
-| **Due Diligence** | "DD findings", "diligence summary" | `add_due_diligence()` | 3 |
 
 ### Institutional Slides
 
@@ -181,6 +202,27 @@ You can ask for any of the following and the agent will generate the appropriate
 | **Rollup Model** | `add_rollup_slides()` | 3 |
 | **Tax Analysis** | `add_tax_slides()` | 2 |
 | **Control Premium** | `add_control_premium_slides()` | 2 |
+
+### CFA Visual Slides (8)
+
+| Module | Request Keywords | Function | Slides |
+|--------|-----------------|----------|--------|
+| **What Must Be True** | "WMBT", "must be true" | `add_wmbt_slide()` | 1 |
+| **Risk-Mitigant Pairing** | "risk mitigant", "risk pairing" | `add_risk_mitigant_slide()` | 1 |
+| **Valuation Blending** | "valuation blend", "weighted valuation" | `add_valuation_blending_slide()` | 1 |
+| **Value Chain** | "value chain", "horizontal flow" | `add_value_chain_slide()` | 1 |
+| **Risk Matrix** | "risk matrix", "probability impact" | `add_risk_matrix_slide()` | 1 |
+| **TAM Funnel** | "TAM", "market sizing funnel" | `add_tam_funnel_slide()` | 1 |
+| **PESTEL** | "PESTEL", "macro analysis" | `add_pestel_slide()` | 1 |
+| **Porter's Radar** | "Porter's radar", "five forces quantified" | `add_porters_radar_slide()` | 1 |
+
+### CFA Excel+Slide Pairs (3)
+
+| Module | Excel Function | Slide Function | Output |
+|--------|---------------|----------------|--------|
+| **Tornado Sensitivity** | `add_tornado_sensitivity()` | `add_tornado_sensitivity_slide()` | Ranked single-variable sensitivity |
+| **Football Field** | `add_football_field()` | `add_football_field_slide()` | Valuation range chart |
+| **SOTP Waterfall** | `add_sotp_valuation()` | `add_sotp_waterfall_slide()` | Sum-of-the-parts waterfall |
 
 ---
 
@@ -471,13 +513,17 @@ Specify where to save:
 
 | Category | Excel Modules | Slide Modules | Total |
 |----------|--------------|---------------|-------|
-| Core LBO | 9 | 10 | 19 |
+| Core LBO | 9 | 9 | 18 |
 | Institutional | 4 | 4 | 8 |
 | Due Diligence | 4 | 4 | 8 |
 | Capital Structure | 4 | 4 | 8 |
 | Transaction Structure | 5 | 5 | 10 |
 | Value Creation | 4 | 4 | 8 |
 | Specialized | 3 | 3 | 6 |
-| **Total** | **33** | **34** | **67** |
+| CFA Valuation | 5 | — | 5 |
+| CFA Advanced | 7 | — | 7 |
+| CFA Visual Slides | — | 8 | 8 |
+| CFA Excel+Slide Pairs | 3 | 3 | 6 |
+| **Total** | **48** | **44** | **92** |
 
-**Total Capabilities:** 67 individual analysis modules available for modular generation.
+**Total Capabilities:** 92 individual analysis modules available for modular generation.

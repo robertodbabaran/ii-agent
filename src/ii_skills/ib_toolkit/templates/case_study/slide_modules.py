@@ -28,6 +28,7 @@ from datetime import datetime
 from dataclasses import dataclass, field
 from typing import List, Dict, Optional, Any
 import os
+import math
 
 # ============================================================
 # STYLE CONSTANTS (Roberto's BCI/Northleaf style)
@@ -116,14 +117,6 @@ SLIDE_MODULES = {
         "description": "Business description, revenue breakdown, customer analysis, operations",
         "slides": ["business_description", "revenue_breakdown", "customer_analysis", "operations"],
         "function": "add_company_overview"
-    },
-
-    # Due Diligence
-    "due_diligence": {
-        "name": "Due Diligence Summary",
-        "description": "DD findings, quality of earnings, key issues, next steps",
-        "slides": ["dd_overview", "qoe_summary", "key_findings", "open_items"],
-        "function": "add_due_diligence"
     },
 
     # ============================================================
@@ -340,6 +333,102 @@ SLIDE_MODULES = {
         "description": "Premium to unaffected, historical premiums",
         "slides": ["premium_analysis", "precedent_premiums"],
         "function": "add_control_premium_slides"
+    },
+
+    # ============================================================
+    # CFA VISUAL SLIDES (Research Challenge Patterns)
+    # ============================================================
+
+    # What Must Be True
+    "wmbt": {
+        "name": "What Must Be True (WMBT)",
+        "description": "Investment thesis conditions with thresholds, status, and consequences",
+        "slides": ["wmbt_checklist"],
+        "function": "add_wmbt_slide"
+    },
+
+    # Risk-Mitigant Pairing
+    "risk_mitigant": {
+        "name": "Risk-Mitigant Pairing",
+        "description": "Risk assessment with probability, impact, mitigant, and residual risk",
+        "slides": ["risk_mitigant_table"],
+        "function": "add_risk_mitigant_slide"
+    },
+
+    # Valuation Blending
+    "valuation_blending": {
+        "name": "Valuation Blending",
+        "description": "Weighted valuation across methods with blended target price",
+        "slides": ["valuation_blend_table", "valuation_blend_summary"],
+        "function": "add_valuation_blending_slide"
+    },
+
+    # Value Chain
+    "value_chain": {
+        "name": "Value Chain Analysis",
+        "description": "Horizontal value chain flow with company positioning highlighted",
+        "slides": ["value_chain_flow"],
+        "function": "add_value_chain_slide"
+    },
+
+    # Risk Matrix
+    "risk_matrix": {
+        "name": "Risk Matrix",
+        "description": "3x3 probability-impact matrix with color-coded risk categories",
+        "slides": ["risk_matrix_grid"],
+        "function": "add_risk_matrix_slide"
+    },
+
+    # TAM Funnel
+    "tam_funnel": {
+        "name": "TAM/SAM/SOM Funnel",
+        "description": "Market sizing funnel with descending-width bars and sources",
+        "slides": ["tam_funnel_chart"],
+        "function": "add_tam_funnel_slide"
+    },
+
+    # PESTEL
+    "pestel": {
+        "name": "PESTEL Analysis",
+        "description": "6-factor macro analysis grid (Political, Economic, Social, Technological, Environmental, Legal)",
+        "slides": ["pestel_grid"],
+        "function": "add_pestel_slide"
+    },
+
+    # Porter's Radar
+    "porters_radar": {
+        "name": "Porter's Five Forces Radar",
+        "description": "Quantified pentagon with force ratings (1-5 scale)",
+        "slides": ["porters_radar_chart"],
+        "function": "add_porters_radar_slide"
+    },
+
+    # ============================================================
+    # CFA EXCEL+SLIDE PAIRS
+    # ============================================================
+
+    # Tornado Sensitivity
+    "tornado_sensitivity": {
+        "name": "Tornado Sensitivity Chart",
+        "description": "Single-variable sensitivity with horizontal bars showing IRR/MOIC range",
+        "slides": ["tornado_chart"],
+        "function": "add_tornado_sensitivity_slide"
+    },
+
+    # Football Field
+    "football_field": {
+        "name": "Football Field Valuation",
+        "description": "Valuation range chart with horizontal bars per methodology",
+        "slides": ["football_field_chart"],
+        "function": "add_football_field_slide"
+    },
+
+    # SOTP Waterfall
+    "sotp_waterfall": {
+        "name": "SOTP Waterfall",
+        "description": "Sum-of-the-parts waterfall with segment contributions and EV bridge",
+        "slides": ["sotp_waterfall_chart"],
+        "function": "add_sotp_waterfall_slide"
     },
 }
 
@@ -2880,6 +2969,1651 @@ class SlideGenerator:
         return self
 
     # ============================================================
+    # CFA VISUAL SLIDES (Research Challenge Patterns)
+    # ============================================================
+
+    def add_wmbt_slide(self, data: Dict = None, include_cover: bool = True):
+        """
+        Add "What Must Be True" (WMBT) slide — investment thesis conditions
+        with thresholds, current status, and consequences.
+
+        Args:
+            data: Optional dict with keys: conditions (list of dicts with
+                  condition, threshold, current, status, consequence)
+            include_cover: Whether to add a section header
+        """
+        data = data or {}
+
+        if include_cover:
+            self._add_section_header("What Must Be True")
+
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[6])
+        page = self._next_page()
+
+        # Title
+        txBox = slide.shapes.add_textbox(Inches(0.3), Inches(0.2), Inches(9.5), Inches(0.3))
+        p = txBox.text_frame.paragraphs[0]
+        p.text = f"What Must Be True — {self.company_name}"
+        p.font.name = FONT_NAME
+        p.font.size = Pt(16)
+        p.font.bold = True
+        p.font.color.rgb = NAVY
+
+        # Subtitle
+        txBox_sub = slide.shapes.add_textbox(Inches(0.3), Inches(0.6), Inches(9.5), Inches(0.3))
+        p_sub = txBox_sub.text_frame.paragraphs[0]
+        p_sub.text = "Key conditions that must hold for the investment thesis to succeed"
+        p_sub.font.name = FONT_NAME
+        p_sub.font.size = Pt(11)
+        p_sub.font.color.rgb = DARK_GRAY
+
+        conditions = data.get('conditions', [
+            {"condition": "Revenue growth sustains >10%", "threshold": ">10%", "current": "12.3%", "status": "PASS", "consequence": "Terminal value drops 20-30%"},
+            {"condition": "EBITDA margins expand to 25%+", "threshold": ">25%", "current": "23.1%", "status": "AT RISK", "consequence": "Returns fall below 15% IRR hurdle"},
+            {"condition": "Working capital stable at 8-10% of rev", "threshold": "<10%", "current": "9.2%", "status": "PASS", "consequence": "FCF conversion deteriorates"},
+            {"condition": "No customer concentration >20%", "threshold": "<20%", "current": "18.5%", "status": "AT RISK", "consequence": "Revenue vulnerability; lower multiple"},
+            {"condition": "Management team retained post-close", "threshold": "Key 5 retained", "current": "4 of 5 confirmed", "status": "PASS", "consequence": "Execution risk; transition cost $2-5M"},
+            {"condition": "Debt covenants maintained", "threshold": "<4.5x leverage", "current": "3.8x", "status": "PASS", "consequence": "Covenant breach triggers acceleration"},
+        ])
+
+        # Table: Condition | Threshold | Current | Status | Consequence
+        headers = ["Condition", "Threshold", "Current", "Status", "If False..."]
+        num_cols = 5
+        num_rows = len(conditions) + 1
+        col_widths_raw = [3.0, 1.2, 1.0, 0.9, 3.3]
+        col_widths = [Inches(w) for w in col_widths_raw]
+
+        table = slide.shapes.add_table(num_rows, num_cols, Inches(0.3), Inches(1.1),
+                                       sum(col_widths), Inches(0.38 * num_rows)).table
+
+        for i, width in enumerate(col_widths):
+            table.columns[i].width = width
+
+        # Header row
+        for i, header in enumerate(headers):
+            cell = table.cell(0, i)
+            cell.text = header
+            cell.fill.solid()
+            cell.fill.fore_color.rgb = NAVY
+            p = cell.text_frame.paragraphs[0]
+            p.font.name = FONT_NAME
+            p.font.size = Pt(9)
+            p.font.bold = True
+            p.font.color.rgb = WHITE
+            p.alignment = PP_ALIGN.CENTER
+
+        # Data rows with status color coding
+        STATUS_COLORS = {
+            "PASS": RGBColor(198, 239, 206),      # Light green
+            "AT RISK": RGBColor(255, 235, 156),    # Light amber
+            "FAIL": RGBColor(255, 199, 206),       # Light red
+        }
+
+        for row_idx, cond in enumerate(conditions):
+            values = [cond.get('condition', ''), cond.get('threshold', ''),
+                      cond.get('current', ''), cond.get('status', ''),
+                      cond.get('consequence', '')]
+            for col_idx, val in enumerate(values):
+                cell = table.cell(row_idx + 1, col_idx)
+                cell.text = str(val)
+                p = cell.text_frame.paragraphs[0]
+                p.font.name = FONT_NAME
+                p.font.size = Pt(9)
+                p.font.color.rgb = DARK_GRAY
+                p.alignment = PP_ALIGN.LEFT if col_idx in (0, 4) else PP_ALIGN.CENTER
+                if col_idx == 0:
+                    p.font.bold = True
+
+                # Color code status column
+                if col_idx == 3:
+                    status = str(val).upper()
+                    if status in STATUS_COLORS:
+                        cell.fill.solid()
+                        cell.fill.fore_color.rgb = STATUS_COLORS[status]
+                        p.font.bold = True
+
+        # Page number
+        txBox_pg = slide.shapes.add_textbox(Inches(9.0), Inches(7.0), Inches(0.8), Inches(0.3))
+        p_pg = txBox_pg.text_frame.paragraphs[0]
+        p_pg.text = str(page)
+        p_pg.font.name = FONT_NAME
+        p_pg.font.size = Pt(10)
+        p_pg.font.color.rgb = DARK_GRAY
+
+        # Source
+        txBox_src = slide.shapes.add_textbox(Inches(0.3), Inches(7.0), Inches(8.5), Inches(0.3))
+        p_src = txBox_src.text_frame.paragraphs[0]
+        p_src.text = f"Source: {data.get('source', 'Management projections, buyer due diligence')}"
+        p_src.font.name = FONT_NAME
+        p_src.font.size = Pt(8)
+        p_src.font.color.rgb = DARK_GRAY
+
+        return self
+
+    def add_risk_mitigant_slide(self, data: Dict = None, include_cover: bool = True):
+        """
+        Add Risk-Mitigant Pairing slide — risks matched with mitigants and residual risk.
+
+        Args:
+            data: Optional dict with keys: risks (list of dicts with
+                  risk, category, probability, impact, mitigant, residual)
+            include_cover: Whether to add a section header
+        """
+        data = data or {}
+
+        if include_cover:
+            self._add_section_header("Risk Assessment")
+
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[6])
+        page = self._next_page()
+
+        # Title
+        txBox = slide.shapes.add_textbox(Inches(0.3), Inches(0.2), Inches(9.5), Inches(0.3))
+        p = txBox.text_frame.paragraphs[0]
+        p.text = f"Risk-Mitigant Pairing — {self.company_name}"
+        p.font.name = FONT_NAME
+        p.font.size = Pt(16)
+        p.font.bold = True
+        p.font.color.rgb = NAVY
+
+        risks = data.get('risks', [
+            {"risk": "Customer concentration (top 3 = 45%)", "category": "Revenue", "probability": "Medium", "impact": "High", "mitigant": "Diversification plan; no single >20%", "residual": "Medium"},
+            {"risk": "Key person dependency (CEO/CTO)", "category": "Operational", "probability": "Low", "impact": "High", "mitigant": "Retention packages; succession plan", "residual": "Low"},
+            {"risk": "Technology obsolescence", "category": "Strategic", "probability": "Medium", "impact": "Medium", "mitigant": "R&D investment >5% of revenue", "residual": "Low"},
+            {"risk": "Regulatory change (data privacy)", "category": "Regulatory", "probability": "Medium", "impact": "Medium", "mitigant": "Compliance program; GDPR-ready", "residual": "Low"},
+            {"risk": "Integration risk (add-on strategy)", "category": "Execution", "probability": "High", "impact": "Medium", "mitigant": "Dedicated integration PMO", "residual": "Medium"},
+            {"risk": "Interest rate increase", "category": "Financial", "probability": "Low", "impact": "Low", "mitigant": "Fixed-rate tranches; hedging", "residual": "Low"},
+        ])
+
+        # Table
+        headers = ["Risk", "Category", "Prob.", "Impact", "Mitigant", "Residual"]
+        num_cols = 6
+        num_rows = len(risks) + 1
+        col_widths_raw = [2.5, 0.9, 0.7, 0.7, 2.7, 0.8]
+        col_widths = [Inches(w) for w in col_widths_raw]
+
+        table = slide.shapes.add_table(num_rows, num_cols, Inches(0.3), Inches(0.8),
+                                       sum(col_widths), Inches(0.38 * num_rows)).table
+
+        for i, width in enumerate(col_widths):
+            table.columns[i].width = width
+
+        # Header
+        for i, header in enumerate(headers):
+            cell = table.cell(0, i)
+            cell.text = header
+            cell.fill.solid()
+            cell.fill.fore_color.rgb = NAVY
+            p = cell.text_frame.paragraphs[0]
+            p.font.name = FONT_NAME
+            p.font.size = Pt(9)
+            p.font.bold = True
+            p.font.color.rgb = WHITE
+            p.alignment = PP_ALIGN.CENTER
+
+        # Color map for probability/impact/residual
+        LEVEL_COLORS = {
+            "High": RGBColor(255, 199, 206),
+            "Medium": RGBColor(255, 235, 156),
+            "Low": RGBColor(198, 239, 206),
+        }
+
+        for row_idx, risk in enumerate(risks):
+            values = [risk.get('risk', ''), risk.get('category', ''),
+                      risk.get('probability', ''), risk.get('impact', ''),
+                      risk.get('mitigant', ''), risk.get('residual', '')]
+            for col_idx, val in enumerate(values):
+                cell = table.cell(row_idx + 1, col_idx)
+                cell.text = str(val)
+                p = cell.text_frame.paragraphs[0]
+                p.font.name = FONT_NAME
+                p.font.size = Pt(9)
+                p.font.color.rgb = DARK_GRAY
+                p.alignment = PP_ALIGN.LEFT if col_idx in (0, 4) else PP_ALIGN.CENTER
+                if col_idx == 0:
+                    p.font.bold = True
+
+                # Color code probability, impact, residual columns
+                if col_idx in (2, 3, 5):
+                    level = str(val).strip().title()
+                    if level in LEVEL_COLORS:
+                        cell.fill.solid()
+                        cell.fill.fore_color.rgb = LEVEL_COLORS[level]
+
+        # Page number
+        txBox_pg = slide.shapes.add_textbox(Inches(9.0), Inches(7.0), Inches(0.8), Inches(0.3))
+        p_pg = txBox_pg.text_frame.paragraphs[0]
+        p_pg.text = str(page)
+        p_pg.font.name = FONT_NAME
+        p_pg.font.size = Pt(10)
+        p_pg.font.color.rgb = DARK_GRAY
+
+        # Source
+        txBox_src = slide.shapes.add_textbox(Inches(0.3), Inches(7.0), Inches(8.5), Inches(0.3))
+        p_src = txBox_src.text_frame.paragraphs[0]
+        p_src.text = f"Source: {data.get('source', 'Due diligence findings, management discussions')}"
+        p_src.font.name = FONT_NAME
+        p_src.font.size = Pt(8)
+        p_src.font.color.rgb = DARK_GRAY
+
+        return self
+
+    def add_valuation_blending_slide(self, data: Dict = None, include_cover: bool = True):
+        """
+        Add Valuation Blending slide — weighted valuation across methods with blended target.
+
+        Args:
+            data: Optional dict with keys: methods (list of dicts with method, low, mid, high, weight),
+                  target_price, current_price
+            include_cover: Whether to add a section header
+        """
+        data = data or {}
+
+        if include_cover:
+            self._add_section_header("Valuation Summary")
+
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[6])
+        page = self._next_page()
+
+        # Title
+        txBox = slide.shapes.add_textbox(Inches(0.3), Inches(0.2), Inches(9.5), Inches(0.3))
+        p = txBox.text_frame.paragraphs[0]
+        p.text = f"Blended Valuation — {self.company_name}"
+        p.font.name = FONT_NAME
+        p.font.size = Pt(16)
+        p.font.bold = True
+        p.font.color.rgb = NAVY
+
+        # Subtitle
+        txBox_sub = slide.shapes.add_textbox(Inches(0.3), Inches(0.6), Inches(9.5), Inches(0.3))
+        p_sub = txBox_sub.text_frame.paragraphs[0]
+        p_sub.text = "Probability-weighted valuation across methodologies"
+        p_sub.font.name = FONT_NAME
+        p_sub.font.size = Pt(11)
+        p_sub.font.color.rgb = DARK_GRAY
+
+        methods = data.get('methods', [
+            {"method": "DCF (Base Case)", "low": "$42.00", "mid": "$48.50", "high": "$55.00", "weight": "35%"},
+            {"method": "Trading Comps (EV/EBITDA)", "low": "$40.00", "mid": "$46.00", "high": "$52.00", "weight": "25%"},
+            {"method": "Transaction Comps", "low": "$44.00", "mid": "$50.00", "high": "$56.00", "weight": "20%"},
+            {"method": "Dividend Discount Model", "low": "$38.00", "mid": "$44.00", "high": "$50.00", "weight": "10%"},
+            {"method": "Sum-of-the-Parts", "low": "$45.00", "mid": "$51.00", "high": "$57.00", "weight": "10%"},
+        ])
+
+        # Method table
+        headers = ["Methodology", "Low", "Mid", "High", "Weight"]
+        num_cols = 5
+        num_rows = len(methods) + 2  # +1 header, +1 blended row
+        col_widths_raw = [3.0, 1.3, 1.3, 1.3, 1.0]
+        col_widths = [Inches(w) for w in col_widths_raw]
+
+        table = slide.shapes.add_table(num_rows, num_cols, Inches(0.5), Inches(1.1),
+                                       sum(col_widths), Inches(0.38 * num_rows)).table
+
+        for i, width in enumerate(col_widths):
+            table.columns[i].width = width
+
+        # Header
+        for i, header in enumerate(headers):
+            cell = table.cell(0, i)
+            cell.text = header
+            cell.fill.solid()
+            cell.fill.fore_color.rgb = NAVY
+            p = cell.text_frame.paragraphs[0]
+            p.font.name = FONT_NAME
+            p.font.size = Pt(10)
+            p.font.bold = True
+            p.font.color.rgb = WHITE
+            p.alignment = PP_ALIGN.CENTER
+
+        # Data rows
+        for row_idx, method in enumerate(methods):
+            values = [method.get('method', ''), method.get('low', ''),
+                      method.get('mid', ''), method.get('high', ''),
+                      method.get('weight', '')]
+            for col_idx, val in enumerate(values):
+                cell = table.cell(row_idx + 1, col_idx)
+                cell.text = str(val)
+                p = cell.text_frame.paragraphs[0]
+                p.font.name = FONT_NAME
+                p.font.size = Pt(10)
+                p.font.color.rgb = DARK_GRAY
+                p.alignment = PP_ALIGN.LEFT if col_idx == 0 else PP_ALIGN.CENTER
+                if col_idx == 0:
+                    p.font.bold = True
+
+        # Blended row (last row)
+        blended_values = [
+            "Blended Valuation",
+            data.get('blended_low', '$42.10'),
+            data.get('blended_mid', '$48.05'),
+            data.get('blended_high', '$54.10'),
+            "100%",
+        ]
+        for col_idx, val in enumerate(blended_values):
+            cell = table.cell(num_rows - 1, col_idx)
+            cell.text = str(val)
+            cell.fill.solid()
+            cell.fill.fore_color.rgb = RGBColor(230, 240, 250)
+            p = cell.text_frame.paragraphs[0]
+            p.font.name = FONT_NAME
+            p.font.size = Pt(10)
+            p.font.bold = True
+            p.font.color.rgb = NAVY
+            p.alignment = PP_ALIGN.LEFT if col_idx == 0 else PP_ALIGN.CENTER
+
+        # Equation bar below table
+        eq_top = 1.1 + 0.38 * num_rows + 0.3
+        eq_box = slide.shapes.add_shape(
+            MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.5), Inches(eq_top), Inches(8.9), Inches(0.8))
+        eq_box.fill.solid()
+        eq_box.fill.fore_color.rgb = RGBColor(248, 250, 252)
+        eq_box.line.color.rgb = NAVY
+        eq_box.line.width = Pt(1.5)
+
+        txBox_eq = slide.shapes.add_textbox(Inches(0.7), Inches(eq_top + 0.1), Inches(8.5), Inches(0.6))
+        tf_eq = txBox_eq.text_frame
+        tf_eq.word_wrap = True
+        p_eq = tf_eq.paragraphs[0]
+        p_eq.text = f"Target Price = {data.get('blended_mid', '$48.05')}  |  Current Price: {data.get('current_price', '$41.25')}  |  Upside: {data.get('upside', '16.5%')}"
+        p_eq.font.name = FONT_NAME
+        p_eq.font.size = Pt(12)
+        p_eq.font.bold = True
+        p_eq.font.color.rgb = NAVY
+        p_eq.alignment = PP_ALIGN.CENTER
+
+        p2 = tf_eq.add_paragraph()
+        p2.text = data.get('recommendation', 'BUY — Target price implies 16.5% upside with favorable risk/reward')
+        p2.font.name = FONT_NAME
+        p2.font.size = Pt(10)
+        p2.font.color.rgb = ACCENT_GREEN
+        p2.font.bold = True
+        p2.alignment = PP_ALIGN.CENTER
+
+        # Page number
+        txBox_pg = slide.shapes.add_textbox(Inches(9.0), Inches(7.0), Inches(0.8), Inches(0.3))
+        p_pg = txBox_pg.text_frame.paragraphs[0]
+        p_pg.text = str(page)
+        p_pg.font.name = FONT_NAME
+        p_pg.font.size = Pt(10)
+        p_pg.font.color.rgb = DARK_GRAY
+
+        return self
+
+    def add_value_chain_slide(self, data: Dict = None, include_cover: bool = True):
+        """
+        Add Value Chain slide — horizontal flow with boxes and arrows,
+        company position highlighted.
+
+        Args:
+            data: Optional dict with keys: stages (list of dicts with name, description,
+                  margin), highlight_index (int, 0-based index of company's position)
+            include_cover: Whether to add a section header
+        """
+        data = data or {}
+
+        if include_cover:
+            self._add_section_header("Value Chain Analysis")
+
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[6])
+        page = self._next_page()
+
+        # Title
+        txBox = slide.shapes.add_textbox(Inches(0.3), Inches(0.2), Inches(9.5), Inches(0.3))
+        p = txBox.text_frame.paragraphs[0]
+        p.text = f"Industry Value Chain — {self.company_name}"
+        p.font.name = FONT_NAME
+        p.font.size = Pt(16)
+        p.font.bold = True
+        p.font.color.rgb = NAVY
+
+        stages = data.get('stages', [
+            {"name": "Raw Materials", "description": "Commodity inputs, mining, extraction", "margin": "8-12%"},
+            {"name": "Components", "description": "Processing, sub-assembly, specialty parts", "margin": "15-20%"},
+            {"name": "Manufacturing", "description": "Assembly, quality control, packaging", "margin": "12-18%"},
+            {"name": "Distribution", "description": "Logistics, warehousing, fulfillment", "margin": "5-8%"},
+            {"name": "End Market", "description": "Retail, B2B sales, service & support", "margin": "20-30%"},
+        ])
+        highlight_idx = data.get('highlight_index', 2)  # Company position
+
+        num_stages = len(stages)
+        total_width = 8.8
+        gap = 0.15
+        arrow_width = 0.25
+        box_width = (total_width - (num_stages - 1) * (gap + arrow_width)) / num_stages
+        box_height = 1.8
+        box_top = 1.5
+        start_left = 0.6
+
+        for i, stage in enumerate(stages):
+            left = start_left + i * (box_width + gap + arrow_width)
+            is_highlight = (i == highlight_idx)
+
+            # Box
+            box = slide.shapes.add_shape(
+                MSO_SHAPE.ROUNDED_RECTANGLE,
+                Inches(left), Inches(box_top), Inches(box_width), Inches(box_height))
+
+            if is_highlight:
+                box.fill.solid()
+                box.fill.fore_color.rgb = NAVY
+                text_color = WHITE
+                desc_color = RGBColor(200, 220, 240)
+            else:
+                box.fill.solid()
+                box.fill.fore_color.rgb = RGBColor(248, 250, 252)
+                box.line.color.rgb = NAVY
+                box.line.width = Pt(1)
+                text_color = NAVY
+                desc_color = DARK_GRAY
+
+            # Stage name
+            txBox_name = slide.shapes.add_textbox(
+                Inches(left + 0.08), Inches(box_top + 0.1),
+                Inches(box_width - 0.16), Inches(0.4))
+            p_name = txBox_name.text_frame.paragraphs[0]
+            p_name.text = stage.get('name', '')
+            p_name.font.name = FONT_NAME
+            p_name.font.size = Pt(9)
+            p_name.font.bold = True
+            p_name.font.color.rgb = text_color
+            p_name.alignment = PP_ALIGN.CENTER
+
+            # Description
+            txBox_desc = slide.shapes.add_textbox(
+                Inches(left + 0.08), Inches(box_top + 0.5),
+                Inches(box_width - 0.16), Inches(0.8))
+            tf_desc = txBox_desc.text_frame
+            tf_desc.word_wrap = True
+            p_desc = tf_desc.paragraphs[0]
+            p_desc.text = stage.get('description', '')
+            p_desc.font.name = FONT_NAME
+            p_desc.font.size = Pt(8)
+            p_desc.font.color.rgb = desc_color
+
+            # Margin
+            txBox_margin = slide.shapes.add_textbox(
+                Inches(left + 0.08), Inches(box_top + box_height - 0.4),
+                Inches(box_width - 0.16), Inches(0.3))
+            p_margin = txBox_margin.text_frame.paragraphs[0]
+            p_margin.text = f"Margin: {stage.get('margin', 'N/A')}"
+            p_margin.font.name = FONT_NAME
+            p_margin.font.size = Pt(8)
+            p_margin.font.bold = True
+            p_margin.font.color.rgb = text_color
+            p_margin.alignment = PP_ALIGN.CENTER
+
+            # Arrow (except after last box)
+            if i < num_stages - 1:
+                arrow_left = left + box_width + gap / 2
+                arrow = slide.shapes.add_shape(
+                    MSO_SHAPE.RIGHT_ARROW,
+                    Inches(arrow_left), Inches(box_top + box_height / 2 - 0.15),
+                    Inches(arrow_width), Inches(0.3))
+                arrow.fill.solid()
+                arrow.fill.fore_color.rgb = NAVY
+                arrow.line.fill.background()
+
+        # Company position label
+        highlight_left = start_left + highlight_idx * (box_width + gap + arrow_width)
+        txBox_label = slide.shapes.add_textbox(
+            Inches(highlight_left), Inches(box_top + box_height + 0.15),
+            Inches(box_width), Inches(0.3))
+        p_label = txBox_label.text_frame.paragraphs[0]
+        p_label.text = f"{self.company_name}"
+        p_label.font.name = FONT_NAME
+        p_label.font.size = Pt(9)
+        p_label.font.bold = True
+        p_label.font.color.rgb = NAVY
+        p_label.alignment = PP_ALIGN.CENTER
+
+        # Key takeaways section
+        takeaways = data.get('takeaways', [
+            "Company operates in the highest-margin segment of the value chain",
+            "Vertical integration opportunity upstream could improve margin by 200-400bps",
+            "Limited substitution risk due to proprietary technology and switching costs",
+        ])
+
+        txBox_take = slide.shapes.add_textbox(Inches(0.5), Inches(4.2), Inches(9.0), Inches(2.5))
+        tf_take = txBox_take.text_frame
+        tf_take.word_wrap = True
+        p_header = tf_take.paragraphs[0]
+        p_header.text = "Key Takeaways"
+        p_header.font.name = FONT_NAME
+        p_header.font.size = Pt(11)
+        p_header.font.bold = True
+        p_header.font.color.rgb = NAVY
+
+        for takeaway in takeaways:
+            p_t = tf_take.add_paragraph()
+            p_t.text = f"• {takeaway}"
+            p_t.font.name = FONT_NAME
+            p_t.font.size = Pt(9)
+            p_t.font.color.rgb = DARK_GRAY
+            p_t.space_after = Pt(4)
+
+        # Page number
+        txBox_pg = slide.shapes.add_textbox(Inches(9.0), Inches(7.0), Inches(0.8), Inches(0.3))
+        p_pg = txBox_pg.text_frame.paragraphs[0]
+        p_pg.text = str(page)
+        p_pg.font.name = FONT_NAME
+        p_pg.font.size = Pt(10)
+        p_pg.font.color.rgb = DARK_GRAY
+
+        return self
+
+    def add_risk_matrix_slide(self, data: Dict = None, include_cover: bool = True):
+        """
+        Add Risk Matrix slide — 3x3 probability-impact grid with color-coded cells.
+
+        Args:
+            data: Optional dict with keys: risks (list of dicts with name, probability (1-3),
+                  impact (1-3)), labels optional
+            include_cover: Whether to add a section header
+        """
+        data = data or {}
+
+        if include_cover:
+            self._add_section_header("Risk Assessment")
+
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[6])
+        page = self._next_page()
+
+        # Title
+        txBox = slide.shapes.add_textbox(Inches(0.3), Inches(0.2), Inches(9.5), Inches(0.3))
+        p = txBox.text_frame.paragraphs[0]
+        p.text = f"Risk Matrix — {self.company_name}"
+        p.font.name = FONT_NAME
+        p.font.size = Pt(16)
+        p.font.bold = True
+        p.font.color.rgb = NAVY
+
+        risks = data.get('risks', [
+            {"name": "Customer concentration", "probability": 2, "impact": 3},
+            {"name": "Key person risk", "probability": 1, "impact": 3},
+            {"name": "Technology disruption", "probability": 2, "impact": 2},
+            {"name": "Regulatory change", "probability": 2, "impact": 2},
+            {"name": "Integration execution", "probability": 3, "impact": 2},
+            {"name": "Interest rate risk", "probability": 1, "impact": 1},
+            {"name": "FX exposure", "probability": 2, "impact": 1},
+            {"name": "Supply chain disruption", "probability": 1, "impact": 2},
+        ])
+
+        # 3x3 grid colors (impact cols, probability rows — row 0 = high prob)
+        # [probability=High][impact=Low/Med/High]
+        GRID_COLORS = [
+            [RGBColor(255, 235, 156), RGBColor(255, 199, 206), RGBColor(255, 99, 71)],    # High prob
+            [RGBColor(198, 239, 206), RGBColor(255, 235, 156), RGBColor(255, 199, 206)],   # Med prob
+            [RGBColor(198, 239, 206), RGBColor(198, 239, 206), RGBColor(255, 235, 156)],   # Low prob
+        ]
+
+        grid_left = 2.0
+        grid_top = 1.2
+        cell_w = 2.0
+        cell_h = 1.6
+        label_width = 1.2
+
+        # Y-axis label (Probability)
+        txBox_y = slide.shapes.add_textbox(
+            Inches(grid_left - 1.3), Inches(grid_top + 1.0), Inches(1.0), Inches(2.0))
+        p_y = txBox_y.text_frame.paragraphs[0]
+        p_y.text = "Probability"
+        p_y.font.name = FONT_NAME
+        p_y.font.size = Pt(12)
+        p_y.font.bold = True
+        p_y.font.color.rgb = NAVY
+
+        # X-axis label (Impact)
+        txBox_x = slide.shapes.add_textbox(
+            Inches(grid_left + 1.5), Inches(grid_top + 3 * cell_h + 0.15), Inches(2.0), Inches(0.3))
+        p_x = txBox_x.text_frame.paragraphs[0]
+        p_x.text = "Impact"
+        p_x.font.name = FONT_NAME
+        p_x.font.size = Pt(12)
+        p_x.font.bold = True
+        p_x.font.color.rgb = NAVY
+        p_x.alignment = PP_ALIGN.CENTER
+
+        # Row labels (High=0, Medium=1, Low=2)
+        prob_labels = ["High", "Medium", "Low"]
+        for r, label in enumerate(prob_labels):
+            txBox_rl = slide.shapes.add_textbox(
+                Inches(grid_left - label_width - 0.1), Inches(grid_top + r * cell_h + cell_h / 2 - 0.15),
+                Inches(label_width), Inches(0.3))
+            p_rl = txBox_rl.text_frame.paragraphs[0]
+            p_rl.text = label
+            p_rl.font.name = FONT_NAME
+            p_rl.font.size = Pt(10)
+            p_rl.font.bold = True
+            p_rl.font.color.rgb = NAVY
+            p_rl.alignment = PP_ALIGN.RIGHT
+
+        # Column labels (Low=0, Medium=1, High=2)
+        impact_labels = ["Low", "Medium", "High"]
+        for c, label in enumerate(impact_labels):
+            txBox_cl = slide.shapes.add_textbox(
+                Inches(grid_left + c * cell_w), Inches(grid_top - 0.3),
+                Inches(cell_w), Inches(0.3))
+            p_cl = txBox_cl.text_frame.paragraphs[0]
+            p_cl.text = label
+            p_cl.font.name = FONT_NAME
+            p_cl.font.size = Pt(10)
+            p_cl.font.bold = True
+            p_cl.font.color.rgb = NAVY
+            p_cl.alignment = PP_ALIGN.CENTER
+
+        # Draw grid cells
+        for r in range(3):
+            for c in range(3):
+                box = slide.shapes.add_shape(
+                    MSO_SHAPE.RECTANGLE,
+                    Inches(grid_left + c * cell_w), Inches(grid_top + r * cell_h),
+                    Inches(cell_w), Inches(cell_h))
+                box.fill.solid()
+                box.fill.fore_color.rgb = GRID_COLORS[r][c]
+                box.line.color.rgb = WHITE
+                box.line.width = Pt(2)
+
+        # Place risk labels in cells
+        # probability: 1=Low(row 2), 2=Med(row 1), 3=High(row 0)
+        # impact: 1=Low(col 0), 2=Med(col 1), 3=High(col 2)
+        cell_risks = {}  # (row, col) -> list of risk names
+        for risk in risks:
+            prob = risk.get('probability', 1)
+            impact = risk.get('impact', 1)
+            row = 3 - prob  # Convert: 3->0(High), 2->1(Med), 1->2(Low)
+            col = impact - 1  # Convert: 1->0(Low), 2->1(Med), 3->2(High)
+            row = max(0, min(2, row))
+            col = max(0, min(2, col))
+            key = (row, col)
+            if key not in cell_risks:
+                cell_risks[key] = []
+            cell_risks[key].append(risk.get('name', ''))
+
+        for (r, c), names in cell_risks.items():
+            txBox_risk = slide.shapes.add_textbox(
+                Inches(grid_left + c * cell_w + 0.1),
+                Inches(grid_top + r * cell_h + 0.1),
+                Inches(cell_w - 0.2), Inches(cell_h - 0.2))
+            tf_risk = txBox_risk.text_frame
+            tf_risk.word_wrap = True
+            for j, name in enumerate(names):
+                p_r = tf_risk.paragraphs[0] if j == 0 else tf_risk.add_paragraph()
+                p_r.text = f"• {name}"
+                p_r.font.name = FONT_NAME
+                p_r.font.size = Pt(8)
+                p_r.font.bold = True
+                p_r.font.color.rgb = DARK_GRAY
+
+        # Page number
+        txBox_pg = slide.shapes.add_textbox(Inches(9.0), Inches(7.0), Inches(0.8), Inches(0.3))
+        p_pg = txBox_pg.text_frame.paragraphs[0]
+        p_pg.text = str(page)
+        p_pg.font.name = FONT_NAME
+        p_pg.font.size = Pt(10)
+        p_pg.font.color.rgb = DARK_GRAY
+
+        return self
+
+    def add_tam_funnel_slide(self, data: Dict = None, include_cover: bool = True):
+        """
+        Add TAM/SAM/SOM Funnel slide — descending-width bars for market sizing.
+
+        Args:
+            data: Optional dict with keys: tam, sam, som (dicts with value, description, source),
+                  company_share
+            include_cover: Whether to add a section header
+        """
+        data = data or {}
+
+        if include_cover:
+            self._add_section_header("Market Sizing")
+
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[6])
+        page = self._next_page()
+
+        # Title
+        txBox = slide.shapes.add_textbox(Inches(0.3), Inches(0.2), Inches(9.5), Inches(0.3))
+        p = txBox.text_frame.paragraphs[0]
+        p.text = f"TAM / SAM / SOM Analysis — {self.company_name}"
+        p.font.name = FONT_NAME
+        p.font.size = Pt(16)
+        p.font.bold = True
+        p.font.color.rgb = NAVY
+
+        # Funnel layers
+        layers = [
+            {
+                "label": "TAM (Total Addressable Market)",
+                "value": data.get('tam', {}).get('value', '$45B'),
+                "description": data.get('tam', {}).get('description', 'Global market for [industry] solutions'),
+                "source": data.get('tam', {}).get('source', 'Industry report, 2025'),
+                "color": RGBColor(0, 54, 91),         # Navy
+                "width": 8.0,
+            },
+            {
+                "label": "SAM (Serviceable Addressable Market)",
+                "value": data.get('sam', {}).get('value', '$12B'),
+                "description": data.get('sam', {}).get('description', 'North American mid-market segment'),
+                "source": data.get('sam', {}).get('source', 'Management estimate'),
+                "color": RGBColor(50, 100, 150),       # Medium blue
+                "width": 5.6,
+            },
+            {
+                "label": "SOM (Serviceable Obtainable Market)",
+                "value": data.get('som', {}).get('value', '$1.8B'),
+                "description": data.get('som', {}).get('description', 'Realistic capture based on go-to-market'),
+                "source": data.get('som', {}).get('source', 'Bottom-up analysis'),
+                "color": RGBColor(100, 150, 200),      # Light blue
+                "width": 3.2,
+            },
+        ]
+
+        center_x = 5.0
+        bar_height = 1.3
+        gap = 0.2
+        start_top = 1.0
+
+        for i, layer in enumerate(layers):
+            top = start_top + i * (bar_height + gap)
+            width = layer['width']
+            left = center_x - width / 2
+
+            # Bar
+            bar = slide.shapes.add_shape(
+                MSO_SHAPE.ROUNDED_RECTANGLE,
+                Inches(left), Inches(top), Inches(width), Inches(bar_height))
+            bar.fill.solid()
+            bar.fill.fore_color.rgb = layer['color']
+            bar.line.fill.background()
+
+            # Label + value on the bar
+            txBox_bar = slide.shapes.add_textbox(
+                Inches(left + 0.2), Inches(top + 0.15), Inches(width - 0.4), Inches(0.4))
+            p_bar = txBox_bar.text_frame.paragraphs[0]
+            p_bar.text = f"{layer['label']}  —  {layer['value']}"
+            p_bar.font.name = FONT_NAME
+            p_bar.font.size = Pt(11)
+            p_bar.font.bold = True
+            p_bar.font.color.rgb = WHITE
+            p_bar.alignment = PP_ALIGN.CENTER
+
+            # Description on the bar
+            txBox_desc = slide.shapes.add_textbox(
+                Inches(left + 0.2), Inches(top + 0.55), Inches(width - 0.4), Inches(0.5))
+            tf_desc = txBox_desc.text_frame
+            tf_desc.word_wrap = True
+            p_desc = tf_desc.paragraphs[0]
+            p_desc.text = layer['description']
+            p_desc.font.name = FONT_NAME
+            p_desc.font.size = Pt(9)
+            p_desc.font.color.rgb = RGBColor(200, 220, 240)
+            p_desc.alignment = PP_ALIGN.CENTER
+
+        # Company share callout
+        share_top = start_top + 3 * (bar_height + gap) + 0.2
+        share_box = slide.shapes.add_shape(
+            MSO_SHAPE.ROUNDED_RECTANGLE,
+            Inches(2.5), Inches(share_top), Inches(5.0), Inches(0.7))
+        share_box.fill.solid()
+        share_box.fill.fore_color.rgb = RGBColor(248, 250, 252)
+        share_box.line.color.rgb = NAVY
+        share_box.line.width = Pt(1.5)
+
+        txBox_share = slide.shapes.add_textbox(
+            Inches(2.7), Inches(share_top + 0.1), Inches(4.6), Inches(0.5))
+        tf_share = txBox_share.text_frame
+        tf_share.word_wrap = True
+        p_share = tf_share.paragraphs[0]
+        p_share.text = f"{self.company_name} Current Revenue: {data.get('company_revenue', '$320M')}  |  SOM Penetration: {data.get('som_penetration', '17.8%')}"
+        p_share.font.name = FONT_NAME
+        p_share.font.size = Pt(10)
+        p_share.font.bold = True
+        p_share.font.color.rgb = NAVY
+        p_share.alignment = PP_ALIGN.CENTER
+
+        # Key assumptions
+        assumptions = data.get('assumptions', [
+            "TAM growing at 7-9% CAGR driven by digital transformation and regulatory tailwinds",
+            "SAM defined by geography (North America) and segment (mid-market, $50-500M revenue)",
+            "SOM assumes 15-20% market share achievable within 5-year hold period",
+        ])
+
+        txBox_assume = slide.shapes.add_textbox(Inches(0.5), Inches(share_top + 1.0), Inches(9.0), Inches(1.5))
+        tf_assume = txBox_assume.text_frame
+        tf_assume.word_wrap = True
+        p_ah = tf_assume.paragraphs[0]
+        p_ah.text = "Key Assumptions"
+        p_ah.font.name = FONT_NAME
+        p_ah.font.size = Pt(10)
+        p_ah.font.bold = True
+        p_ah.font.color.rgb = NAVY
+
+        for assumption in assumptions:
+            p_a = tf_assume.add_paragraph()
+            p_a.text = f"• {assumption}"
+            p_a.font.name = FONT_NAME
+            p_a.font.size = Pt(9)
+            p_a.font.color.rgb = DARK_GRAY
+
+        # Page number
+        txBox_pg = slide.shapes.add_textbox(Inches(9.0), Inches(7.0), Inches(0.8), Inches(0.3))
+        p_pg = txBox_pg.text_frame.paragraphs[0]
+        p_pg.text = str(page)
+        p_pg.font.name = FONT_NAME
+        p_pg.font.size = Pt(10)
+        p_pg.font.color.rgb = DARK_GRAY
+
+        return self
+
+    def add_pestel_slide(self, data: Dict = None, include_cover: bool = True):
+        """
+        Add PESTEL Analysis slide — 3x2 grid of macro factors.
+
+        Args:
+            data: Optional dict with keys for each factor: political, economic, social,
+                  technological, environmental, legal (each a list of bullet strings)
+            include_cover: Whether to add a section header
+        """
+        data = data or {}
+
+        if include_cover:
+            self._add_section_header("Macro Environment")
+
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[6])
+        page = self._next_page()
+
+        # Title
+        txBox = slide.shapes.add_textbox(Inches(0.3), Inches(0.2), Inches(9.5), Inches(0.3))
+        p = txBox.text_frame.paragraphs[0]
+        p.text = f"PESTEL Analysis — {self.company_name}"
+        p.font.name = FONT_NAME
+        p.font.size = Pt(16)
+        p.font.bold = True
+        p.font.color.rgb = NAVY
+
+        factors = [
+            ("Political", "P", data.get('political', [
+                "Regulatory stability in core markets",
+                "Trade policy impact on supply chain",
+                "Government subsidy programs",
+            ]), RGBColor(0, 54, 91)),
+            ("Economic", "E", data.get('economic', [
+                "GDP growth outlook: 2-3%",
+                "Interest rate environment",
+                "Inflation impact on margins",
+            ]), RGBColor(34, 100, 34)),
+            ("Social", "S", data.get('social', [
+                "Demographic shifts (aging population)",
+                "Consumer behavior trends",
+                "Workforce availability",
+            ]), RGBColor(150, 80, 0)),
+            ("Technological", "T", data.get('technological', [
+                "AI/automation disruption potential",
+                "Digital transformation spend",
+                "Cybersecurity requirements",
+            ]), RGBColor(120, 50, 150)),
+            ("Environmental", "E", data.get('environmental', [
+                "Carbon regulation compliance",
+                "ESG reporting requirements",
+                "Supply chain sustainability",
+            ]), RGBColor(0, 120, 120)),
+            ("Legal", "L", data.get('legal', [
+                "Data privacy (GDPR, CCPA)",
+                "IP protection regime",
+                "Employment law changes",
+            ]), RGBColor(178, 34, 34)),
+        ]
+
+        # 3x2 grid layout
+        col_count = 3
+        row_count = 2
+        box_width = 2.9
+        box_height = 2.7
+        h_gap = 0.15
+        v_gap = 0.15
+        grid_left = 0.4
+        grid_top = 0.8
+
+        for idx, (name, letter, bullets, color) in enumerate(factors):
+            row = idx // col_count
+            col = idx % col_count
+            left = grid_left + col * (box_width + h_gap)
+            top = grid_top + row * (box_height + v_gap)
+
+            # Box
+            box = slide.shapes.add_shape(
+                MSO_SHAPE.ROUNDED_RECTANGLE,
+                Inches(left), Inches(top), Inches(box_width), Inches(box_height))
+            box.fill.solid()
+            box.fill.fore_color.rgb = RGBColor(248, 250, 252)
+            box.line.color.rgb = color
+            box.line.width = Pt(1.5)
+
+            # Factor header
+            txBox_h = slide.shapes.add_textbox(
+                Inches(left + 0.15), Inches(top + 0.1),
+                Inches(box_width - 0.3), Inches(0.35))
+            p_h = txBox_h.text_frame.paragraphs[0]
+            p_h.text = name
+            p_h.font.name = FONT_NAME
+            p_h.font.size = Pt(11)
+            p_h.font.bold = True
+            p_h.font.color.rgb = color
+
+            # Bullets
+            txBox_b = slide.shapes.add_textbox(
+                Inches(left + 0.15), Inches(top + 0.5),
+                Inches(box_width - 0.3), Inches(box_height - 0.6))
+            tf_b = txBox_b.text_frame
+            tf_b.word_wrap = True
+            for j, bullet in enumerate(bullets):
+                p_b = tf_b.paragraphs[0] if j == 0 else tf_b.add_paragraph()
+                p_b.text = f"• {bullet}"
+                p_b.font.name = FONT_NAME
+                p_b.font.size = Pt(8)
+                p_b.font.color.rgb = DARK_GRAY
+                p_b.space_after = Pt(3)
+
+        # Page number
+        txBox_pg = slide.shapes.add_textbox(Inches(9.0), Inches(7.0), Inches(0.8), Inches(0.3))
+        p_pg = txBox_pg.text_frame.paragraphs[0]
+        p_pg.text = str(page)
+        p_pg.font.name = FONT_NAME
+        p_pg.font.size = Pt(10)
+        p_pg.font.color.rgb = DARK_GRAY
+
+        return self
+
+    def add_porters_radar_slide(self, data: Dict = None, include_cover: bool = True):
+        """
+        Add Porter's Five Forces Radar slide — quantified pentagon chart with
+        force ratings on a 1-5 scale.
+
+        Args:
+            data: Optional dict with keys: forces (dict with supplier_power, buyer_power,
+                  new_entrants, substitutes, rivalry — each 1-5), descriptions (dict)
+            include_cover: Whether to add a section header
+        """
+        data = data or {}
+
+        if include_cover:
+            self._add_section_header("Competitive Forces")
+
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[6])
+        page = self._next_page()
+
+        # Title
+        txBox = slide.shapes.add_textbox(Inches(0.3), Inches(0.2), Inches(9.5), Inches(0.3))
+        p = txBox.text_frame.paragraphs[0]
+        p.text = f"Porter's Five Forces — {self.company_name}"
+        p.font.name = FONT_NAME
+        p.font.size = Pt(16)
+        p.font.bold = True
+        p.font.color.rgb = NAVY
+
+        force_defaults = {
+            "rivalry": 4, "new_entrants": 2, "substitutes": 3,
+            "buyer_power": 3, "supplier_power": 2,
+        }
+        forces = data.get('forces', force_defaults)
+
+        desc_defaults = {
+            "rivalry": "Intense: fragmented market with 5+ major players",
+            "new_entrants": "Low: high barriers (capital, regulation, relationships)",
+            "substitutes": "Moderate: alternative solutions exist but inferior",
+            "buyer_power": "Moderate: concentrated buyer base but high switching costs",
+            "supplier_power": "Low: multiple suppliers, commodity inputs",
+        }
+        descriptions = data.get('descriptions', desc_defaults)
+
+        # Pentagon radar chart parameters
+        force_names = ["Competitive\nRivalry", "Threat of\nNew Entrants", "Supplier\nPower",
+                       "Threat of\nSubstitutes", "Buyer\nPower"]
+        force_keys = ["rivalry", "new_entrants", "supplier_power", "substitutes", "buyer_power"]
+        ratings = [forces.get(k, 3) for k in force_keys]
+
+        cx, cy = 3.3, 3.6  # Center of pentagon (inches)
+        max_r = 1.8         # Max radius (inches)
+
+        # Calculate pentagon vertices for each ring (1-5)
+        angles = [math.pi / 2 - i * 2 * math.pi / 5 for i in range(5)]
+
+        # Draw concentric pentagons (gridlines)
+        for ring in range(1, 6):
+            scale = ring / 5.0
+            points = []
+            for angle in angles:
+                x = cx + max_r * scale * math.cos(angle)
+                y = cy - max_r * scale * math.sin(angle)
+                points.append((x, y))
+
+            # Draw lines between consecutive vertices
+            for j in range(5):
+                x1, y1 = points[j]
+                x2, y2 = points[(j + 1) % 5]
+                line = slide.shapes.add_connector(
+                    1,  # MSO_CONNECTOR.STRAIGHT
+                    Inches(x1), Inches(y1), Inches(x2), Inches(y2))
+                line.line.color.rgb = RGBColor(220, 220, 220)
+                line.line.width = Pt(0.5)
+
+        # Draw axis lines from center to each vertex
+        for angle in angles:
+            x_end = cx + max_r * math.cos(angle)
+            y_end = cy - max_r * math.sin(angle)
+            line = slide.shapes.add_connector(
+                1, Inches(cx), Inches(cy), Inches(x_end), Inches(y_end))
+            line.line.color.rgb = RGBColor(200, 200, 200)
+            line.line.width = Pt(0.5)
+
+        # Draw the rating polygon (filled)
+        # We'll use individual lines for the data shape since python-pptx
+        # freeform is complex — draw thick navy lines connecting data points
+        data_points = []
+        for i, angle in enumerate(angles):
+            scale = ratings[i] / 5.0
+            x = cx + max_r * scale * math.cos(angle)
+            y = cy - max_r * scale * math.sin(angle)
+            data_points.append((x, y))
+
+        for j in range(5):
+            x1, y1 = data_points[j]
+            x2, y2 = data_points[(j + 1) % 5]
+            line = slide.shapes.add_connector(
+                1, Inches(x1), Inches(y1), Inches(x2), Inches(y2))
+            line.line.color.rgb = NAVY
+            line.line.width = Pt(2.5)
+
+        # Draw data point markers
+        marker_size = 0.15
+        for x, y in data_points:
+            marker = slide.shapes.add_shape(
+                MSO_SHAPE.OVAL,
+                Inches(x - marker_size / 2), Inches(y - marker_size / 2),
+                Inches(marker_size), Inches(marker_size))
+            marker.fill.solid()
+            marker.fill.fore_color.rgb = NAVY
+            marker.line.fill.background()
+
+        # Force labels at each vertex (outside the pentagon)
+        label_offsets = [
+            (0, -0.55),     # Top (rivalry) - above
+            (0.6, -0.3),   # Upper-right (new entrants)
+            (0.5, 0.25),   # Lower-right (supplier power)
+            (-0.5, 0.25),  # Lower-left (substitutes)
+            (-0.6, -0.3),  # Upper-left (buyer power)
+        ]
+
+        for i, angle in enumerate(angles):
+            x_label = cx + (max_r + 0.35) * math.cos(angle) + label_offsets[i][0]
+            y_label = cy - (max_r + 0.35) * math.sin(angle) + label_offsets[i][1]
+
+            txBox_label = slide.shapes.add_textbox(
+                Inches(x_label - 0.6), Inches(y_label),
+                Inches(1.5), Inches(0.5))
+            tf_label = txBox_label.text_frame
+            tf_label.word_wrap = True
+            p_label = tf_label.paragraphs[0]
+            p_label.text = f"{force_names[i]}\n({ratings[i]}/5)"
+            p_label.font.name = FONT_NAME
+            p_label.font.size = Pt(9)
+            p_label.font.bold = True
+            p_label.font.color.rgb = NAVY
+            p_label.alignment = PP_ALIGN.CENTER
+
+        # Descriptions panel (right side)
+        txBox_desc = slide.shapes.add_textbox(Inches(6.0), Inches(1.0), Inches(3.8), Inches(5.5))
+        tf_desc = txBox_desc.text_frame
+        tf_desc.word_wrap = True
+
+        p_dh = tf_desc.paragraphs[0]
+        p_dh.text = "Force Assessment"
+        p_dh.font.name = FONT_NAME
+        p_dh.font.size = Pt(11)
+        p_dh.font.bold = True
+        p_dh.font.color.rgb = NAVY
+
+        desc_labels = ["Rivalry", "New Entrants", "Supplier Power", "Substitutes", "Buyer Power"]
+        for i, key in enumerate(force_keys):
+            p_name = tf_desc.add_paragraph()
+            p_name.text = f"{desc_labels[i]} ({ratings[i]}/5)"
+            p_name.font.name = FONT_NAME
+            p_name.font.size = Pt(9)
+            p_name.font.bold = True
+            p_name.font.color.rgb = NAVY
+            p_name.space_before = Pt(6)
+
+            p_detail = tf_desc.add_paragraph()
+            p_detail.text = descriptions.get(key, 'N/A')
+            p_detail.font.name = FONT_NAME
+            p_detail.font.size = Pt(8)
+            p_detail.font.color.rgb = DARK_GRAY
+
+        # Page number
+        txBox_pg = slide.shapes.add_textbox(Inches(9.0), Inches(7.0), Inches(0.8), Inches(0.3))
+        p_pg = txBox_pg.text_frame.paragraphs[0]
+        p_pg.text = str(page)
+        p_pg.font.name = FONT_NAME
+        p_pg.font.size = Pt(10)
+        p_pg.font.color.rgb = DARK_GRAY
+
+        return self
+
+    # ============================================================
+    # CFA EXCEL+SLIDE PAIRS
+    # ============================================================
+
+    def add_tornado_sensitivity_slide(self, data: Dict = None, include_cover: bool = True):
+        """
+        Add Tornado Sensitivity Chart slide — horizontal bars showing IRR range
+        for each variable, sorted by impact.
+
+        Args:
+            data: Optional dict with keys: variables (list of dicts with name,
+                  low_irr, base_irr, high_irr), base_irr
+            include_cover: Whether to add a section header
+        """
+        data = data or {}
+
+        if include_cover:
+            self._add_section_header("Sensitivity Analysis")
+
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[6])
+        page = self._next_page()
+
+        # Title
+        txBox = slide.shapes.add_textbox(Inches(0.3), Inches(0.2), Inches(9.5), Inches(0.3))
+        p = txBox.text_frame.paragraphs[0]
+        p.text = f"Tornado Sensitivity — {self.company_name}"
+        p.font.name = FONT_NAME
+        p.font.size = Pt(16)
+        p.font.bold = True
+        p.font.color.rgb = NAVY
+
+        txBox_sub = slide.shapes.add_textbox(Inches(0.3), Inches(0.55), Inches(9.5), Inches(0.3))
+        p_sub = txBox_sub.text_frame.paragraphs[0]
+        p_sub.text = "Single-variable sensitivity on Sponsor IRR (base case shown as center line)"
+        p_sub.font.name = FONT_NAME
+        p_sub.font.size = Pt(10)
+        p_sub.font.color.rgb = DARK_GRAY
+
+        base_irr = data.get('base_irr', 22.0)
+        variables = data.get('variables', [
+            {"name": "Exit Multiple", "low_irr": 16.0, "high_irr": 29.0},
+            {"name": "Entry Multiple", "low_irr": 18.0, "high_irr": 27.5},
+            {"name": "Revenue Growth", "low_irr": 18.5, "high_irr": 26.0},
+            {"name": "EBITDA Margin", "low_irr": 19.0, "high_irr": 25.5},
+            {"name": "Leverage (Turns)", "low_irr": 20.0, "high_irr": 24.5},
+            {"name": "Interest Rate", "low_irr": 20.5, "high_irr": 23.5},
+            {"name": "Capex % Revenue", "low_irr": 21.0, "high_irr": 23.0},
+        ])
+
+        # Sort by impact range (widest first)
+        variables.sort(key=lambda v: (v.get('high_irr', base_irr) - v.get('low_irr', base_irr)), reverse=True)
+
+        # Chart area
+        chart_left = 2.2
+        chart_right = 9.2
+        chart_width = chart_right - chart_left
+        chart_top = 1.1
+        bar_height = 0.55
+        bar_gap = 0.12
+
+        # IRR range for scaling
+        all_irrs = [v.get('low_irr', base_irr) for v in variables] + [v.get('high_irr', base_irr) for v in variables]
+        min_irr = min(all_irrs) - 2
+        max_irr = max(all_irrs) + 2
+        irr_range = max_irr - min_irr
+
+        def irr_to_x(irr):
+            return chart_left + (irr - min_irr) / irr_range * chart_width
+
+        # Base case vertical line
+        base_x = irr_to_x(base_irr)
+        base_line = slide.shapes.add_connector(
+            1, Inches(base_x), Inches(chart_top - 0.1),
+            Inches(base_x), Inches(chart_top + len(variables) * (bar_height + bar_gap) + 0.1))
+        base_line.line.color.rgb = DARK_GRAY
+        base_line.line.width = Pt(1.5)
+
+        # Base IRR label
+        txBox_base = slide.shapes.add_textbox(
+            Inches(base_x - 0.4), Inches(chart_top - 0.35), Inches(0.8), Inches(0.25))
+        p_base = txBox_base.text_frame.paragraphs[0]
+        p_base.text = f"Base: {base_irr:.1f}%"
+        p_base.font.name = FONT_NAME
+        p_base.font.size = Pt(8)
+        p_base.font.bold = True
+        p_base.font.color.rgb = DARK_GRAY
+        p_base.alignment = PP_ALIGN.CENTER
+
+        for i, var in enumerate(variables):
+            top = chart_top + i * (bar_height + bar_gap)
+            low_irr = var.get('low_irr', base_irr)
+            high_irr = var.get('high_irr', base_irr)
+
+            # Variable label (left side)
+            txBox_name = slide.shapes.add_textbox(
+                Inches(0.2), Inches(top + 0.05), Inches(1.9), Inches(bar_height - 0.1))
+            p_name = txBox_name.text_frame.paragraphs[0]
+            p_name.text = var.get('name', '')
+            p_name.font.name = FONT_NAME
+            p_name.font.size = Pt(9)
+            p_name.font.bold = True
+            p_name.font.color.rgb = DARK_GRAY
+            p_name.alignment = PP_ALIGN.RIGHT
+
+            # Low bar (left of base) — red
+            if low_irr < base_irr:
+                x_start = irr_to_x(low_irr)
+                x_end = irr_to_x(base_irr)
+                bar_w = x_end - x_start
+                bar = slide.shapes.add_shape(
+                    MSO_SHAPE.RECTANGLE,
+                    Inches(x_start), Inches(top), Inches(bar_w), Inches(bar_height))
+                bar.fill.solid()
+                bar.fill.fore_color.rgb = RGBColor(255, 120, 120)
+                bar.line.fill.background()
+
+                # Low value label
+                txBox_low = slide.shapes.add_textbox(
+                    Inches(x_start - 0.4), Inches(top + 0.05),
+                    Inches(0.4), Inches(bar_height - 0.1))
+                p_low = txBox_low.text_frame.paragraphs[0]
+                p_low.text = f"{low_irr:.1f}%"
+                p_low.font.name = FONT_NAME
+                p_low.font.size = Pt(7)
+                p_low.font.color.rgb = ACCENT_RED
+                p_low.alignment = PP_ALIGN.RIGHT
+
+            # High bar (right of base) — green
+            if high_irr > base_irr:
+                x_start = irr_to_x(base_irr)
+                x_end = irr_to_x(high_irr)
+                bar_w = x_end - x_start
+                bar = slide.shapes.add_shape(
+                    MSO_SHAPE.RECTANGLE,
+                    Inches(x_start), Inches(top), Inches(bar_w), Inches(bar_height))
+                bar.fill.solid()
+                bar.fill.fore_color.rgb = RGBColor(120, 200, 120)
+                bar.line.fill.background()
+
+                # High value label
+                txBox_high = slide.shapes.add_textbox(
+                    Inches(x_end), Inches(top + 0.05),
+                    Inches(0.4), Inches(bar_height - 0.1))
+                p_high = txBox_high.text_frame.paragraphs[0]
+                p_high.text = f"{high_irr:.1f}%"
+                p_high.font.name = FONT_NAME
+                p_high.font.size = Pt(7)
+                p_high.font.color.rgb = ACCENT_GREEN
+                p_high.alignment = PP_ALIGN.LEFT
+
+        # Page number
+        txBox_pg = slide.shapes.add_textbox(Inches(9.0), Inches(7.0), Inches(0.8), Inches(0.3))
+        p_pg = txBox_pg.text_frame.paragraphs[0]
+        p_pg.text = str(page)
+        p_pg.font.name = FONT_NAME
+        p_pg.font.size = Pt(10)
+        p_pg.font.color.rgb = DARK_GRAY
+
+        return self
+
+    def add_football_field_slide(self, data: Dict = None, include_cover: bool = True):
+        """
+        Add Football Field Valuation slide — horizontal range bars for each methodology.
+
+        Args:
+            data: Optional dict with keys: methods (list of dicts with name, low, mid, high),
+                  current_price
+            include_cover: Whether to add a section header
+        """
+        data = data or {}
+
+        if include_cover:
+            self._add_section_header("Valuation Summary")
+
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[6])
+        page = self._next_page()
+
+        # Title
+        txBox = slide.shapes.add_textbox(Inches(0.3), Inches(0.2), Inches(9.5), Inches(0.3))
+        p = txBox.text_frame.paragraphs[0]
+        p.text = f"Football Field Valuation — {self.company_name}"
+        p.font.name = FONT_NAME
+        p.font.size = Pt(16)
+        p.font.bold = True
+        p.font.color.rgb = NAVY
+
+        methods = data.get('methods', [
+            {"name": "DCF (WACC 9-11%)", "low": 38.0, "mid": 48.5, "high": 58.0},
+            {"name": "Trading Comps (EV/EBITDA)", "low": 36.0, "mid": 46.0, "high": 52.0},
+            {"name": "Transaction Comps", "low": 40.0, "mid": 50.0, "high": 60.0},
+            {"name": "Dividend Discount Model", "low": 34.0, "mid": 44.0, "high": 50.0},
+            {"name": "52-Week Range", "low": 32.0, "mid": 41.0, "high": 49.0},
+        ])
+
+        current_price = data.get('current_price', 41.25)
+
+        # Chart area
+        chart_left = 3.0
+        chart_right = 9.2
+        chart_width = chart_right - chart_left
+        chart_top = 1.0
+        bar_height = 0.7
+        bar_gap = 0.3
+
+        # Value range for scaling
+        all_vals = [m.get('low', 0) for m in methods] + [m.get('high', 0) for m in methods]
+        min_val = min(all_vals) - 5
+        max_val = max(all_vals) + 5
+        val_range = max_val - min_val
+
+        def val_to_x(val):
+            return chart_left + (val - min_val) / val_range * chart_width
+
+        # Color palette for bars
+        bar_colors = [
+            NAVY,
+            RGBColor(50, 100, 150),
+            RGBColor(100, 150, 200),
+            RGBColor(34, 139, 34),
+            RGBColor(150, 100, 50),
+        ]
+
+        for i, method in enumerate(methods):
+            top = chart_top + i * (bar_height + bar_gap)
+            low = method.get('low', 0)
+            mid = method.get('mid', 0)
+            high = method.get('high', 0)
+            color = bar_colors[i % len(bar_colors)]
+
+            # Method label
+            txBox_name = slide.shapes.add_textbox(
+                Inches(0.2), Inches(top + 0.1), Inches(2.7), Inches(bar_height - 0.2))
+            p_name = txBox_name.text_frame.paragraphs[0]
+            p_name.text = method.get('name', '')
+            p_name.font.name = FONT_NAME
+            p_name.font.size = Pt(9)
+            p_name.font.bold = True
+            p_name.font.color.rgb = DARK_GRAY
+            p_name.alignment = PP_ALIGN.RIGHT
+
+            # Range bar (low to high)
+            x_low = val_to_x(low)
+            x_high = val_to_x(high)
+            bar_w = x_high - x_low
+
+            bar = slide.shapes.add_shape(
+                MSO_SHAPE.ROUNDED_RECTANGLE,
+                Inches(x_low), Inches(top), Inches(bar_w), Inches(bar_height))
+            bar.fill.solid()
+            bar.fill.fore_color.rgb = color
+            bar.line.fill.background()
+
+            # Mid-point marker (white diamond)
+            x_mid = val_to_x(mid)
+            marker_size = 0.18
+            marker = slide.shapes.add_shape(
+                MSO_SHAPE.DIAMOND,
+                Inches(x_mid - marker_size / 2), Inches(top + bar_height / 2 - marker_size / 2),
+                Inches(marker_size), Inches(marker_size))
+            marker.fill.solid()
+            marker.fill.fore_color.rgb = WHITE
+            marker.line.color.rgb = color
+            marker.line.width = Pt(1)
+
+            # Value labels on bar
+            txBox_vals = slide.shapes.add_textbox(
+                Inches(x_low + 0.05), Inches(top + 0.05),
+                Inches(bar_w - 0.1), Inches(bar_height - 0.1))
+            p_vals = txBox_vals.text_frame.paragraphs[0]
+            p_vals.text = f"${low:.0f}    —    ${mid:.0f}    —    ${high:.0f}"
+            p_vals.font.name = FONT_NAME
+            p_vals.font.size = Pt(8)
+            p_vals.font.bold = True
+            p_vals.font.color.rgb = WHITE
+            p_vals.alignment = PP_ALIGN.CENTER
+
+        # Current price vertical line
+        if current_price:
+            x_current = val_to_x(current_price)
+            total_height = len(methods) * (bar_height + bar_gap)
+            current_line = slide.shapes.add_connector(
+                1, Inches(x_current), Inches(chart_top - 0.2),
+                Inches(x_current), Inches(chart_top + total_height))
+            current_line.line.color.rgb = ACCENT_RED
+            current_line.line.width = Pt(2)
+
+            txBox_current = slide.shapes.add_textbox(
+                Inches(x_current - 0.5), Inches(chart_top - 0.4), Inches(1.0), Inches(0.2))
+            p_current = txBox_current.text_frame.paragraphs[0]
+            p_current.text = f"Current: ${current_price:.2f}"
+            p_current.font.name = FONT_NAME
+            p_current.font.size = Pt(8)
+            p_current.font.bold = True
+            p_current.font.color.rgb = ACCENT_RED
+            p_current.alignment = PP_ALIGN.CENTER
+
+        # Page number
+        txBox_pg = slide.shapes.add_textbox(Inches(9.0), Inches(7.0), Inches(0.8), Inches(0.3))
+        p_pg = txBox_pg.text_frame.paragraphs[0]
+        p_pg.text = str(page)
+        p_pg.font.name = FONT_NAME
+        p_pg.font.size = Pt(10)
+        p_pg.font.color.rgb = DARK_GRAY
+
+        return self
+
+    def add_sotp_waterfall_slide(self, data: Dict = None, include_cover: bool = True):
+        """
+        Add SOTP Waterfall slide — stacked segments with EV bridge to equity.
+
+        Args:
+            data: Optional dict with keys: segments (list of dicts with name, ev, color),
+                  adjustments (list of dicts with name, value — negative for deductions),
+                  equity_value, shares_outstanding
+            include_cover: Whether to add a section header
+        """
+        data = data or {}
+
+        if include_cover:
+            self._add_section_header("Sum-of-the-Parts")
+
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[6])
+        page = self._next_page()
+
+        # Title
+        txBox = slide.shapes.add_textbox(Inches(0.3), Inches(0.2), Inches(9.5), Inches(0.3))
+        p = txBox.text_frame.paragraphs[0]
+        p.text = f"SOTP Waterfall — {self.company_name}"
+        p.font.name = FONT_NAME
+        p.font.size = Pt(16)
+        p.font.bold = True
+        p.font.color.rgb = NAVY
+
+        segments = data.get('segments', [
+            {"name": "Core Business", "ev": 850},
+            {"name": "Growth Division", "ev": 320},
+            {"name": "International", "ev": 180},
+            {"name": "Other / Corporate", "ev": 50},
+        ])
+
+        adjustments = data.get('adjustments', [
+            {"name": "Less: Net Debt", "value": -420},
+            {"name": "Less: Minority Interest", "value": -30},
+            {"name": "Plus: Cash & Equivalents", "value": 85},
+        ])
+
+        total_ev = sum(s.get('ev', 0) for s in segments)
+        equity_value = data.get('equity_value', total_ev + sum(a.get('value', 0) for a in adjustments))
+        shares = data.get('shares_outstanding', 20.0)
+
+        # Waterfall chart
+        chart_left = 0.8
+        chart_bottom = 5.5
+        chart_height = 3.5  # max bar height in inches
+        bar_width = 0.9
+        gap = 0.15
+
+        # All items: segments + total EV + adjustments + equity value
+        all_items = []
+        for s in segments:
+            all_items.append({"name": s['name'], "value": s['ev'], "type": "segment"})
+        all_items.append({"name": "Total EV", "value": total_ev, "type": "total"})
+        for a in adjustments:
+            all_items.append({"name": a['name'], "value": a['value'], "type": "adjustment"})
+        all_items.append({"name": "Equity Value", "value": equity_value, "type": "equity"})
+
+        max_val = max(total_ev, equity_value) * 1.1
+
+        def val_to_height(val):
+            return abs(val) / max_val * chart_height
+
+        # Segment colors
+        seg_colors = [
+            NAVY,
+            RGBColor(50, 100, 150),
+            RGBColor(100, 150, 200),
+            RGBColor(150, 180, 210),
+        ]
+
+        # Draw waterfall bars
+        running_top = chart_bottom  # Where the next segment stacks
+
+        for i, item in enumerate(all_items):
+            left = chart_left + i * (bar_width + gap)
+            val = item['value']
+            h = val_to_height(val)
+
+            if item['type'] == 'segment':
+                # Stacking segments from bottom up
+                bar_top = running_top - h
+                color = seg_colors[i % len(seg_colors)]
+                running_top = bar_top  # Next segment starts here
+
+                bar = slide.shapes.add_shape(
+                    MSO_SHAPE.RECTANGLE,
+                    Inches(left), Inches(bar_top), Inches(bar_width), Inches(h))
+                bar.fill.solid()
+                bar.fill.fore_color.rgb = color
+                bar.line.fill.background()
+
+            elif item['type'] == 'total':
+                # Total EV — full bar from bottom
+                h_total = val_to_height(total_ev)
+                bar_top = chart_bottom - h_total
+
+                bar = slide.shapes.add_shape(
+                    MSO_SHAPE.RECTANGLE,
+                    Inches(left), Inches(bar_top), Inches(bar_width), Inches(h_total))
+                bar.fill.solid()
+                bar.fill.fore_color.rgb = RGBColor(0, 80, 130)
+                bar.line.fill.background()
+
+                running_top = bar_top  # Reset for adjustments
+
+            elif item['type'] == 'adjustment':
+                if val < 0:
+                    # Deduction: bar drops down from running_top
+                    bar_top = running_top
+                    bar = slide.shapes.add_shape(
+                        MSO_SHAPE.RECTANGLE,
+                        Inches(left), Inches(bar_top), Inches(bar_width), Inches(h))
+                    bar.fill.solid()
+                    bar.fill.fore_color.rgb = ACCENT_RED
+                    bar.line.fill.background()
+                    running_top = bar_top + h
+                else:
+                    # Addition: bar goes up from running_top
+                    bar_top = running_top - h
+                    bar = slide.shapes.add_shape(
+                        MSO_SHAPE.RECTANGLE,
+                        Inches(left), Inches(bar_top), Inches(bar_width), Inches(h))
+                    bar.fill.solid()
+                    bar.fill.fore_color.rgb = ACCENT_GREEN
+                    bar.line.fill.background()
+                    running_top = bar_top
+
+            elif item['type'] == 'equity':
+                # Equity value — full bar from bottom
+                h_eq = val_to_height(equity_value)
+                bar_top = chart_bottom - h_eq
+
+                bar = slide.shapes.add_shape(
+                    MSO_SHAPE.RECTANGLE,
+                    Inches(left), Inches(bar_top), Inches(bar_width), Inches(h_eq))
+                bar.fill.solid()
+                bar.fill.fore_color.rgb = ACCENT_GREEN
+                bar.line.fill.background()
+
+            # Value label above/below bar
+            label_val = f"${abs(val):,.0f}M" if abs(val) >= 1 else f"${abs(val) * 1000:,.0f}K"
+            if item['type'] == 'total':
+                label_top = chart_bottom - val_to_height(total_ev) - 0.25
+            elif item['type'] == 'equity':
+                label_top = chart_bottom - val_to_height(equity_value) - 0.25
+            elif item['type'] == 'adjustment' and val < 0:
+                label_top = running_top + 0.02
+            else:
+                label_top = (bar_top if 'bar_top' in dir() else running_top) - 0.25
+
+            txBox_val = slide.shapes.add_textbox(
+                Inches(left - 0.1), Inches(label_top), Inches(bar_width + 0.2), Inches(0.2))
+            p_val = txBox_val.text_frame.paragraphs[0]
+            p_val.text = label_val
+            p_val.font.name = FONT_NAME
+            p_val.font.size = Pt(8)
+            p_val.font.bold = True
+            p_val.font.color.rgb = DARK_GRAY
+            p_val.alignment = PP_ALIGN.CENTER
+
+            # Item name label below chart
+            txBox_item = slide.shapes.add_textbox(
+                Inches(left - 0.15), Inches(chart_bottom + 0.1),
+                Inches(bar_width + 0.3), Inches(0.5))
+            tf_item = txBox_item.text_frame
+            tf_item.word_wrap = True
+            p_item = tf_item.paragraphs[0]
+            p_item.text = item['name']
+            p_item.font.name = FONT_NAME
+            p_item.font.size = Pt(7)
+            p_item.font.bold = True
+            p_item.font.color.rgb = DARK_GRAY
+            p_item.alignment = PP_ALIGN.CENTER
+
+        # Per-share summary box
+        summary_box = slide.shapes.add_shape(
+            MSO_SHAPE.ROUNDED_RECTANGLE,
+            Inches(0.5), Inches(6.3), Inches(9.0), Inches(0.5))
+        summary_box.fill.solid()
+        summary_box.fill.fore_color.rgb = RGBColor(248, 250, 252)
+        summary_box.line.color.rgb = NAVY
+        summary_box.line.width = Pt(1.5)
+
+        per_share = equity_value / shares if shares else 0
+        txBox_summary = slide.shapes.add_textbox(Inches(0.7), Inches(6.35), Inches(8.6), Inches(0.4))
+        p_summary = txBox_summary.text_frame.paragraphs[0]
+        p_summary.text = (f"Total EV: ${total_ev:,.0f}M  |  Equity Value: ${equity_value:,.0f}M  |  "
+                          f"Shares: {shares:.1f}M  |  Per Share: ${per_share:,.2f}")
+        p_summary.font.name = FONT_NAME
+        p_summary.font.size = Pt(10)
+        p_summary.font.bold = True
+        p_summary.font.color.rgb = NAVY
+        p_summary.alignment = PP_ALIGN.CENTER
+
+        # Page number
+        txBox_pg = slide.shapes.add_textbox(Inches(9.0), Inches(7.0), Inches(0.8), Inches(0.3))
+        p_pg = txBox_pg.text_frame.paragraphs[0]
+        p_pg.text = str(page)
+        p_pg.font.name = FONT_NAME
+        p_pg.font.size = Pt(10)
+        p_pg.font.color.rgb = DARK_GRAY
+
+        return self
+
+    # ============================================================
     # OUTPUT
     # ============================================================
 
@@ -3213,6 +4947,102 @@ def generate_control_premium_slides(company_name: str, output_path: str, data: D
 
 
 # ============================================================
+# CFA VISUAL SLIDES QUICK ACCESS
+# ============================================================
+
+def generate_wmbt_slide(company_name: str, output_path: str, data: Dict = None) -> str:
+    """Quick function to generate What Must Be True slide."""
+    gen = SlideGenerator(company_name)
+    gen._add_cover_slide(f"{company_name} - Investment Thesis", "What Must Be True Analysis")
+    gen.add_wmbt_slide(data, include_cover=False)
+    return gen.save(output_path)
+
+
+def generate_risk_mitigant_slide(company_name: str, output_path: str, data: Dict = None) -> str:
+    """Quick function to generate Risk-Mitigant Pairing slide."""
+    gen = SlideGenerator(company_name)
+    gen._add_cover_slide(f"{company_name} - Risk Assessment", "Risk-Mitigant Pairing")
+    gen.add_risk_mitigant_slide(data, include_cover=False)
+    return gen.save(output_path)
+
+
+def generate_valuation_blending_slide(company_name: str, output_path: str, data: Dict = None) -> str:
+    """Quick function to generate Valuation Blending slide."""
+    gen = SlideGenerator(company_name)
+    gen._add_cover_slide(f"{company_name} - Valuation", "Blended Valuation Summary")
+    gen.add_valuation_blending_slide(data, include_cover=False)
+    return gen.save(output_path)
+
+
+def generate_value_chain_slide(company_name: str, output_path: str, data: Dict = None) -> str:
+    """Quick function to generate Value Chain Analysis slide."""
+    gen = SlideGenerator(company_name)
+    gen._add_cover_slide(f"{company_name} - Value Chain", "Industry Value Chain Analysis")
+    gen.add_value_chain_slide(data, include_cover=False)
+    return gen.save(output_path)
+
+
+def generate_risk_matrix_slide(company_name: str, output_path: str, data: Dict = None) -> str:
+    """Quick function to generate Risk Matrix slide."""
+    gen = SlideGenerator(company_name)
+    gen._add_cover_slide(f"{company_name} - Risk Matrix", "Probability-Impact Assessment")
+    gen.add_risk_matrix_slide(data, include_cover=False)
+    return gen.save(output_path)
+
+
+def generate_tam_funnel_slide(company_name: str, output_path: str, data: Dict = None) -> str:
+    """Quick function to generate TAM/SAM/SOM Funnel slide."""
+    gen = SlideGenerator(company_name)
+    gen._add_cover_slide(f"{company_name} - Market Sizing", "TAM / SAM / SOM Analysis")
+    gen.add_tam_funnel_slide(data, include_cover=False)
+    return gen.save(output_path)
+
+
+def generate_pestel_slide(company_name: str, output_path: str, data: Dict = None) -> str:
+    """Quick function to generate PESTEL Analysis slide."""
+    gen = SlideGenerator(company_name)
+    gen._add_cover_slide(f"{company_name} - PESTEL", "Macro Environment Analysis")
+    gen.add_pestel_slide(data, include_cover=False)
+    return gen.save(output_path)
+
+
+def generate_porters_radar_slide(company_name: str, output_path: str, data: Dict = None) -> str:
+    """Quick function to generate Porter's Five Forces Radar slide."""
+    gen = SlideGenerator(company_name)
+    gen._add_cover_slide(f"{company_name} - Porter's Forces", "Five Forces Quantified Radar")
+    gen.add_porters_radar_slide(data, include_cover=False)
+    return gen.save(output_path)
+
+
+# ============================================================
+# CFA EXCEL+SLIDE PAIRS QUICK ACCESS
+# ============================================================
+
+def generate_tornado_sensitivity_slide(company_name: str, output_path: str, data: Dict = None) -> str:
+    """Quick function to generate Tornado Sensitivity Chart slide."""
+    gen = SlideGenerator(company_name)
+    gen._add_cover_slide(f"{company_name} - Sensitivity", "Tornado Sensitivity Analysis")
+    gen.add_tornado_sensitivity_slide(data, include_cover=False)
+    return gen.save(output_path)
+
+
+def generate_football_field_slide(company_name: str, output_path: str, data: Dict = None) -> str:
+    """Quick function to generate Football Field Valuation slide."""
+    gen = SlideGenerator(company_name)
+    gen._add_cover_slide(f"{company_name} - Valuation", "Football Field Analysis")
+    gen.add_football_field_slide(data, include_cover=False)
+    return gen.save(output_path)
+
+
+def generate_sotp_waterfall_slide(company_name: str, output_path: str, data: Dict = None) -> str:
+    """Quick function to generate SOTP Waterfall slide."""
+    gen = SlideGenerator(company_name)
+    gen._add_cover_slide(f"{company_name} - SOTP", "Sum-of-the-Parts Waterfall")
+    gen.add_sotp_waterfall_slide(data, include_cover=False)
+    return gen.save(output_path)
+
+
+# ============================================================
 # MODULE LISTING
 # ============================================================
 
@@ -3257,3 +5087,22 @@ if __name__ == "__main__":
     print("  generate_dcf_slides(company, path)")
     print("  generate_covenant_slides(company, path)")
     print("  generate_institutional_deck(company, path)")
+
+    print("\n" + "=" * 60)
+    print("CFA Visual Slides:")
+    print("=" * 60)
+    print("  generate_wmbt_slide(company, path)")
+    print("  generate_risk_mitigant_slide(company, path)")
+    print("  generate_valuation_blending_slide(company, path)")
+    print("  generate_value_chain_slide(company, path)")
+    print("  generate_risk_matrix_slide(company, path)")
+    print("  generate_tam_funnel_slide(company, path)")
+    print("  generate_pestel_slide(company, path)")
+    print("  generate_porters_radar_slide(company, path)")
+
+    print("\n" + "=" * 60)
+    print("CFA Excel+Slide Pairs:")
+    print("=" * 60)
+    print("  generate_tornado_sensitivity_slide(company, path)")
+    print("  generate_football_field_slide(company, path)")
+    print("  generate_sotp_waterfall_slide(company, path)")

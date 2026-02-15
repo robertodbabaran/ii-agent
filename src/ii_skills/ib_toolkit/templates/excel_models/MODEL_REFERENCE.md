@@ -183,6 +183,146 @@ Sponsor Equity       Financing Fees
 - Covenant compliance status
 - Headroom analysis
 
+### CFA-Derived Modules
+
+#### Reverse DCF (`add_reverse_dcf`)
+- Market-implied growth rates from current share price
+- Implied vs forecast comparison table
+
+#### DuPont Analysis (`add_dupont_analysis`)
+- 3-component and 5-component ROE decomposition
+- Trend analysis with driver attribution
+
+#### ROIC Decomposition (`add_roic_decomposition`)
+- ROIC vs WACC spread calculation
+- Economic profit and invested capital turnover
+
+#### DDM Valuation (`add_ddm_valuation`)
+- Two-stage and H-model dividend discount
+- Sensitivity grid (Cost of Equity × Terminal Growth)
+
+#### Earnings Quality (`add_earnings_quality`)
+- Beneish M-Score, Altman Z-Score, Piotroski F-Score
+- Conditional formatting dashboard
+
+#### Tornado Sensitivity (`add_tornado_sensitivity`)
+- Single-variable sensitivity with IRR impact ranking
+- Auto-sorted horizontal bar data for slide generation
+
+#### Football Field (`add_football_field`)
+- Valuation range comparison across methodologies
+- Low/Mid/High per method with weighted blend
+
+#### SOTP Valuation (`add_sotp_valuation`)
+- Sum-of-the-parts by business segment
+- Conglomerate discount sensitivity
+
+#### Enhanced WACC (`add_enhanced_wacc`)
+- 3-method cost of debt, multi-method beta
+- Country risk premium, size premium, illiquidity premium
+
+#### Geographic Terminal Growth (`add_geographic_terminal_growth`)
+- GDP-weighted terminal growth by geography
+- Reasonability check vs long-term inflation
+
+#### Multi-Stage DCF (`add_multi_stage_dcf`)
+- 3-stage DCF: explicit → transition → terminal
+- Linear growth decline with EV bridge
+
+#### Source Index (`add_source_index`)
+- Canonical repository of all metrics flowing to slides
+- Numbered metrics with source links and data vintage
+
+### Due Diligence Modules
+
+#### Quality of Earnings (`add_quality_of_earnings`)
+- EBITDA normalization with adjustments bridge
+- Run-rate analysis with pro forma earnings
+
+#### Working Capital Normalization (`add_working_capital_normalization`)
+- Component-level days analysis
+- NWC peg mechanism with seasonal patterns
+
+#### Customer & Revenue Quality (`add_customer_revenue_quality`)
+- Customer concentration analysis (top 10)
+- Retention cohorts, LTV, unit economics
+
+#### Credit & Debt Sizing (`add_credit_debt_sizing`)
+- Credit ratios and agency benchmarks
+- Debt capacity with stress test scenarios
+
+### Capital Structure Modules
+
+#### Dividend Recap (`add_dividend_recap`)
+- Mid-hold dividend sizing with leverage constraints
+- Returns impact analysis (before/after recap)
+
+#### Refinancing Analysis (`add_refinancing_analysis`)
+- Rate comparison with NPV of savings
+- Prepayment penalty cost-benefit
+
+#### Cap Table Waterfall (`add_cap_table_waterfall`)
+- Equity distribution with preferred return and catch-up
+- Multi-class equity with MIP and co-invest
+
+#### Sponsor Economics (`add_sponsor_economics`)
+- GP carry and management fee calculation
+- Fund-level returns with clawback analysis
+
+### Transaction Structure Modules
+
+#### Add-on Analysis (`add_addon_analysis`)
+- Platform + bolt-on combined model
+- Synergy quantification and accretion analysis
+
+#### Synergy Model (`add_synergy_model`)
+- Revenue and cost synergy phasing
+- Implementation costs and net NPV
+
+#### Carve-out Analysis (`add_carveout_analysis`)
+- Standalone P&L with TSA costs
+- Stranded cost identification and phase-out
+
+#### Earnout Model (`add_earnout_model`)
+- Performance milestone tracking
+- Probability-weighted earnout valuation
+
+#### Purchase Price Allocation (`add_purchase_price_allocation`)
+- Intangibles identification with useful lives
+- Goodwill residual and deferred tax impact
+
+### Value Creation Modules
+
+#### Value Creation Bridge (`add_value_creation_bridge`)
+- EBITDA growth, multiple expansion, deleveraging attribution
+- Organic vs. inorganic decomposition
+
+#### 100-Day Plan (`add_hundred_day_plan`)
+- Post-close priorities with phased milestones
+- Owner assignment and KPI tracking
+
+#### Exit Readiness (`add_exit_readiness`)
+- Exit option comparison and timing analysis
+- Readiness scorecard with gap identification
+
+#### Management Incentive Plan (`add_management_incentive_plan`)
+- MIP structure with vesting schedule
+- Payout scenarios with ratchets and sweet equity
+
+### Specialized Modules
+
+#### Rollup Model (`add_rollup_model`)
+- Multi-acquisition pipeline tracking
+- Multiple-arbitrage and combined metrics
+
+#### Tax Analysis (`add_tax_analysis`)
+- NOL utilization schedule
+- Step-up analysis with tax shield quantification
+
+#### Control Premium Analysis (`add_control_premium_analysis`)
+- Premium to unaffected price (30-day VWAP)
+- Historical precedent premium comparison
+
 ---
 
 ## Prompt-to-Module Mapping
@@ -209,6 +349,67 @@ Sponsor Equity       Financing Fees
 | "DCF model", "discounted cash flow", "terminal value" | `dcf_valuation` | via ExcelModelGenerator |
 | "covenant analysis", "leverage covenant", "coverage covenant" | `covenant_analysis` | via ExcelModelGenerator |
 | "institutional model", "7-day model", "comprehensive LBO" | all + institutional | `generate_comprehensive_lbo()` |
+
+### CFA Enrichment Modules
+
+| User Request | Module | Function |
+|--------------|--------|----------|
+| "reverse DCF", "implied growth" | `reverse_dcf` | `add_reverse_dcf()` |
+| "DuPont", "ROE decomposition" | `dupont_analysis` | `add_dupont_analysis()` |
+| "ROIC", "economic profit", "invested capital" | `roic_decomposition` | `add_roic_decomposition()` |
+| "DDM", "dividend discount" | `ddm_valuation` | `add_ddm_valuation()` |
+| "earnings quality", "M-Score", "Z-Score", "F-Score" | `earnings_quality` | `add_earnings_quality()` |
+| "tornado", "single variable sensitivity" | `tornado_sensitivity` | `add_tornado_sensitivity()` |
+| "football field", "valuation range" | `football_field` | `add_football_field()` |
+| "SOTP", "sum of the parts" | `sotp_valuation` | `add_sotp_valuation()` |
+| "enhanced WACC", "multi-method beta" | `enhanced_wacc` | `add_enhanced_wacc()` |
+| "geographic terminal growth", "GDP-weighted" | `geographic_terminal_growth` | `add_geographic_terminal_growth()` |
+| "multi-stage DCF", "3-stage DCF" | `multi_stage_dcf` | `add_multi_stage_dcf()` |
+
+### Due Diligence Modules
+
+| User Request | Module | Function |
+|--------------|--------|----------|
+| "quality of earnings", "QoE", "EBITDA adjustments" | `quality_of_earnings` | `add_quality_of_earnings()` |
+| "NWC normalization", "NWC peg", "target NWC" | `working_capital_normalization` | `add_working_capital_normalization()` |
+| "customer quality", "concentration", "churn", "LTV" | `customer_revenue_quality` | `add_customer_revenue_quality()` |
+| "credit analysis", "debt capacity", "stress test" | `credit_debt_sizing` | `add_credit_debt_sizing()` |
+
+### Capital Structure Modules
+
+| User Request | Module | Function |
+|--------------|--------|----------|
+| "dividend recap", "recapitalization" | `dividend_recap` | `add_dividend_recap()` |
+| "refinancing", "rate savings" | `refinancing_analysis` | `add_refinancing_analysis()` |
+| "cap table", "waterfall", "LP/GP" | `cap_table_waterfall` | `add_cap_table_waterfall()` |
+| "sponsor economics", "carry", "GP economics" | `sponsor_economics` | `add_sponsor_economics()` |
+
+### Transaction Structure Modules
+
+| User Request | Module | Function |
+|--------------|--------|----------|
+| "add-on", "bolt-on" | `addon_analysis` | `add_addon_analysis()` |
+| "synergies", "cost savings" | `synergy_model` | `add_synergy_model()` |
+| "carve-out", "spin-off" | `carveout_analysis` | `add_carveout_analysis()` |
+| "earnout", "contingent consideration" | `earnout_model` | `add_earnout_model()` |
+| "PPA", "goodwill", "purchase price allocation" | `purchase_price_allocation` | `add_purchase_price_allocation()` |
+
+### Value Creation Modules
+
+| User Request | Module | Function |
+|--------------|--------|----------|
+| "value bridge", "value creation" | `value_creation_bridge` | `add_value_creation_bridge()` |
+| "100-day plan", "post-close" | `hundred_day_plan` | `add_hundred_day_plan()` |
+| "exit readiness", "exit planning" | `exit_readiness` | `add_exit_readiness()` |
+| "MIP", "management equity" | `management_incentive_plan` | `add_management_incentive_plan()` |
+
+### Specialized Modules
+
+| User Request | Module | Function |
+|--------------|--------|----------|
+| "rollup", "platform build" | `rollup_model` | `add_rollup_model()` |
+| "tax", "NOL", "step-up" | `tax_analysis` | `add_tax_analysis()` |
+| "control premium", "takeover premium" | `control_premium_analysis` | `add_control_premium_analysis()` |
 
 ---
 
@@ -287,7 +488,16 @@ print(f"Tips: {framework['tips']}")
 
 ```
 ii-agent/src/ii_skills/ib_toolkit/templates/excel_models/
-├── excel_modules.py       # Modular generator (USE THIS)
-├── MODEL_REFERENCE.md     # This reference document
-└── [generated models]     # Output files
+├── excel_modules.py           # ExcelModelGenerator assembly (USE THIS)
+├── _base.py                   # Base class, MODEL_MODULES registry, CASE_FRAMEWORKS
+├── _core_modules.py           # 14 core modules (S&U, OpModel, Debt, Returns, Scenario, DCF, etc.)
+├── _cfa_modules.py            # 11 CFA modules (Reverse DCF, DuPont, ROIC, DDM, Earnings Quality, etc.)
+├── _dd_modules.py             # 4 DD modules (QoE, NWC Normalization, Customer Quality, Credit)
+├── _capital_structure.py      # 4 capital structure modules (Dividend Recap, Refi, Waterfall, Sponsor)
+├── _transaction_modules.py    # 5 transaction modules (Add-on, Synergy, Carve-out, Earnout, PPA)
+├── _value_creation.py         # 4 value creation modules (Bridge, 100-Day, Exit, MIP)
+├── _specialized_modules.py    # 4 specialized modules (Rollup, Tax, Control Premium, Source Index)
+├── formula_builder.py         # FormulaBuilder helper class
+├── MODEL_REFERENCE.md         # This reference document
+└── [generated models]         # Output files
 ```

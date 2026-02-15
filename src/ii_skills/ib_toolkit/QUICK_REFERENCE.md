@@ -74,6 +74,36 @@ When the user asks for analysis, generate BOTH the Excel sheet AND corresponding
 | "tax analysis", "tax shield", "NOL" | `add_tax_analysis()` | Tax Analysis | `add_tax_slides()` | 2 |
 | "control premium", "takeover premium" | `add_control_premium_analysis()` | Control Premium Analysis | `add_control_premium_slides()` | 2 |
 
+### CFA Enrichment Modules
+
+| User Request | Excel Module | Excel Sheet | Slide Module | Slides |
+|--------------|--------------|-------------|--------------|--------|
+| "reverse DCF", "implied growth" | `add_reverse_dcf()` | Reverse DCF | — | — |
+| "DuPont", "ROE decomposition" | `add_dupont_analysis()` | DuPont Analysis | — | — |
+| "ROIC", "economic profit" | `add_roic_decomposition()` | ROIC Decomposition | — | — |
+| "DDM", "dividend discount" | `add_ddm_valuation()` | DDM Valuation | — | — |
+| "earnings quality", "M-Score", "Z-Score" | `add_earnings_quality()` | Earnings Quality | — | — |
+| "enhanced WACC", "multi-method beta" | `add_enhanced_wacc()` | Enhanced WACC | — | — |
+| "geographic terminal growth" | `add_geographic_terminal_growth()` | Geo Terminal Growth | — | — |
+| "multi-stage DCF", "3-stage DCF" | `add_multi_stage_dcf()` | Multi-Stage DCF | — | — |
+| "tornado", "single-variable sensitivity" | `add_tornado_sensitivity()` | Tornado Sensitivity | `add_tornado_sensitivity_slide()` | 1 |
+| "football field", "valuation range" | `add_football_field()` | Football Field | `add_football_field_slide()` | 1 |
+| "SOTP", "sum of the parts" | `add_sotp_valuation()` | SOTP Valuation | `add_sotp_waterfall_slide()` | 1 |
+| "source index", "data audit trail" | `add_source_index()` | Source Index | — | — |
+
+### CFA Visual Slides (Slide-Only)
+
+| User Request | Slide Module | Slides |
+|--------------|--------------|--------|
+| "WMBT", "what must be true" | `add_wmbt_slide()` | 1 |
+| "risk mitigant", "risk pairing" | `add_risk_mitigant_slide()` | 1 |
+| "valuation blend", "weighted valuation" | `add_valuation_blending_slide()` | 1 |
+| "value chain", "horizontal flow" | `add_value_chain_slide()` | 1 |
+| "risk matrix", "probability impact" | `add_risk_matrix_slide()` | 1 |
+| "TAM funnel", "market sizing" | `add_tam_funnel_slide()` | 1 |
+| "PESTEL", "macro analysis" | `add_pestel_slide()` | 1 |
+| "Porter's radar", "five forces quantified" | `add_porters_radar_slide()` | 1 |
+
 ### Slides Only (No Excel)
 
 | User Request | Slide Module | Slides |
@@ -151,6 +181,22 @@ When the user asks for analysis, generate BOTH the Excel sheet AND corresponding
 | Rollup Model | Platform + add-ons | Combined metrics, Blended multiple |
 | Tax Analysis | Tax structure, Shields | PV of tax attributes |
 | Control Premium Analysis | Premium to unaffected | Precedent premiums |
+| Source Index | Canonical data repository | Numbered metrics with source links |
+
+### CFA Enrichment Sheets
+| Sheet Name | Contents | Key Outputs |
+|------------|----------|-------------|
+| Reverse DCF | Market-implied growth | Implied vs forecast comparison |
+| DuPont Analysis | ROE decomposition | 3/5-component driver attribution |
+| ROIC Decomposition | ROIC vs WACC | Economic profit spread |
+| DDM Valuation | Dividend discount model | Two-stage DDM with sensitivity |
+| Earnings Quality | M-Score, Z-Score, F-Score | Quality dashboard |
+| Tornado Sensitivity | Single-variable sensitivity | IRR-ranked variable impacts |
+| Football Field | Valuation range by method | Low/Mid/High per methodology |
+| SOTP Valuation | Sum-of-the-parts | Segment values + conglomerate discount |
+| Enhanced WACC | Multi-method cost of capital | 3-method Kd, CRP, size premium |
+| Geo Terminal Growth | GDP-weighted terminal rate | Revenue-weighted country growth |
+| Multi-Stage DCF | 3-stage DCF | Explicit → transition → terminal |
 
 ## Quick Access Functions
 
@@ -185,6 +231,20 @@ gen.add_management_incentive_plan()
 gen.add_rollup_model()
 gen.add_tax_analysis()
 gen.add_control_premium_analysis()
+gen.add_source_index()
+
+# CFA Enrichment
+gen.add_reverse_dcf()
+gen.add_dupont_analysis()
+gen.add_roic_decomposition()
+gen.add_ddm_valuation()
+gen.add_earnings_quality()
+gen.add_tornado_sensitivity()
+gen.add_football_field()
+gen.add_sotp_valuation()
+gen.add_enhanced_wacc()
+gen.add_geographic_terminal_growth()
+gen.add_multi_stage_dcf()
 ```
 
 ### Slides
