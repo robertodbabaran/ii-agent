@@ -19,8 +19,9 @@ Config/
 **/*.pdf
 !docs/**/*.pdf
 
-# Sensitive skill directories (untracked, contain personal data)
-src/ii_skills/career_toolkit/resources/
+# Proprietary skills — local only, NEVER commit to public GitHub
+src/ii_skills/career_toolkit/
+src/ii_skills/spaced_repetition/
 src/ii_skills/podcast_deep_dive/output/
 
 # ============================================================
