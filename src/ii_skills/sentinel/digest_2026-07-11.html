@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sentinel Weekly Digest — 2026-07-11</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0f0f13;
+    color: #e4e4ef;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .wrapper { max-width: 680px; margin: 0 auto; padding: 32px 20px; }
+
+  .header {
+    border-bottom: 1px solid #2a2a38;
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+  .header-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #6b6b80;
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+  }
+  .header .date {
+    font-size: 13px;
+    color: #6b6b80;
+    margin-top: 6px;
+  }
+
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7c6af5;
+    border-left: 3px solid #7c6af5;
+    padding-left: 10px;
+    margin-bottom: 16px;
+  }
+
+  .headline {
+    background: #16161f;
+    border: 1px solid #22222e;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+  }
+  .headline-num {
+    font-size: 10px;
+    color: #4a4a5a;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .headline-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #f0f0ff;
+    margin-bottom: 6px;
+  }
+  .headline-body {
+    font-size: 14px;
+    color: #9090a8;
+    line-height: 1.6;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .tag-anthropic { background: #1e1a38; color: #a98bfa; }
+  .tag-google    { background: #0d2010; color: #5fbf7a; }
+  .tag-openai    { background: #0d1a14; color: #10a37f; }
+  .tag-github    { background: #0d1117; color: #8b949e; }
+  .tag-mcp       { background: #0d1a20; color: #5bc4d8; }
+  .tag-aws       { background: #100d1a; color: #f7a83d; }
+  .tag-langchain { background: #0d1820; color: #5ba8d8; }
+  .tag-research  { background: #1a100d; color: #d87c5a; }
+
+  .item {
+    padding: 12px 0;
+    border-bottom: 1px solid #1c1c28;
+  }
+  .item:last-child { border-bottom: none; }
+  .item-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 4px;
+  }
+  .item-body {
+    font-size: 13.5px;
+    color: #8888a0;
+    line-height: 1.55;
+  }
+  .ii-pill {
+    display: inline-block;
+    font-size: 10px;
+    background: #7c6af5;
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+  }
+  .warning-pill {
+    display: inline-block;
+    font-size: 10px;
+    background: #6b1a1a;
+    color: #ffaaaa;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+  }
+  .new-pill {
+    display: inline-block;
+    font-size: 10px;
+    background: #0e2a1a;
+    color: #5fbf7a;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+  }
+  .action-pill {
+    display: inline-block;
+    font-size: 10px;
+    background: #1a1620;
+    color: #c4a0f5;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+  }
+
+  a { color: #7c6af5; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .read-item { padding: 10px 0; border-bottom: 1px solid #1c1c28; }
+  .read-item:last-child { border-bottom: none; }
+  .read-link { font-size: 14px; font-weight: 500; color: #7c6af5; }
+  .read-why { font-size: 13px; color: #6b6b80; margin-top: 2px; }
+
+  .rec-box {
+    background: linear-gradient(135deg, #18103a 0%, #10181a 100%);
+    border: 1px solid #3a2a6a;
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .rec-box .rec-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #a98bfa;
+    margin-bottom: 8px;
+  }
+  .rec-box .rec-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+  .rec-box .rec-body {
+    font-size: 14px;
+    color: #b0b0c8;
+    line-height: 1.65;
+  }
+
+  .footer {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid #1c1c28;
+    font-size: 12px;
+    color: #4a4a5a;
+    text-align: center;
+    line-height: 1.6;
+  }
+  .sig { font-size: 14px; color: #6b6b80; margin-top: 28px; font-style: italic; }
+  code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    background: #1c1c2e;
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: #c4a0f5;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">SENTINEL &nbsp;/&nbsp; AI Agent Ecosystem Monitor</div>
+    <h1>Weekly Digest</h1>
+    <div class="date">Week of July 5 – 11, 2026 &nbsp;·&nbsp; ii-agent edition</div>
+  </div>
+
+  <!-- Top 5 Headlines -->
+  <div class="section">
+    <div class="section-title">Top 5 Headlines</div>
+
+    <div class="headline">
+      <div class="headline-num">01 &nbsp;<span class="tag tag-anthropic">ANTHROPIC</span></div>
+      <div class="headline-title">Claude Sonnet 5 is now the default in Claude Code — 1M context, adaptive thinking on, promotional pricing through Aug 31</div>
+      <div class="headline-body">
+        <strong>Claude Sonnet 5</strong> became the default model in Claude Code (v2.1.197+) this week, replacing Sonnet 4.6 for all new sessions. The model ships with a <strong>native 1M-token context window</strong>, adaptive thinking enabled by default on every request, and real-time cybersecurity safeguards — the first Sonnet-tier model to include these. Promotional API pricing: <strong>$2 input / $10 output per MTok</strong> through August 31 (then $3/$15). For Claude Code users, the model update is automatic on latest versions; check <code>claude --version</code> and update if you're below 2.1.197. Separately, Anthropic expanded <strong>Cowork to mobile and web</strong> with background work, scheduled tasks, shared projects, and mobile approvals — Max plan users get doubled usage limits through August 5.
+      </div>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">02 &nbsp;<span class="tag tag-mcp">MCP</span></div>
+      <div class="headline-title">MCP July 28 Release Candidate: stateless-by-default spec — sessions eliminated, Tasks extension, MCP Apps land in 17 days</div>
+      <div class="headline-body">
+        The <strong>2026-07-28 MCP specification Release Candidate</strong> dropped this week — described by the MCP team as "the largest revision since launch." The core structural change: <strong>sessions are eliminated</strong>. The <code>initialize</code> handshake and <code>Mcp-Session-Id</code> header are removed; every request is now fully self-contained and runs behind any standard round-robin load balancer without sticky sessions. New additions in the RC: <strong>Tasks extension</strong> for long-running work via opaque handles; <strong>MCP Apps</strong> for server-rendered UIs surfaced directly inside Claude Code via sandboxed iframes; and routable headers (<code>Mcp-Method</code>, <code>Mcp-Name</code>) for gateway routing without body inspection. The formal deprecation policy also codifies a 30-day minimum migration window for all future breaking changes. The ecosystem now indexes 15,930+ public MCP servers. Also this week: <strong>X (Twitter) launched an official MCP server</strong>, joining GitHub, Slack, Notion, Stripe, and Salesforce with a hosted server enabling AI tools to interact with X API using user account permissions.
+      </div>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">03 &nbsp;<span class="tag tag-research">RESEARCH</span></div>
+      <div class="headline-title">Lilian Weng publishes "Harness Engineering for Self-Improvement" — agent = LLM + memory + tools + planning + workflow + eval + permissions</div>
+      <div class="headline-body">
+        Lilian Weng (OpenAI) published a <strong>28-minute research survey</strong> on July 4 covering <em>harness engineering</em> — the expanded frame for what it takes to build agents that improve themselves. The key shift from the 2023 "agent = LLM + memory + tools + planning" definition: harness engineering additionally includes <strong>loop/workflow design, evaluation, permission controls, and persistent state management</strong>. The post reviews 35 papers on recursive self-improvement (RSI) and synthesises the conditions under which an AI system can use its current capability to improve the cognitive machinery that produces that capability. Yudkowsky's original RSI loop (1965: "ultraintelligent machine designs better machines") is now traceable to concrete harness architectures. The ii-agent relevance is direct: every skill in the system is a mini-harness — the framework's maturity determines whether improvement cycles compound or decay.
+      </div>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">04 &nbsp;<span class="tag tag-aws">AWS</span></div>
+      <div class="headline-title">Bedrock Classic sunsets July 30 — AgentCore CLI v0.4 GA with multi-framework deploy, managed session storage, and agent-to-agent protocol</div>
+      <div class="headline-body">
+        <strong>Critical deadline:</strong> Amazon Bedrock Agents Classic is no longer accepting new customers and sunsets <strong>July 30, 2026</strong>. The replacement, <strong>Amazon Bedrock AgentCore CLI v0.4.0</strong>, reached GA this week. Key additions: scaffolding for Strands, LangChain, Google ADK, OpenAI Agents SDK, and Claude Agent SDK in a single deploy command; <strong>managed session storage</strong> (1 GB per session, 14-day retention, standard filesystem ops); a <strong>Web Search tool</strong> as a built-in MCP connector backed by Amazon's index with zero data egress; and Bedrock Guardrails integration for prompt-injection detection on all agent I/O. Account rate limits increased to 5,000 active sessions and 200 TPS. The <strong>agent-to-agent (A2A) protocol</strong> shipped in AgentCore this week — agents in different frameworks (LangGraph, OpenAI Agents, Google ADK, Claude SDK) can now share context and capabilities via a common verifiable Agent Card format.
+      </div>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">05 &nbsp;<span class="tag tag-github">GITHUB TRENDING</span></div>
+      <div class="headline-title">ai-job-search tops GitHub trending (3.4k stars/day); MadsLorentzen's Claude Code framework sets a record; memory framework Cloudflare Agent Memory exits beta</div>
+      <div class="headline-body">
+        This week's fastest-moving GitHub project: <strong>MadsLorentzen/ai-job-search</strong> — an AI job application framework built directly on Claude Code that hit 20k total stars, gaining 3.4k in a single day. The broader trending landscape: <strong>Langflow</strong> (146k), <strong>Dify</strong> (136k), and <strong>Flowise</strong> (51k) continue to dominate by star count, confirming the no-code/visual-builder trend as the plurality winner in agent tooling. Framework news: <strong>Cloudflare Agent Memory</strong> exited private beta, marking the maturation of persistent memory from experimental to managed infrastructure. <strong>Cognee</strong> released research showing that graph-enhanced memory retrieval achieves ~90% accuracy on contextual queries vs. ~60% for plain RAG — a substantial gap that favours hybrid vector-graph storage for production agents. The week's most interesting archived paper: "From Multi-Agent Systems and the Semantic Web to Agentic AI: A Unified Narrative of the Web of Agents" (arXiv:2507.10644), tracing the intellectual lineage from 1990s FIPA standards to today's A2A protocol.
+      </div>
+    </div>
+  </div>
+
+  <!-- Architecture Watch -->
+  <div class="section">
+    <div class="section-title">Architecture Watch</div>
+
+    <div class="item">
+      <div class="item-title">Harness Engineering: the six-layer agent model <span class="ii-pill">frame</span></div>
+      <div class="item-body">
+        Lilian Weng's survey formalises a six-layer model for production agent harnesses: (1) <strong>LLM backbone</strong>; (2) <strong>memory system</strong> (short-term/context, long-term/external, episodic); (3) <strong>tool use</strong> (function calling, MCP, sandboxed code); (4) <strong>planning</strong> (decomposition, reflection, self-critique); (5) <strong>workflow design</strong> (loop engineering, checkpointing, branching); (6) <strong>evaluation + permission controls</strong> (metric-driven feedback, capability boundaries). The sixth layer is what separates a research demo from a production harness. For ii-agent: layers 1–4 are well-covered by the existing skill architecture; layer 5 (explicit loop engineering and checkpoint design) and layer 6 (structured eval per skill, not just end-to-end) are the development frontier.
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-title">Stateless MCP = "handle as argument" — July 28 spec makes it mandatory for remote servers <span class="warning-pill">deadline</span></div>
+      <div class="item-body">
+        The July 28 MCP RC eliminates server-side session state for all remote MCP deployments. Every resource — a file handle, a browser instance, a search context — must now be passed as an explicit argument in each tool call, not held in a session slot. ii-agent's existing skill implementations (pdf_extractor, excel_modules.py, slide generators) are already stateless by design — file paths are always explicit arguments. This is architecturally correct. <strong>Action item:</strong> If you ever expose a skill as a remote MCP server (e.g., putting IB Toolkit behind an HTTP endpoint for other agents to call), the stateless constraint is non-negotiable. Design any future remote server to pass all state as JSON arguments, return results, and hold nothing. Migration window closes July 28.
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-title">Context Engineering: four production primitives (write / select / compress / isolate) <span class="action-pill">adopt</span></div>
+      <div class="item-body">
+        LangChain published a formal taxonomy of context engineering strategies this week. The four primitives: <em>write</em> (craft instructions and memory), <em>select</em> (retrieve only the relevant slice via RAG), <em>compress</em> (summarise or trim token waste), and <em>isolate</em> (keep unrelated context physically separate per sub-agent). A companion paper shows the <em>isolate</em> strategy cuts sub-agent error rates by 31% on multi-step tasks. Concrete ii-agent application: apply <em>isolate</em> between LBO modules — each sub-agent gets a context window containing only its inputs, no cross-module working notes. Apply <em>select</em> to deal_memory: fetch only the tagged slice relevant to the current module at dispatch time, not the full deal context at session start.
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-title">P2 dispatch contract — four-field task boundary reduces cross-module contamination in multi-agent flows</div>
+      <div class="item-body">
+        Production multi-agent research consistently identifies one tractable fix for sub-agent assumption drift: the <strong>P2 dispatch contract</strong>. Every sub-agent invocation must include four elements: (1) objective, (2) output format/schema, (3) tool/source guidance, and (4) an explicit <strong>NOT-DO boundary</strong> — what the agent must not model or assume. Teams that omit the boundary see hallucinated assumptions bleeding across modules. For ii-agent's LBO orchestrator, adding one NOT-DO clause per module dispatch takes under an hour and eliminates the most common error (Revenue Build assuming a capital structure, Debt Schedule re-deriving revenue). Start with the three highest-contamination modules: Revenue Build, Debt Schedule, Returns Analysis.
+      </div>
+    </div>
+  </div>
+
+  <!-- Capability Spotlight -->
+  <div class="section">
+    <div class="section-title">Capability Spotlight</div>
+
+    <div class="item">
+      <div class="item-title">Claude Code 2.1.207 — auto mode on Bedrock/Vertex/Foundry, fixed terminal freeze on long outputs <span class="new-pill">shipped</span></div>
+      <div class="item-body">
+        Today's Claude Code release (2.1.207, July 11) includes several notable fixes: <strong>Auto mode</strong> (model selection based on task complexity) is now available without the <code>CLAUDE_CODE_ENABLE_AUTO_MODE</code> opt-in on Bedrock, Vertex AI, and Foundry. <strong>Terminal freeze</strong> on very long outputs (tables, code blocks) is fixed — relevant for ii-agent sessions that generate large Excel schemas. Remote Control task status updates no longer drop during network interruptions. The <strong><code>/doctor</code> command now proposes trimming oversized CLAUDE.md files</strong> — worth running if the current CLAUDE.md is getting close to context limits. Bedrock and Vertex default changed to <strong>Claude Opus 4.8</strong> (not Sonnet 5) for users on those platforms.
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-title">Claude Code 2.1.206 — /commit-push-pr with auto-allowed git push, /cd with directory suggestions <span class="new-pill">shipped</span></div>
+      <div class="item-body">
+        This week's prior release (2.1.206, July 9) added useful workflow shortcuts: <code>/commit-push-pr</code> now auto-allows <code>git push</code> to configured push remotes, removing one permission prompt from the commit → PR flow. <code>/cd</code> now shows directory path suggestions inline. <code>/doctor</code> proposes trimming oversized checked-in CLAUDE.md files. For ii-agent's scheduled sentinel/newsletter runs that include git commits of output files, the auto-allowed git push in <code>/commit-push-pr</code> reduces the number of manual approvals required in automated sessions.
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-title">Cloudflare Agent Memory GA — managed persistent memory layer, no infrastructure required <span class="new-pill">GA</span></div>
+      <div class="item-body">
+        Cloudflare Agent Memory exited private beta this week, making managed persistent memory available to any agent on Cloudflare Workers. The implementation uses a hybrid vector-graph storage backend — aligned with the Cognee research showing 90% vs 60% retrieval accuracy advantage for graph-enhanced memory over plain RAG. Key properties: distributed across Cloudflare's edge, privacy-preserving (no cross-account data sharing), GDPR-compliant, and billing is pay-per-read/write. For ii-agent's current architecture, the most relevant use case is a cloud-based replacement for the local <code>DataStore</code> / <code>DealMemory</code> pattern if the system ever moves to a serverless execution model.
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-title">Graph-enhanced memory: +30pp retrieval accuracy over plain RAG — Cognee benchmark (May 2026) <span class="ii-pill">evaluate</span></div>
+      <div class="item-body">
+        Cognee released benchmark data showing graph-enhanced memory achieves approximately <strong>90% accuracy on contextual queries</strong> compared to ~60% for plain vector/RAG retrieval. The improvement comes from relationships between memory nodes (e.g., "this revenue assumption belongs to the Acme deal, Q3 2024 vintage, sourced from CIM page 47") being queryable, not just the text content. ii-agent's current <code>deal_memory</code> module uses a flat dictionary/JSON store — it retrieves "everything tagged Acme" rather than "only the revenue assumptions for Acme, Q3 2024." Adding a lightweight graph layer (even just a simple property graph with entity/relationship triples, no external DB needed) to deal_memory could substantially improve retrieval precision for multi-deal sessions.
+      </div>
+    </div>
+  </div>
+
+  <!-- Workflow Ideas -->
+  <div class="section">
+    <div class="section-title">Workflow Ideas</div>
+
+    <div class="item">
+      <div class="item-title">Add the six-layer harness audit to CLAUDE.md as a skill-level quality gate <span class="ii-pill">quick win</span></div>
+      <div class="item-body">
+        Weng's six-layer harness model maps directly to ii-agent's skill architecture. Proposed addition to CLAUDE.md: a one-page harness audit checklist for new skills. For each skill, verify: (1) backbone model assigned and sized appropriately (Haiku vs Sonnet); (2) memory strategy defined (what goes in deal_memory, what stays in-context); (3) tool list scoped to the minimum needed; (4) planning mode documented (single-shot vs. multi-step with reflection); (5) loop structure and checkpoint strategy specified; (6) evaluation metric and permission boundary documented. Skills that miss layers 5 or 6 are the most likely to fail silently in scheduled runs. The audit takes 10 minutes per skill and catches the gaps before they cause silent failures.
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-title">DSPy prompt evaluation for ii-agent skill prompts — systematic improvement via Willison's workflow <span class="action-pill">build this</span></div>
+      <div class="item-body">
+        Simon Willison published a concrete workflow for using <strong>DSPy to evaluate and improve system prompts</strong> for agentic tools, applied to his Datasette Agent SQL generation prompts. The steps: (1) define a scoring metric (e.g., "does this LBO module output match the reference schema?"); (2) generate 20–50 test cases from past case outputs; (3) run DSPy's teleprompter to search for prompt improvements against the metric; (4) evaluate candidates; (5) ship the winning prompt. For ii-agent, the highest-value application is the LBO module dispatch prompts — they're used repeatedly, the quality floor matters, and there are enough past case outputs to build a test set. Start with the Operating Model and Returns Analysis module prompts where prompt quality most directly impacts IC-ready accuracy.
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-title">Model-tier routing: Haiku 4.5 for mechanical tasks, Sonnet 5 for analysis — cost-neutral capability upgrade <span class="ii-pill">implement</span></div>
+      <div class="item-body">
+        Performance research confirms the gap between models narrows on structured tool-use tasks (schema compliance, formatting) and widens on open-ended analysis. Proposed routing for ii-agent: <strong>Haiku 4.5</strong> for module dispatch, formula generation, PDF extraction, Excel formatting, and newsletter data collection; <strong>Sonnet 5</strong> for investment thesis, IC oral prep, scenario analysis, deal screening, and sentinel digest composition. In Claude Code, set the <code>model</code> parameter in agent calls or use <code>--model</code> in subagent spawns. The Haiku cost savings on mechanical modules is material — at $0.25 input / $1.25 output per MTok, Haiku runs at ~8× lower cost than Sonnet 5, funding the higher-reasoning calls where they matter. This is cost-neutral or better overall.
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-title">Wire up MCP Apps preview — serve skill UIs directly inside Claude Code sessions <span class="action-pill">watch</span></div>
+      <div class="item-body">
+        The MCP July 28 RC introduces <strong>MCP Apps</strong>: servers can now ship interactive HTML interfaces that Claude Code renders in a sandboxed iframe, with UI actions going through the same audit and consent path as direct tool calls. The preview spec is live now — the feature is available to MCP server authors ahead of the July 28 GA. For ii-agent: the most useful near-term application is a deal intake UI that renders inside Claude Code. Instead of the user typing deal assumptions in natural language, a structured form (pre-seeded from the CIM extraction) is presented inline — the user reviews and confirms assumptions before the model proceeds. This reduces intake ambiguity and makes the human-in-the-loop step explicit. Watch the MCP blog for the server-author guide.
+      </div>
+    </div>
+  </div>
+
+  <!-- Worth Reading -->
+  <div class="section">
+    <div class="section-title">Worth Reading</div>
+
+    <div class="read-item">
+      <div class="read-link"><a href="https://lilianweng.github.io/posts/2026-07-04-harness/">Harness Engineering for Self-Improvement — Lilian Weng / Lil'Log</a></div>
+      <div class="read-why">28-minute survey of 35 papers on recursive self-improvement and the expanded harness model (beyond the classic "LLM + memory + tools + planning"). Read sections 4–6 on loop engineering, evaluation design, and permission controls — these are directly applicable to ii-agent's skill architecture and represent the gap between current state and production-grade harness maturity.</div>
+    </div>
+
+    <div class="read-item">
+      <div class="read-link"><a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/">The 2026-07-28 MCP Specification Release Candidate — MCP Blog</a></div>
+      <div class="read-why">The stateless-by-default section is the highest-priority read for anyone building MCP servers. The Tasks extension design (opaque handles, client-driven polling) is elegant and directly applicable to long-running II skills like LBO model generation. Migration window closes July 28 — 17 days from today.</div>
+    </div>
+
+    <div class="read-item">
+      <div class="read-link"><a href="https://www.latent.space/p/ainews-lilian-weng-summarizes-35">AINews: Lilian Weng Summarizes 35 Papers on Harness Engineering — Latent Space</a></div>
+      <div class="read-why">Latent Space's AINews summary of the Weng post, with curated community reactions from practitioners who've tried to implement RSI loops in production. The comment thread surfaces several failure modes (reward hacking, capability plateau at iteration 3–5) that are relevant if you ever want to run ii-agent on a self-improvement loop.</div>
+    </div>
+
+    <div class="read-item">
+      <div class="read-link"><a href="https://simonw.substack.com/p/agentic-engineering-patterns">Agentic Engineering Patterns — Simon Willison's Newsletter</a></div>
+      <div class="read-why">Willison's working collection of patterns that survive production: explicit tool schemas, safe execution layers, DSPy-driven prompt eval, and why "the agent decides everything" fails at the boundary between reasoning and side effects. Short, opinionated, directly applicable to how ii-agent skills call downstream tools.</div>
+    </div>
+
+    <div class="read-item">
+      <div class="read-link"><a href="https://amux.io/guides/ai-agent-orchestration-2026/">AI Agent Orchestration in 2026: Patterns, Tools, and the Complete Architecture Guide — amux</a></div>
+      <div class="read-why">Comprehensive overview of the five dominant multi-agent patterns in production: fan-out, pipeline, debate, supervisor, and swarm. The "debate" pattern (independent agents critique each other's output before synthesis) is underused in financial analysis contexts — a natural fit for IC sensitivity review where two agents independently estimate downside scenarios before the orchestrator merges them.</div>
+    </div>
+  </div>
+
+  <!-- Recommendation -->
+  <div class="section">
+    <div class="rec-box">
+      <div class="rec-label">&#9889; This Week's Recommendation</div>
+      <div class="rec-title">Add the harness audit checklist to CLAUDE.md — close the loop on skill-level evaluation and permission design</div>
+      <div class="rec-body">
+        The most impactful one-hour investment this week is formalising Weng's six-layer harness model as an ii-agent skill audit checklist in CLAUDE.md. Most ii-agent skills cover layers 1–4 (LLM, memory, tools, planning) but are thin on layer 5 (explicit loop engineering and checkpointing) and layer 6 (per-skill evaluation metrics and permission boundaries). These are the layers that matter for scheduled autonomous runs — where there's no human watching to catch silent failures.<br /><br />
+
+        <strong>The checklist (add one block per skill to CLAUDE.md):</strong><br />
+        1. <em>Model</em> — which model tier and why (Haiku/Sonnet/Opus)<br />
+        2. <em>Memory</em> — what goes to deal_memory, what stays in-context, what is discarded<br />
+        3. <em>Tools</em> — minimum scoped tool list; no tool that isn't needed<br />
+        4. <em>Planning</em> — single-shot or multi-step with reflection; if multi-step, how many iterations max<br />
+        5. <em>Loop</em> — where does the skill checkpoint; how does it resume on failure<br />
+        6. <em>Eval + permissions</em> — what metric determines success; what actions require human approval<br /><br />
+
+        Layer 5 is the most actionable gap right now. For the three newsletter skills (networth, market, health), add explicit checkpointing: if the email send fails, the skill should checkpoint the compiled content and retry the send only — not recompile. For the LBO modules, checkpoint after each validated sheet, not just at final delivery. This turns silent failures into diagnosable resume-able state, which is the difference between a brittle cron job and a production harness.
+      </div>
+    </div>
+  </div>
+
+  <!-- Sign-off -->
+  <div class="sig">— Jordan</div>
+
+  <!-- Footer -->
+  <div class="footer">
+    SENTINEL monitors Anthropic/Claude, agent frameworks, GitHub trending, and notable content weekly.<br/>
+    ii-agent &nbsp;·&nbsp; robertodbabaran/ii-agent &nbsp;·&nbsp; Digest generated 2026-07-11
+  </div>
+
+</div>
+</body>
+</html>
