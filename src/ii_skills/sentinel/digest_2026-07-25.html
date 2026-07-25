@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentinel Weekly Digest — 2026-07-25</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    background: #0f1117;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #e2e8f0;
+  }
+  .wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 16px;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%);
+    border: 1px solid #2d3748;
+    border-radius: 12px;
+    padding: 32px 36px 28px;
+    margin-bottom: 24px;
+  }
+  .header-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #7c8fa6;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+  .badge-hot { background: #7f1d1d; color: #fca5a5; }
+  .badge-new { background: #1e3a5f; color: #93c5fd; }
+  .badge-watch { background: #1f2d1a; color: #86efac; }
+
+  .section {
+    background: #1a1f2e;
+    border: 1px solid #2d3748;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #2d3748;
+  }
+  .section-icon {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  /* Headlines */
+  .headline {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #1e2535;
+  }
+  .headline:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .headline-num {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1e40af;
+    min-width: 28px;
+    line-height: 1.3;
+  }
+  .headline-body {}
+  .headline-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin: 0 0 4px;
+    line-height: 1.4;
+  }
+  .headline-desc {
+    font-size: 13.5px;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* Body content */
+  .item {
+    margin-bottom: 16px;
+  }
+  .item:last-child { margin-bottom: 0; }
+  .item-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin: 0 0 4px;
+  }
+  .item-body {
+    font-size: 13.5px;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* Reading list */
+  .read-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #1e2535;
+  }
+  .read-item:last-child { border-bottom: none; }
+  .read-arrow {
+    color: #3b82f6;
+    font-size: 13px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .read-body {}
+  .read-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    margin: 0 0 2px;
+  }
+  .read-title a {
+    color: #60a5fa;
+    text-decoration: none;
+  }
+  .read-title a:hover { text-decoration: underline; }
+  .read-desc {
+    font-size: 12.5px;
+    color: #64748b;
+    margin: 0;
+  }
+
+  /* Recommendation */
+  .rec-box {
+    background: linear-gradient(135deg, #1e3a5f22, #1a1f2e);
+    border: 1px solid #1e40af55;
+    border-left: 3px solid #3b82f6;
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .rec-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #3b82f6;
+    margin: 0 0 8px;
+  }
+  .rec-text {
+    font-size: 14px;
+    color: #cbd5e1;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 24px 0 0;
+    font-size: 12px;
+    color: #334155;
+  }
+  .footer strong { color: #475569; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-label">AI Agent Ecosystem Monitor</div>
+    <h1 class="header-title">Sentinel Weekly Digest</h1>
+    <p class="header-sub">Week of July 25, 2026 &nbsp;&bull;&nbsp; ii-agent personal system</p>
+  </div>
+
+  <!-- TOP 5 HEADLINES -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">📰</span>
+      <h2 class="section-title">Top 5 Headlines</h2>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">1</div>
+      <div class="headline-body">
+        <p class="headline-title">MCP Specification 2026-07-28 Ships This Week <span class="badge badge-hot">CRITICAL</span></p>
+        <p class="headline-desc">The most significant MCP update since launch finalizes July 28: stateless architecture (eliminates session handshake), a formal Extensions framework (MCP Apps + Tasks), OAuth 2.0-aligned auth, JSON Schema 2020-12 support, and W3C trace context propagation. SDK betas for Python, TypeScript, Go, and C# are live now. Any ii-agent MCP integrations using session-based patterns will need migration. The ecosystem has crossed 10,000+ MCP servers.</p>
+      </div>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">2</div>
+      <div class="headline-body">
+        <p class="headline-title">Claude Sonnet 5 Is the New Default Model <span class="badge badge-new">NEW</span></p>
+        <p class="headline-desc">Launched June 30, Claude Sonnet 5 is now the default across Claude.ai and Claude Code. It features a native 1M-token context window, adaptive thinking on by default, real-time cyber safeguards, and significant agentic improvements — better planning, tool use, and multi-step task completion. API priced at $2/$10 per million tokens (promotional through August 31). Replaces Sonnet 4.6 as the standard workhorse.</p>
+      </div>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">3</div>
+      <div class="headline-body">
+        <p class="headline-title">Claude Code: Voice Mode, Nested Agents, Live Artifact Data <span class="badge badge-new">NEW</span></p>
+        <p class="headline-desc">Voice mode now runs on Opus + Sonnet with access to connected tools (Gmail, Slack); subagents now support 3-level nesting (was 1); published artifacts can now call live MCP connectors on each view so dashboards stay fresh without re-running sessions; screen reader mode added; emoji shortcode autocomplete in prompt input. Git push to configured remotes now auto-allowed.</p>
+      </div>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">4</div>
+      <div class="headline-body">
+        <p class="headline-title">Amazon Bedrock Agents Classic Sunset July 30 <span class="badge badge-hot">ACTION</span></p>
+        <p class="headline-desc">The original Amazon Bedrock Agents (launched Nov 2023) is now "Bedrock Agents Classic" and closes to new customers July 30. AgentCore CLI reaches v0.4.0 GA supporting Google ADK, OpenAI Agents SDK, and multi-framework deployments. OpenAI GPT-5.6 Sol/Terra/Luna are GA on Bedrock. Managed session storage (1GB/session, 14-day retention) and Chrome Enterprise policies also ship.</p>
+      </div>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">5</div>
+      <div class="headline-body">
+        <p class="headline-title">AI Engineer World's Fair 2026: Application Race Declared <span class="badge badge-watch">TREND</span></p>
+        <p class="headline-desc">6,000 engineers descended on Moscone Center July 2. The clear consensus: the model race is over, the application/engineering race has begun. MCP is now "assumed infrastructure" — not a headline, a substrate. RAG fading from center stage. Production AI — deploying scalable, secure, reliable agent systems in enterprise — dominates the agenda. The EU AI Act, enforceable August 2026, classifies most multi-agent orchestration in high-impact sectors as "high-risk."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE WATCH -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🏗️</span>
+      <h2 class="section-title">Architecture Watch</h2>
+    </div>
+
+    <div class="item">
+      <p class="item-title">MCP Goes Stateless — Production Infrastructure Pattern</p>
+      <p class="item-body">The 2026-07-28 spec eliminates session stickiness entirely. MCP servers can now run behind standard round-robin load balancers — no more shared session stores or sticky routing. This transitions MCP from a "local dev tool" to a genuinely distributed protocol. Protocol metadata moves to <code style="background:#0f1117;padding:1px 4px;border-radius:3px;font-size:12px;">_meta</code> fields on individual requests. Any server using <code style="background:#0f1117;padding:1px 4px;border-radius:3px;font-size:12px;">Mcp-Session-Id</code> will need rearchitecting.</p>
+    </div>
+
+    <div class="item">
+      <p class="item-title">Microsoft Agent Framework Orchestration Patterns 1.0 (July 8)</p>
+      <p class="item-body">Sequential, Concurrent, Group Chat, Handoff, and Magentic-One orchestration patterns reach 1.0 stability in both .NET and Python SDKs. All patterns support checkpointing, human-in-the-loop approvals, streaming, and pause/resume for long-running workflows. The Magentic-One pattern — give a goal + manager + specialists, let the manager self-organize the team — is the least hand-coded option and worth evaluating for complex ii-agent multi-skill workflows.</p>
+    </div>
+
+    <div class="item">
+      <p class="item-title">Lilian Weng: "Harness Engineering for Self-Improvement" (2026)</p>
+      <p class="item-body">Former OpenAI researcher and Thinking Machines Lab co-founder published a landmark essay arguing the system surrounding the model is now as critical as the model itself: workflow management, context, permissions, evaluation, persistent state, and continuous self-improvement loops. The framing "harness engineering" is increasingly shared across AI engineering circles — relevant to how ii-agent structures its skill infrastructure.</p>
+    </div>
+  </div>
+
+  <!-- CAPABILITY SPOTLIGHT -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">⚡</span>
+      <h2 class="section-title">Capability Spotlight</h2>
+    </div>
+
+    <div class="item">
+      <p class="item-title">Live MCP Connectors in Claude Code Artifacts</p>
+      <p class="item-body">Published Claude Code artifacts can now call MCP connectors on each viewer load — a dashboard shows live data rather than a snapshot from session time. Each viewer uses their own credentials; access is approved on first load. For ii-agent, this means the net worth dashboard or health metrics artifact could display real-time data without needing a re-run session. Massive upgrade for anything built as a persistent artifact.</p>
+    </div>
+
+    <div class="item">
+      <p class="item-title">MCP SDK Betas — Python, TypeScript, Go, C# (2026-07-28 Spec)</p>
+      <p class="item-body">Beta SDK releases are live now at <a href="https://blog.modelcontextprotocol.io/posts/sdk-betas-2026-07-28/" style="color:#60a5fa;">blog.modelcontextprotocol.io</a>. If ii-agent integrates any MCP servers, testing against the beta SDKs now will prevent a migration scramble when the final spec ships July 28. Key breaking changes: no initialize handshake, no session headers, new required <code style="background:#0f1117;padding:1px 4px;border-radius:3px;font-size:12px;">Mcp-Method</code> + <code style="background:#0f1117;padding:1px 4px;border-radius:3px;font-size:12px;">Mcp-Name</code> headers.</p>
+    </div>
+
+    <div class="item">
+      <p class="item-title">AgentCore CLI v0.4.0 GA (AWS)</p>
+      <p class="item-body">AWS's AgentCore reaches GA with managed session storage (1GB per session, 14-day retention, standard Linux filesystem), Chrome Enterprise policies, custom root CA cert support, and multi-framework support for Google ADK + OpenAI Agents SDK. Useful for any ii-agent skills that need cloud-hosted persistent execution rather than local runs.</p>
+    </div>
+
+    <div class="item">
+      <p class="item-title">Safari MCP Server (Apple, July 1)</p>
+      <p class="item-body">Safari Technology Preview 247 ships a built-in MCP server that lets AI agents emulate user web experiences — useful for web automation, debugging, and testing tasks. Agents can now inspect real browser rendering through a standards-based protocol rather than headless workarounds.</p>
+    </div>
+  </div>
+
+  <!-- WORKFLOW IDEAS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">⚙️</span>
+      <h2 class="section-title">Workflow Ideas for ii-agent</h2>
+    </div>
+
+    <div class="item">
+      <p class="item-title">Nested Subagents for Multi-Phase IB Workflows</p>
+      <p class="item-body">Claude Code now supports 3-level subagent nesting. Apply this to the IB Toolkit: a top-level orchestrator spawns an LBO analyst subagent (which itself spawns tool-specific sub-agents for data pulling and formula building). Currently the IB Toolkit runs in a single agent loop — depth-3 nesting would allow parallel model-building sub-threads with isolated context windows.</p>
+    </div>
+
+    <div class="item">
+      <p class="item-title">Plan-and-Execute for Cost Efficiency (40-60% savings)</p>
+      <p class="item-body">Teams winning with workflow agents in 2026 are using a two-tier model: a planner (cheaper model — Haiku-class) that breaks down the task, and an executor (smarter model) that carries out each step. For ii-agent's daily newsletters and routine data-fetching skills, routing the planning phase through a lightweight model could meaningfully reduce per-run costs.</p>
+    </div>
+
+    <div class="item">
+      <p class="item-title">Prompt Versioning as Production Artifacts</p>
+      <p class="item-body">The ii-agent PROMPT_LIBRARY.md is already a good start. The 2026 production AI playbook goes further: prompts are versioned in git, tagged with model+performance metadata, and tested against evals before updates ship. Consider adding a prompt changelog workflow — when a skill prompt is changed, it gets a version bump and a quick benchmark run before going into production.</p>
+    </div>
+
+    <div class="item">
+      <p class="item-title">OpenWiki: Auto-Generate AI-Friendly Codebase Docs</p>
+      <p class="item-body">OpenWiki (from the LangChain team, one of the trending GitHub repos this week) is a CLI that automatically generates and maintains AI-readable documentation for your codebase. Given ii-agent's growing CAPABILITIES.md and CLAUDE.md structure, this could keep the skill documentation in sync with code changes automatically.</p>
+    </div>
+  </div>
+
+  <!-- WORTH READING -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">📚</span>
+      <h2 class="section-title">Worth Reading</h2>
+    </div>
+
+    <div class="read-item">
+      <div class="read-arrow">→</div>
+      <div class="read-body">
+        <p class="read-title"><a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/">MCP 2026-07-28 Specification Release Candidate</a></p>
+        <p class="read-desc">modelcontextprotocol.io — Full breakdown of stateless core, Extensions, auth hardening, deprecation policy. Required reading before July 28.</p>
+      </div>
+    </div>
+
+    <div class="read-item">
+      <div class="read-arrow">→</div>
+      <div class="read-body">
+        <p class="read-title"><a href="https://www.anthropic.com/news/claude-sonnet-5">Introducing Claude Sonnet 5 — Anthropic</a></p>
+        <p class="read-desc">anthropic.com — Full launch post: agentic improvements, 1M context, adaptive thinking, real-time cyber safeguards. Benchmarks vs. prior models.</p>
+      </div>
+    </div>
+
+    <div class="read-item">
+      <div class="read-arrow">→</div>
+      <div class="read-body">
+        <p class="read-title"><a href="https://www.latent.space/p/aiewf26trends">5 Trends That Defined AI Engineering at World's Fair 2026 — Latent Space</a></p>
+        <p class="read-desc">latent.space — Best single-page summary of where the AI engineering field actually is in mid-2026. MCP as infrastructure, production AI, RAG decline.</p>
+      </div>
+    </div>
+
+    <div class="read-item">
+      <div class="read-arrow">→</div>
+      <div class="read-body">
+        <p class="read-title"><a href="https://devblogs.microsoft.com/agent-framework/agent-frameworks-orchestration-patterns-reach-1-0/">Microsoft Agent Framework: Orchestration Patterns Reach 1.0</a></p>
+        <p class="read-desc">devblogs.microsoft.com — Stable reference architecture for Sequential, Group Chat, Handoff, and Magentic-One patterns. Good mental model for multi-agent system design.</p>
+      </div>
+    </div>
+
+    <div class="read-item">
+      <div class="read-arrow">→</div>
+      <div class="read-body">
+        <p class="read-title"><a href="https://simonwillison.net/">Simon Willison's Weblog — July 2026</a></p>
+        <p class="read-desc">simonwillison.net — July 3 post on cost-efficient subagent patterns (cheap models for implementation, expensive model for judgment). July 16 on WebAssembly + Claude Code. High-signal, vendor-neutral.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECOMMENDATION -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🎯</span>
+      <h2 class="section-title">Recommendation This Week</h2>
+    </div>
+    <div class="rec-box">
+      <p class="rec-label">Action Item</p>
+      <p class="rec-text"><strong>Upgrade ii-agent's model references to Claude Sonnet 5.</strong> It's now the same default used by Claude Code itself, carries the same promotional price as Sonnet 4.6 through August 31, and delivers meaningfully better agentic performance — better planning, multi-step tool use, and task completion. Specifically: update any hardcoded model IDs in skill scripts and the IB Toolkit prompt library from <code style="background:#0f1117;padding:2px 6px;border-radius:3px;font-size:12px;">claude-sonnet-4-6</code> to <code style="background:#0f1117;padding:2px 6px;border-radius:3px;font-size:12px;">claude-sonnet-5</code>. Bonus: the 1M-token context window means full CIM PDFs can now be passed directly to the pdf_extractor without chunking.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>— Jordan &nbsp;|&nbsp; <strong>Sentinel</strong> &nbsp;|&nbsp; ii-agent ecosystem monitor &nbsp;|&nbsp; 2026-07-25</p>
+    <p style="margin-top:6px;font-size:11px;">Research spans Anthropic, MCP, LangChain, Microsoft Agent Framework, Amazon Bedrock, Latent Space, Simon Willison, GitHub Trending · July 19–25, 2026</p>
+  </div>
+
+</div>
+</body>
+</html>
