@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentinel Weekly Digest — 2026-08-01</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    background: #0f1117;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #e2e8f0;
+  }
+  .wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 16px;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%);
+    border: 1px solid #2d3748;
+    border-radius: 12px;
+    padding: 32px 36px 28px;
+    margin-bottom: 24px;
+  }
+  .header-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #7c8fa6;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-right: 6px;
+    margin-bottom: 4px;
+  }
+  .badge-anthropic { background: #1e3a5f; color: #60a5fa; }
+  .badge-mcp       { background: #1c3a2e; color: #34d399; }
+  .badge-frameworks{ background: #2d1f4a; color: #a78bfa; }
+  .badge-research  { background: #3d2000; color: #fbbf24; }
+
+  .section {
+    background: #161b27;
+    border: 1px solid #1e2535;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #4a6080;
+    text-transform: uppercase;
+    margin: 0 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1e2535;
+  }
+
+  .headline {
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #1a2236;
+  }
+  .headline:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .headline-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin: 0 0 5px;
+    line-height: 1.4;
+  }
+  .headline-body {
+    font-size: 13px;
+    color: #8899b0;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .lens {
+    margin-bottom: 16px;
+  }
+  .lens:last-child { margin-bottom: 0; }
+  .lens-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #4a6080;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .lens-text {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .reading-item {
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #1a2236;
+  }
+  .reading-item:last-child {
+    margin-bottom: 0; padding-bottom: 0; border-bottom: none;
+  }
+  .reading-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #60a5fa;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .reading-title:hover { text-decoration: underline; }
+  .reading-meta {
+    font-size: 12px;
+    color: #4a6080;
+  }
+  .reading-desc {
+    font-size: 13px;
+    color: #8899b0;
+    margin: 4px 0 0;
+    line-height: 1.55;
+  }
+
+  .reco-box {
+    background: #0f1e35;
+    border: 1px solid #1e3a5f;
+    border-left: 3px solid #3b82f6;
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .reco-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #3b82f6;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .reco-text {
+    font-size: 14px;
+    color: #cbd5e1;
+    line-height: 1.65;
+    margin: 0;
+  }
+  .reco-text strong { color: #e2e8f0; }
+
+  .footer {
+    text-align: center;
+    padding: 24px 0 8px;
+    font-size: 12px;
+    color: #374151;
+    line-height: 1.7;
+  }
+  .footer a { color: #4a6080; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">SENTINEL &mdash; AI Agent Ecosystem Monitor</div>
+    <h1 class="header-title">Weekly Digest &mdash; 2026-08-01</h1>
+    <p class="header-sub">Compiled: Friday, August 1, 2026 &nbsp;&bull;&nbsp; Coverage: July 25 – August 1</p>
+    <div style="margin-top:16px;">
+      <span class="badge badge-anthropic">Anthropic</span>
+      <span class="badge badge-mcp">MCP</span>
+      <span class="badge badge-frameworks">Frameworks</span>
+      <span class="badge badge-research">Research</span>
+    </div>
+  </div>
+
+  <!-- Top 5 Headlines -->
+  <div class="section">
+    <div class="section-title">Top 5 Headlines</div>
+
+    <div class="headline">
+      <p class="headline-title">1. Claude Opus 5 ships — 96% SWE-bench, same Opus price</p>
+      <p class="headline-body">Released July 24, Opus 5 posts 96.0% on SWE-bench Verified and 79.2% on SWE-bench Pro — double its predecessor's agentic coding capability — at <em>unchanged Opus pricing</em>. It ships with a 1M-token context, adaptive thinking on by default, and a five-level effort toggle, making it the go-to model for long-running autonomous tasks in Claude Code.</p>
+    </div>
+
+    <div class="headline">
+      <p class="headline-title">2. MCP 2026-07-28: stateless core, serverless deployment unlocked</p>
+      <p class="headline-body">The largest MCP spec change since launch drops the initialize handshake and session ID entirely — a single HTTP request is now a complete, self-contained tool call. Three official extensions ship under a versioned framework: MCP Apps (server-rendered UI), Tasks (async long-running ops), and Enterprise Managed Auth (Entra / Okta IdP provisioning). Monthly SDK downloads: 400 M, up 4× year-to-date.</p>
+    </div>
+
+    <div class="headline">
+      <p class="headline-title">3. Lilian Weng's "Harness Engineering for Self-Improvement" (July 4)</p>
+      <p class="headline-body">The most-cited AI post of July argues that recursive self-improvement starts not with weights but with the <em>harness</em>: the orchestration layer managing tool calls, planning loops, memory, sub-agent delegation, and evaluation. Synthesises 35 papers; endorsed by DeepSeek's Cui Tianyi. Framing AI engineering as harness design has reshaped how practitioners at AIEWF 2026 described their work.</p>
+    </div>
+
+    <div class="headline">
+      <p class="headline-title">4. Claude Cowork goes web and mobile (August 3 beta)</p>
+      <p class="headline-body">Cowork sessions now run in Anthropic's cloud on iOS, Android, and the web app, with cross-device file sync and background task continuity. Team and Enterprise plans included. Doubled usage limits extended through August 5. Shared <em>artifacts</em> (not sessions) are sharable org-wide.</p>
+    </div>
+
+    <div class="headline">
+      <p class="headline-title">5. AI Engineer World's Fair 2026: 6,000 engineers, one theme — loops and harnesses</p>
+      <p class="headline-body">The conference (Latent Space recap: "5 Trends That Defined AIEWF 2026") crowned loop engineering and harness discipline as the defining practices. The opening keynote was titled "Loopcraft: The Art of Stacking Loops." The field has moved from "build an agent" to "engineer the system around the agent."</p>
+    </div>
+  </div>
+
+  <!-- Architecture Watch -->
+  <div class="section">
+    <div class="section-title">Architecture Watch</div>
+
+    <div class="lens">
+      <div class="lens-label">Pattern: Stateless MCP Over Serverless</div>
+      <p class="lens-text">With the 2026-07-28 spec, MCP tool calls become plain HTTP requests — no sticky sessions, no shared session stores, no specialist infrastructure. This is a direct unlock for ii-agent skills that currently need persistent connections: any MCP server can now deploy on Lambda, Cloudflare Workers, or Cloud Run, behind an ordinary load balancer. AWS AgentCore Gateway already supports the new spec.</p>
+    </div>
+
+    <div class="lens">
+      <div class="lens-label">Pattern: Harness-First Agent Design</div>
+      <p class="lens-text">Weng's framing crystallises a trend: the harness (workflow orchestration, context windows, eval loops, memory, budgeting) matters as much as the model. ii-agent's sentinel/newsletter skills are already harness-first; the insight is to make that structure explicit and self-improving — e.g., letting evals feed back into prompt templates and scheduling decisions.</p>
+    </div>
+
+    <div class="lens">
+      <div class="lens-label">Pattern: Graph + Vector Memory Hybrid</div>
+      <p class="lens-text">Graph memory graduated from experimental to production in early 2026; 13 frameworks now support it. The production consensus is graph memory (entity relationships) + vector memory (semantic similarity) — neither alone is sufficient. For deal_memory in ii-agent, adding a lightweight graph layer over existing vector retrieval would improve cross-deal entity recall.</p>
+    </div>
+  </div>
+
+  <!-- Capability Spotlight -->
+  <div class="section">
+    <div class="section-title">Capability Spotlight</div>
+
+    <div class="lens">
+      <div class="lens-label">MCP Tasks Extension (Official)</div>
+      <p class="lens-text">The Tasks extension in MCP 2026-07-28 formalises async long-running operations — exactly what ii-agent's newsletter and sentinel scripts need. Servers can now declare a task, return a task ID immediately, and stream progress. This replaces the current pattern of running Python scripts in the background and hoping they complete.</p>
+    </div>
+
+    <div class="lens">
+      <div class="lens-label">Claude Opus 5 Effort Toggle (5 Levels)</div>
+      <p class="lens-text">Opus 5 ships a five-level effort setting, letting you trade latency and cost against reasoning depth per call. For ii-agent: use <code>effort: low</code> for market-price lookups in newsletters, <code>effort: high</code> for LBO model validation and IC prep. The Claude Code CLI surfaces this via the /effort command.</p>
+    </div>
+
+    <div class="lens">
+      <div class="lens-label">Amazon Bedrock AgentCore — Managed Web Search + Policy Controls GA</div>
+      <p class="lens-text">AgentCore added a fully managed web search tool (zero data egress, cited results) and moved policy controls to GA — precise action-level permissions verified outside the agent's reasoning loop. If ii-agent ever runs on AWS, these remove the need to build your own search + guardrail layer.</p>
+    </div>
+
+    <div class="lens">
+      <div class="lens-label">CrewAI v1.12 — Qdrant Edge Memory + Native OpenRouter Support</div>
+      <p class="lens-text">CrewAI now ships with Qdrant Edge as a memory backend (on-device vector store, no cloud required) and native support for OpenRouter, DeepSeek, Ollama, and Cerebras as drop-in providers. Relevant if ii-agent skills ever expand to multi-role crew workflows for deal analysis.</p>
+    </div>
+  </div>
+
+  <!-- Workflow Ideas -->
+  <div class="section">
+    <div class="section-title">Workflow Ideas</div>
+
+    <div class="lens">
+      <div class="lens-label">Loop Stacking for Sentinel</div>
+      <p class="lens-text">The AIEWF "Loopcraft" framing suggests nesting loops by frequency: an outer weekly loop (Sentinel) feeds a daily briefing loop (market newsletter) which feeds an intra-day alert loop (price thresholds). ii-agent already has the skills; making the dependency chain explicit — each loop's output becomes the next loop's context — would tighten the whole system.</p>
+    </div>
+
+    <div class="lens">
+      <div class="lens-label">Eval-Driven Prompt Refinement</div>
+      <p class="lens-text">Weng's harness-for-self-improvement pattern applied concretely: after each Sentinel run, score the digest quality (coverage breadth, freshness, actionability) and write a short eval note back to the sentinel prompt. Over 4–6 weeks the prompt self-tunes. This is low-cost and directly in scope for a scheduled task running anyway.</p>
+    </div>
+
+    <div class="lens">
+      <div class="lens-label">MCP App for Deal Memory UI</div>
+      <p class="lens-text">MCP Apps (server-rendered UI, now an official extension) would let deal_memory surface a web UI directly inside Claude without any separate frontend. A thin FastAPI MCP server wrapping the existing DealMemory class could render deal notes, assumptions, and history as a formatted page inside the Claude chat.</p>
+    </div>
+  </div>
+
+  <!-- Worth Reading -->
+  <div class="section">
+    <div class="section-title">Worth Reading</div>
+
+    <div class="reading-item">
+      <a class="reading-title" href="https://lilianweng.github.io/posts/2026-07-04-harness/">Harness Engineering for Self-Improvement</a>
+      <span class="reading-meta">Lilian Weng &mdash; Lil'Log &mdash; July 4, 2026</span>
+      <p class="reading-desc">Synthesises 35 papers to argue that the scaffolding around the model — tool calls, planning loops, memory, eval — is the new frontier of AI capability growth. The most-shared AI essay of July.</p>
+    </div>
+
+    <div class="reading-item">
+      <a class="reading-title" href="https://claude.com/blog/bringing-mcp-2026-07-28-to-claude">MCP 2026-07-28 Spec: Stateless Core, Coming to Claude</a>
+      <span class="reading-meta">Anthropic &mdash; July 2026</span>
+      <p class="reading-desc">Official breakdown of what the stateless spec means for deployments, plus the three new official extensions (Apps, Tasks, Enterprise Managed Auth). Required reading before building any new MCP server.</p>
+    </div>
+
+    <div class="reading-item">
+      <a class="reading-title" href="https://www.latent.space/p/aiewf26trends">5 Trends That Defined AI Engineering at World's Fair 2026</a>
+      <span class="reading-meta">Latent Space &mdash; July 2026</span>
+      <p class="reading-desc">Latent Space's recap of AIEWF 2026 with 6,000 engineers. Loop engineering, harness discipline, memory architecture, and evals dominated. Dense with links to talks worth watching.</p>
+    </div>
+
+    <div class="reading-item">
+      <a class="reading-title" href="https://www.marktechpost.com/2026/07/24/meet-the-new-claude-opus-5-frontier-class-agentic-coding-and-computer-use-at-unchanged-opus-pricing/">Claude Opus 5: Frontier-Class Agentic Coding at Unchanged Opus Pricing</a>
+      <span class="reading-meta">MarkTechPost &mdash; July 24, 2026</span>
+      <p class="reading-desc">Good overview of Opus 5's SWE-bench numbers, context window, effort levels, and how it compares to Fable 5 for cost-sensitive agentic workloads.</p>
+    </div>
+
+    <div class="reading-item">
+      <a class="reading-title" href="https://blog.modelcontextprotocol.io/posts/2026-07-28/">The 2026-07-28 Specification — MCP Blog</a>
+      <span class="reading-meta">Model Context Protocol Blog &mdash; July 28, 2026</span>
+      <p class="reading-desc">The canonical spec post from the MCP team. Covers the request/response model, MRTR (mid-tool confirmations), and the formal extensions framework with code examples.</p>
+    </div>
+  </div>
+
+  <!-- Recommendation -->
+  <div class="section">
+    <div class="section-title">Recommendation This Week</div>
+    <div class="reco-box">
+      <div class="reco-label">Concrete Action</div>
+      <p class="reco-text">
+        <strong>Upgrade the default model in ii-agent to Claude Opus 5 for agentic tasks.</strong>
+        Opus 5 launched July 24 at the same price as Opus 4.8 with double the agentic coding capability and a 1M-token window. If you're running LBO model builds, deal-memory queries, or multi-step case work through Claude Code, switching the configured model to <code>claude-opus-5</code> is a free performance upgrade. Pair it with <code>effort: medium</code> as the default to keep latency reasonable, stepping up to <code>high</code> for IC-prep and model audit tasks. Second priority: read the MCP 2026-07-28 spec — the Tasks extension directly solves the async delivery problem Sentinel currently works around with cron + subprocess.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    &mdash; Jordan<br>
+    SENTINEL &bull; ii-agent ecosystem monitor<br>
+    <a href="mailto:babaranrob@gmail.com">babaranrob@gmail.com</a><br><br>
+    <span style="color:#2d3748;">Coverage: July 25 – August 1, 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
