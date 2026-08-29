@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentinel Weekly Digest — 2026-08-29</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    background: #0f1117;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #e2e8f0;
+  }
+  .wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 16px;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%);
+    border: 1px solid #2d3748;
+    border-radius: 12px;
+    padding: 32px 36px 28px;
+    margin-bottom: 24px;
+  }
+  .header-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #7c8fa6;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-right: 6px;
+    margin-bottom: 4px;
+  }
+  .badge-anthropic { background: #1e3a5f; color: #60a5fa; }
+  .badge-mcp       { background: #1c3a2e; color: #34d399; }
+  .badge-frameworks{ background: #2d1f4a; color: #a78bfa; }
+  .badge-research  { background: #3d2000; color: #fbbf24; }
+  .badge-aws       { background: #2d1a00; color: #fb923c; }
+
+  .section {
+    background: #161b27;
+    border: 1px solid #1e2535;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #4a6080;
+    text-transform: uppercase;
+    margin: 0 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1e2535;
+  }
+
+  .headline {
+    margin-bottom: 18px;
+  }
+  .headline:last-child { margin-bottom: 0; }
+  .headline-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: #2d4a6a;
+    margin-bottom: 4px;
+  }
+  .headline-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin: 0 0 5px;
+  }
+  .headline-body {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .item {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #1e2535;
+  }
+  .item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .item-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #4a6080;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .item-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #94a3b8;
+    margin: 0 0 4px;
+  }
+  .item-body {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .rec-box {
+    background: linear-gradient(135deg, #0d2137 0%, #0a1929 100%);
+    border: 1px solid #1e4060;
+    border-left: 3px solid #3b82f6;
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+  .rec-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #3b82f6;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .rec-body {
+    font-size: 14px;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.7;
+  }
+  .rec-body strong { color: #cbd5e1; }
+
+  .links-list {
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  .links-list li {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1e2535;
+  }
+  .links-list li:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .links-list a {
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .links-list a:hover { text-decoration: underline; }
+  .links-list .link-desc {
+    font-size: 12px;
+    color: #4a5568;
+    margin-top: 2px;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 20px 0 0;
+    font-size: 12px;
+    color: #2d3748;
+    border-top: 1px solid #1a2030;
+    margin-top: 8px;
+  }
+  .footer strong { color: #4a5568; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">SENTINEL &nbsp;·&nbsp; AI Agent Ecosystem Monitor</div>
+    <h1 class="header-title">Weekly Digest &mdash; 2026-08-29</h1>
+    <p class="header-sub">Covering August 22–29, 2026 &nbsp;·&nbsp; ii-agent personal cloud ops base</p>
+    <div style="margin-top:16px;">
+      <span class="badge badge-anthropic">Anthropic</span>
+      <span class="badge badge-mcp">MCP</span>
+      <span class="badge badge-frameworks">Frameworks</span>
+      <span class="badge badge-research">Research</span>
+      <span class="badge badge-aws">AWS</span>
+    </div>
+  </div>
+
+  <!-- Top 5 Headlines -->
+  <div class="section">
+    <div class="section-title">Top 5 Headlines</div>
+
+    <div class="headline">
+      <div class="headline-num">01 &nbsp;·&nbsp; <span class="badge badge-anthropic" style="font-size:10px;">Anthropic</span></div>
+      <div class="headline-title">Claude Code Auto Mode Is Now the Default (Aug 14)</div>
+      <p class="headline-body">Anthropic flipped auto mode on for all Pro, Max, and Team plans. In a 1,053-action study, auto mode blocked 89% of harmful actions versus just 13.6% when humans clicked through prompts — and users had been approving 97% of those prompts anyway. The change does not affect running sessions and remains opt-out. Enterprise and API access follow next month.</p>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">02 &nbsp;·&nbsp; <span class="badge badge-mcp" style="font-size:10px;">MCP</span></div>
+      <div class="headline-title">MCP 2026-07-28 Spec Finalized + New Roadmap Published (Aug 22)</div>
+      <p class="headline-body">The MCP 2026-07-28 specification is now final. The headline change: MCP goes stateless — the protocol-level session handshake is gone, making remote servers ordinary HTTP services that scale horizontally without managing state. New extensions ship Apps (server-rendered UIs) and Tasks (long-running work). The Aug 22 roadmap adds five new priorities: agentic messaging primitives (webhooks, channels), HTTP-native transport unification for local servers, agent identity via Workload Identity Federation, progressive tool discovery, and better SDK DX across language platforms.</p>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">03 &nbsp;·&nbsp; <span class="badge badge-research" style="font-size:10px;">Research</span></div>
+      <div class="headline-title">Lilian Weng: "Harness Engineering for Self-Improvement"</div>
+      <p class="headline-body">Published July 4, this post reframes how to think about agent systems. Beyond "agent = LLM + memory + tools + planning," harness engineering adds workflow design (loop architecture), evaluation, permission controls, and persistent state management as first-class system concerns. It positions the runtime and surrounding software infrastructure — not just the prompt — as the core design surface.</p>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">04 &nbsp;·&nbsp; <span class="badge badge-aws" style="font-size:10px;">AWS</span></div>
+      <div class="headline-title">Amazon Bedrock AgentCore Runtime Instances Go GA</div>
+      <p class="headline-body">Agents can now run on any EC2 instance type without managing infrastructure — AgentCore handles provisioning, patching, scaling, and lifecycle. This matters for sustained, resource-intensive, or specialized-hardware workloads. Also shipped this week: cross-account agent registry sharing via AWS RAM with four managed permission levels (ReadOnly, Consumer, Publisher, Admin).</p>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">05 &nbsp;·&nbsp; <span class="badge badge-anthropic" style="font-size:10px;">Anthropic</span></div>
+      <div class="headline-title">Mid-Conversation Tool Changes Now in Beta on Claude Fable 5 / Opus 5</div>
+      <p class="headline-body">The Claude Developer Platform now supports changing the active tool set mid-conversation without starting a new session. Available in beta on Claude Fable 5, Mythos 5, Opus 4.8, and Opus 5. This enables adaptive agent workflows where tool availability changes based on context or user permissions.</p>
+    </div>
+  </div>
+
+  <!-- Architecture Watch -->
+  <div class="section">
+    <div class="section-title">Architecture Watch</div>
+
+    <div class="item">
+      <div class="item-label">MCP Goes Stateless</div>
+      <div class="item-title">HTTP-native scaling changes the deployment model</div>
+      <p class="item-body">A remote MCP server is now just an HTTP service — no session state, no sticky routing, trivially scalable behind a load balancer. ii-agent's MCP integrations can move from local stdio processes to deployed HTTP endpoints without any protocol rework.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">Harness Engineering</div>
+      <div class="item-title">The runtime layer is the new design surface</div>
+      <p class="item-body">Weng's framing separates the agent harness (loop design, eval, permissions, state) from the agent itself. In ii-agent terms: the scheduled task runner, budget controls, and skill dispatch are the harness — and they deserve the same design rigor as the prompts and tools.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">Multi-Agent Reality Check</div>
+      <div class="item-title">40% of multi-agent pilots fail within 6 months</div>
+      <p class="item-body">Production data shows multi-agent adds 2.1 percentage points of accuracy at roughly double the cost. Pipeline (linear handoff) is the most reliable pattern. Fan-out, debate, and swarm patterns have much higher failure rates when poorly matched to the problem. Simpler beats clever.</p>
+    </div>
+  </div>
+
+  <!-- Capability Spotlight -->
+  <div class="section">
+    <div class="section-title">Capability Spotlight</div>
+
+    <div class="item">
+      <div class="item-label">MCP Extensions</div>
+      <div class="item-title">Apps extension — server-rendered UIs in MCP</div>
+      <p class="item-body">MCP servers can now push embedded UI components directly into the client. This means tools can render interactive forms, charts, or controls in the Claude Code UI without the agent writing separate HTML artifacts.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">Claude Code</div>
+      <div class="item-title">Cross-session messaging + restricted mode</div>
+      <p class="item-body">Claude Code now supports cross-session messaging (agents sending messages to other agents across sessions) and a restricted mode that locks down file system and shell access. Critical for ii-agent scheduled tasks — restricted mode can sandbox automation runs cleanly.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">GitHub Trending</div>
+      <div class="item-title">browser-use: headless browser access for LLM agents</div>
+      <p class="item-body">Built on Playwright + LangChain/LlamaIndex, browser-use gives agents the ability to navigate real web applications, click buttons, and fill dynamic forms. Relevant for ii-agent's market research and news aggregation workflows that currently hit paywalls or require JS rendering.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">Claude SDK (Beta)</div>
+      <div class="item-title">Managed agent controls: session budgets + advisor models</div>
+      <p class="item-body">The Claude Developer Platform now exposes session-level token budgets, advisor model configuration, and inference geo pinning at the managed agent level. GitHub-hosted skills are also now available. Budget controls are immediately useful for ii-agent's scheduled runs to prevent runaway token spend.</p>
+    </div>
+  </div>
+
+  <!-- Workflow Ideas -->
+  <div class="section">
+    <div class="section-title">Workflow Ideas</div>
+
+    <div class="item">
+      <div class="item-label">Prompt Pattern</div>
+      <div class="item-title">Lean into auto mode for all scheduled tasks</div>
+      <p class="item-body">Now that auto mode is the default and demonstrably safer than click-through prompts, ii-agent's scheduled newsletters and Sentinel runs should explicitly set auto mode. Remove any residual approval gates in routine automation — they were adding friction without safety.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">Architecture</div>
+      <div class="item-title">Add an evaluation loop to each skill run</div>
+      <p class="item-body">Inspired by Weng's harness engineering: each skill (networth, market, health) could include a self-evaluation step — "did this output meet the quality bar?" — before emailing. A simple rubric check by a fast model (Haiku 4.5) adds a validation gate without much cost.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">Tooling</div>
+      <div class="item-title">Evaluate browser-use for research workflows</div>
+      <p class="item-body">The daily investment newsletter and market newsletter currently rely on NewsAPI and static fetches. browser-use could enable dynamic page scraping for sources that require JS or login. Worth a proof-of-concept for one newsletter before broader adoption.</p>
+    </div>
+  </div>
+
+  <!-- Worth Reading -->
+  <div class="section">
+    <div class="section-title">Worth Reading</div>
+    <ul class="links-list">
+      <li>
+        <a href="https://claude.com/blog/auto-mode-default-in-claude-code">Auto mode is now the default in Claude Code</a>
+        <div class="link-desc">Anthropic's announcement with the safety study data — essential reading on the permission model shift.</div>
+      </li>
+      <li>
+        <a href="https://blog.modelcontextprotocol.io/posts/mcp-roadmap/">The New MCP Roadmap (Aug 22)</a>
+        <div class="link-desc">Five new priority areas for MCP after the stateless 2026-07-28 spec shipped — agent identity and HTTP unification are the headliners.</div>
+      </li>
+      <li>
+        <a href="https://lilianweng.github.io/posts/2026-07-04-harness/">Harness Engineering for Self-Improvement — Lil'Log</a>
+        <div class="link-desc">Weng's framework for the runtime layer around LLM agents — workflow design, eval, permission controls, persistent state. ~31 min read, worth it.</div>
+      </li>
+      <li>
+        <a href="https://simonwillison.net/2026/Aug/8/auto-mode/">Simon Willison on Claude Code Auto Mode</a>
+        <div class="link-desc">Willison's take on what the default mode change means for developers building with Claude Code.</div>
+      </li>
+      <li>
+        <a href="https://startupcorners.com/digest/devtools-digest-2026-08-09">GitHub Trending: AI Agents &amp; Dev Tools (Aug 9)</a>
+        <div class="link-desc">Good weekly roundup — OmniRoute (unified LLM gateway), browser-use, and PrimeIntellect's self-improving agent are the standouts.</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Recommendation -->
+  <div class="rec-box">
+    <div class="rec-label">⚡ This Week's Recommendation</div>
+    <p class="rec-body">
+      <strong>Add session budget controls to ii-agent's scheduled runs.</strong> The Claude Developer Platform now exposes managed agent session budgets in beta. Before next week's scheduled tasks run, configure a per-session token budget on the highest-cost skills (ib_toolkit, market_newsletter) to cap runaway spend. Pair this with auto mode (now the default) and you get safer, cheaper, and less interruptive scheduled automation in one change. If budget controls aren't yet exposed in Claude Code's remote session config, set <code>run_budgets.py</code> limits as a stopgap — the infrastructure is already in ii-agent's shared layer at <code>src/ii_skills/shared/run_budgets.py</code>.
+    </p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&mdash; Jordan &nbsp;·&nbsp; <strong>SENTINEL</strong> &nbsp;·&nbsp; ii-agent ecosystem monitor &nbsp;·&nbsp; 2026-08-29</p>
+    <p style="margin-top:6px; font-size:11px; color:#1e2535;">AI Agent Ecosystem Monitor &nbsp;·&nbsp; Delivered automatically every Friday</p>
+  </div>
+
+</div>
+</body>
+</html>
