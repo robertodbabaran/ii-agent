@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentinel Weekly Digest — 2026-09-05</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    background: #0f1117;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #e2e8f0;
+  }
+  .wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 16px;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%);
+    border: 1px solid #2d3748;
+    border-radius: 12px;
+    padding: 32px 36px 28px;
+    margin-bottom: 24px;
+  }
+  .header-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #7c8fa6;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-right: 6px;
+    margin-bottom: 4px;
+  }
+  .badge-anthropic { background: #1e3a5f; color: #60a5fa; }
+  .badge-mcp       { background: #1c3a2e; color: #34d399; }
+  .badge-frameworks{ background: #2d1f4a; color: #a78bfa; }
+  .badge-research  { background: #3d2000; color: #fbbf24; }
+  .badge-aws       { background: #2d1a00; color: #fb923c; }
+  .badge-security  { background: #3d0f0f; color: #f87171; }
+
+  .section {
+    background: #161b27;
+    border: 1px solid #1e2535;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #4a6080;
+    text-transform: uppercase;
+    margin: 0 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1e2535;
+  }
+
+  .headline {
+    margin-bottom: 18px;
+  }
+  .headline:last-child { margin-bottom: 0; }
+  .headline-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: #2d4a6a;
+    margin-bottom: 4px;
+  }
+  .headline-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin: 0 0 5px;
+  }
+  .headline-body {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .item {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #1e2535;
+  }
+  .item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .item-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #4a6080;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .item-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #94a3b8;
+    margin: 0 0 4px;
+  }
+  .item-body {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .rec-box {
+    background: linear-gradient(135deg, #0d2137 0%, #0a1929 100%);
+    border: 1px solid #1e4060;
+    border-left: 3px solid #3b82f6;
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+  .rec-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #3b82f6;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .rec-body {
+    font-size: 14px;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.6;
+  }
+  .rec-body strong { color: #cbd5e1; }
+
+  .links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .links-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #1e2535;
+  }
+  .links-list li:last-child { border-bottom: none; }
+  .links-list a {
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .links-list a:hover { text-decoration: underline; }
+  .links-list .link-desc {
+    font-size: 12px;
+    color: #4a6080;
+    margin-top: 2px;
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 12px;
+    color: #2d3748;
+    padding-top: 8px;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">SENTINEL // AI AGENT ECOSYSTEM MONITOR</div>
+    <div class="header-title">Weekly Digest — September 5, 2026</div>
+    <p class="header-sub">Coverage: Aug 29 – Sep 5, 2026 &nbsp;·&nbsp; ii-agent personal AI ops base</p>
+    <div style="margin-top:14px;">
+      <span class="badge badge-anthropic">Anthropic</span>
+      <span class="badge badge-mcp">MCP</span>
+      <span class="badge badge-frameworks">Frameworks</span>
+      <span class="badge badge-security">Security</span>
+      <span class="badge badge-aws">AWS</span>
+    </div>
+  </div>
+
+  <!-- Top 5 Headlines -->
+  <div class="section">
+    <div class="section-title">Top 5 Headlines</div>
+
+    <div class="headline">
+      <div class="headline-num">01 &nbsp;·&nbsp; <span class="badge badge-anthropic" style="margin:0;padding:2px 8px;">Anthropic</span></div>
+      <div class="headline-title">Claude Fable 5.1 ships with 1M-token context and 75% cheaper cache reads</div>
+      <p class="headline-body">Released September 1, Fable 5.1 (and its gated sibling Mythos 5.1) is now the default Fable model in Claude Code. The 75% drop in cache-read pricing materially lowers the operating cost of long-running agent workflows and multi-hour sessions — directly beneficial to ii-agent's scheduled newsletter tasks. Watermarking and C2PA Content Credentials are enabled on all generated text and media.</p>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">02 &nbsp;·&nbsp; <span class="badge badge-mcp" style="margin:0;padding:2px 8px;">Claude Code / MCP</span></div>
+      <div class="headline-title">Claude Code v2.1.259 introduces <code style="background:#1e2535;padding:1px 5px;border-radius:3px;font-size:12px;">managedMcpServers</code> — centralized org-wide MCP deployment</div>
+      <p class="headline-body">Shipped September 2. Organizations can now push HTTP and SSE MCP servers to every user automatically via a <code style="background:#1e2535;padding:1px 5px;border-radius:3px;font-size:12px;">managedMcpServers</code> key in their Claude Code org settings — the same shape as .mcp.json, but applied org-wide without per-user configuration. This is the most impactful ii-agent infrastructure change this week.</p>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">03 &nbsp;·&nbsp; <span class="badge badge-security" style="margin:0;padding:2px 8px;">Security</span></div>
+      <div class="headline-title">Anthropic Inference Hooks enter Enterprise beta — inline DLP before every prompt</div>
+      <p class="headline-body">Every prompt and tool-call response now routes through a signed WebSocket to your security server before reaching Claude. Your server returns allow/deny; Claude enforces in real time. Works across Claude Enterprise, Claude Code, Cowork, and MCP connectors. Plugs into Zscaler, Palo Alto, Netskope, and Proofpoint out of the box — a significant milestone for enterprise AI governance.</p>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">04 &nbsp;·&nbsp; <span class="badge badge-frameworks" style="margin:0;padding:2px 8px;">Open Source</span></div>
+      <div class="headline-title">OpenClaw 2.0 releases with Linux desktop support, collaborative agents, and auto-setup</div>
+      <p class="headline-body">OpenClaw 2.0 (version 2026.8.1, 933 contributors, 16k+ PRs) now auto-detects existing Claude/ChatGPT subscriptions and API keys during install, dramatically reducing setup friction. A Linux desktop companion (.deb / AppImage) lands alongside new collaborative-agent features and rolling-back-on-failure update logic. OpenClaw has surpassed 210k GitHub stars.</p>
+    </div>
+
+    <div class="headline">
+      <div class="headline-num">05 &nbsp;·&nbsp; <span class="badge badge-research" style="margin:0;padding:2px 8px;">Market Signal</span></div>
+      <div class="headline-title">McKinsey: 32% of enterprises have skipped buying software because of agentic coding</div>
+      <p class="headline-body">McKinsey's "State of AI in 2026" survey finds nearly a third of organizations have bypassed at least one software purchase because internal agentic coding tools let them build it themselves. The build-vs-buy calculation has shifted structurally — validating the ii-agent approach of owning custom skill modules rather than subscribing to off-the-shelf SaaS.</p>
+    </div>
+  </div>
+
+  <!-- Architecture Watch -->
+  <div class="section">
+    <div class="section-title">Architecture Watch</div>
+
+    <div class="item">
+      <div class="item-label">Pattern</div>
+      <div class="item-title">Supervisor / Orchestrator — the dominant production multi-agent pattern</div>
+      <p class="item-body">The field has converged: one orchestrator agent (using a capable/expensive model) receives the task, breaks it into subtasks, and delegates to specialist workers (using cheaper, task-specific models). Teams report 40–60% cost reduction versus homogeneous fleets. Microsoft's WorkflowBuilder formalizes this as a compile-time type-safe directed graph with sequential, parallel, conditional, and handoff patterns.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">Protocol</div>
+      <div class="item-title">MCP 2026-07-28 Release Candidate — stateless HTTP, Tasks extension, MCP Apps</div>
+      <p class="item-body">The largest MCP protocol revision since launch delivers a stateless core that runs behind plain round-robin load balancers (no sticky sessions), a Tasks extension for long-running work with pause/resume, and MCP Apps for server-rendered UIs. List and resource results now carry cache-control metadata. 200+ servers in the ecosystem, growing weekly.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">Infrastructure</div>
+      <div class="item-title">AWS Agent Registry GA — auto-discovers agents across AWS Organizations</div>
+      <p class="item-body">AWS Agent Registry is now generally available, auto-detecting AgentCore Runtimes and Gateways across member accounts into a single unified registry. AgentCore Evaluations now covers TypeScript frameworks (Strands, LangGraph, OpenAI Agents, Vercel AI SDK) alongside Python, and added support for Claude Agent SDK, LlamaIndex, and Google ADK evaluation targets.</p>
+    </div>
+  </div>
+
+  <!-- Capability Spotlight -->
+  <div class="section">
+    <div class="section-title">Capability Spotlight</div>
+
+    <div class="item">
+      <div class="item-label">Claude Code Feature</div>
+      <div class="item-title"><code style="background:#1e2535;padding:1px 5px;border-radius:3px;font-size:12px;">managedMcpServers</code> — org-wide MCP distribution</div>
+      <p class="item-body">Add an HTTP/SSE MCP server once in your org's Claude Code settings and it propagates to all users automatically. Eliminates per-user .mcp.json drift. This is the right primitive for ii-agent: central skill/tool governance without manual per-session config.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">Anthropic Enterprise</div>
+      <div class="item-title">Inference Hooks — WebSocket DLP gateway for all Claude surfaces</div>
+      <p class="item-body">Even for personal/solo use, inference hooks expose a powerful pattern: a sidecar process that inspects and can modify every Claude inference request. Could be repurposed for audit logging, cost throttling, or context injection beyond DLP — worth watching for ii-agent's governance layer.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">MCP Ecosystem</div>
+      <div class="item-title">Enterprise platforms adopt MCP natively — SnapLogic, Workato, MuleSoft</div>
+      <p class="item-body">All three major enterprise iPaaS platforms shipped production MCP support this cycle. Combined with the new stateless HTTP transport in the 2026-07-28 RC, MCP servers can now sit behind standard cloud load balancers — opening the door to highly available, scalable tool endpoints for ii-agent skill modules.</p>
+    </div>
+  </div>
+
+  <!-- Workflow Ideas -->
+  <div class="section">
+    <div class="section-title">Workflow Ideas</div>
+
+    <div class="item">
+      <div class="item-label">Orchestration Pattern</div>
+      <div class="item-title">Debate/Council pattern for high-stakes analysis</div>
+      <p class="item-body">Two agents independently answer the same IB/IR analysis prompt, then a judge model selects and synthesizes the stronger output. Well-suited for QoE challenges, LBO sensitivity debates, and IC prep where the second opinion matters. Add to ib_toolkit as an optional multi-agent review step.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">Cost Optimization</div>
+      <div class="item-title">Fable 5.1 cache-read pricing — restructure scheduled tasks around caching</div>
+      <p class="item-body">At $0.25/M cache-read tokens (75% below input price), it's now cheap to inject large context — sector playbooks, case notes, reference templates — as cached system context rather than recomputing each turn. Sentinel, market newsletter, and IB toolkit all benefit from pre-warmed context blocks.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-label">Security / Governance</div>
+      <div class="item-title">Local inference hook pattern for ii-agent audit logging</div>
+      <p class="item-body">Inference hooks use a signed WebSocket protocol with a documented schema. Even without Claude Enterprise, the pattern is instructive: a local sidecar that intercepts tool calls could enforce ii-agent's three-tier file protection rules (Tier 1/2 guard rails) automatically rather than relying on prompt-only instructions.</p>
+    </div>
+  </div>
+
+  <!-- Worth Reading -->
+  <div class="section">
+    <div class="section-title">Worth Reading</div>
+    <ul class="links-list">
+      <li>
+        <a href="https://claude.com/blog/claude-enterprise-inference-hooks">Inference Hooks: Inline DLP for Claude Enterprise — Anthropic Blog</a>
+        <div class="link-desc">The canonical explainer on how inference hooks work — WebSocket protocol, allow/deny flow, vendor integrations.</div>
+      </li>
+      <li>
+        <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/">MCP 2026-07-28 Release Candidate — MCP Blog</a>
+        <div class="link-desc">Full spec for stateless HTTP, Tasks extension, MCP Apps, and new cache-control metadata on list responses.</div>
+      </li>
+      <li>
+        <a href="https://www.infoq.com/news/2026/09/openclaw-2-release/">OpenClaw 2.0 Releases with Simplified Setup and Collaborative Agents — InfoQ</a>
+        <div class="link-desc">Good technical breakdown of what changed in the 2.0 architecture — relevant for anyone building on top of OpenClaw.</div>
+      </li>
+      <li>
+        <a href="https://beam.ai/agentic-insights/multi-agent-orchestration-patterns-production">6 Multi-Agent Orchestration Patterns for Production (2026) — Beam AI</a>
+        <div class="link-desc">Practical guide to sequential, supervisor, debate/council, and magentic patterns with production cost/reliability trade-offs.</div>
+      </li>
+      <li>
+        <a href="https://kie.ai/blog/claude-fable-5-1-context-pricing-agentic-work">Claude Fable 5.1: Context Window and Pricing for Agentic Work — kie.ai</a>
+        <div class="link-desc">Clear breakdown of the 1M context window and the 75% cache-read price cut and what it means for long agent sessions.</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Recommendation -->
+  <div class="section">
+    <div class="rec-box">
+      <div class="rec-label">This Week's Recommendation</div>
+      <p class="rec-body">
+        <strong>Adopt <code style="background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;">managedMcpServers</code> to centralize ii-agent's MCP configuration.</strong>
+        Claude Code v2.1.259 lets organizations push HTTP/SSE MCP servers to all users via a single settings key — eliminating per-session .mcp.json drift. For ii-agent, this means the Gmail MCP, GitHub MCP, and any future skill-endpoint MCP servers can be declared once in the org settings and automatically available in every scheduled and interactive session. This directly fixes the Gmail connector availability issue that affected this digest delivery.
+        <br><br>
+        Concretely: add a <code style="background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;">managedMcpServers</code> block to your Claude Code org settings (or .mcp.json) pointing to the Gmail and other connectors you use, and set <em>enabledInChat: true</em> by default for scheduled sessions.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    — Jordan &nbsp;·&nbsp; Sentinel v1.0 &nbsp;·&nbsp; ii-agent &nbsp;·&nbsp; 2026-09-05<br>
+    <span style="color:#1e2535;font-size:11px;">Compiled from 15+ web searches across Anthropic, MCP, agent frameworks, GitHub, and industry sources.</span>
+  </div>
+
+</div>
+</body>
+</html>
